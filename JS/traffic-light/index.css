@@ -1,0 +1,47 @@
+.road {
+    width: 100px;
+    height: 100px;
+    background: red;
+    margin: 10px;
+}
+
+.green {
+    background: green;
+}
+
+.yellow {
+    background: yellow;
+}
+
+.red {
+    background: red;
+}
+
+#north {
+    position: absolute;
+    top: 5%;
+    left: 40%;
+}
+#east {
+    position: absolute;
+    top: 40%;
+    left: 80%;
+}
+#south {
+    position: absolute;
+    top: 80%;
+    left: 40%;
+}
+#west {
+    position: absolute;
+    top: 40%;
+    left: 5%;
+}
+
+.table{
+    border: 1px solid black;
+}
+
+.td{
+    width: 150px; height: 100px;
+}
