@@ -1,0 +1,27 @@
+	
+Chintan Gor
+12:13 PM
+@all Check this Job application form 
+
+Your task is to design the front end form using HTML, JS , Table structure or other DIV structure and add proper validations 
+
+Job Application Form (1).pdf
+PDF60KB
+Notes
+user can select N number of rows in showing the experience not 3 rows only , in pdf it shows only three you have to add dynamic lines when needed 
+
+for experience and Education both 
+
+
+Chintan Gor
+12:20 PM
+
+when you click on + there must be one new blank records add in the grid 
+
+and when you click -  the last records should remove after the Promp that you want to delete this line 
+
+Then experience section is also like same 
+
+Experience  + - 
+1 Company | FromDate | To date | Annual Package | Reason to leave | Ref Contact NO | ref Ct. Name
+

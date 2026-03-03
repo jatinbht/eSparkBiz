@@ -1,0 +1,45 @@
+<body>
+    <h3>Languages Known</h3>
+    
+    <table id="languageTable">
+        <thead>
+            <tr>
+                <th>Language</th>
+                <th>Read</th>
+                <th>Write</th>
+                <th>Speak</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    
+    
+    <script>
+        let languages = [
+        "Hindi",
+        "English",
+        "Gujarati",
+        'japanese'
+    ];
+    
+    function renderLanguages() {
+        const tbody = document.querySelector("#languageTable tbody");
+        tbody.innerHTML = "";
+    
+        languages.forEach((lang, index) => {
+            const row = document.createElement("tr");
+    
+            row.innerHTML = `
+                <td>${lang}</td>
+                <td><input type="checkbox" name="read_${index}"></td>
+                <td><input type="checkbox" name="write_${index}"></td>
+                <td><input type="checkbox" name="speak_${index}"></td>
+            `;
+    
+            tbody.appendChild(row);
+        });
+    }
+    
+    renderLanguages();
+    </script>
+</body>

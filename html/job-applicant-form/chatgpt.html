@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Application Form</title>
+</head>
+<body>
+
+<h2>Job Application Form</h2>
+
+<form id="jobForm">
+
+<!-- ================= BASIC DETAILS ================= -->
+<div class="section">
+    <h3>Basic Details</h3>
+
+    First Name:
+    <input type="text" name="firstName" required>
+
+    Last Name:
+    <input type="text" name="lastName" required>
+
+    Email:
+    <input type="email" name="email" required>
+
+    Phone:
+    <input type="tel" name="phone" pattern="[0-9]{10}" required>
+
+    Date of Birth:
+    <input type="date" name="dob" required>
+</div>
+
+
+<!-- ================= EDUCATION ================= -->
+<div class="section">
+    <h3>Education Details</h3>
+
+    <table id="educationTable">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Board/University</th>
+                <th>Passing Year</th>
+                <th>Percentage</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" required></td>
+                <td><input type="text" required></td>
+                <td><input type="number" min="1950" max="2100" required></td>
+                <td><input type="number" min="0" max="100" step="0.01" required></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn" onclick="addEducationRow()">Add Education</button>
+</div>
+
+
+<!-- ================= WORK EXPERIENCE ================= -->
+<div class="section">
+    <h3>Work Experience</h3>
+
+    <table id="experienceTable">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Designation</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" required></td>
+                <td><input type="date" required></td>
+                <td><input type="date" required></td>
+                <td><input type="text" required></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn" onclick="addExperienceRow()">Add Experience</button>
+</div>
+
+
+<!-- ================= SKILLS ================= -->
+<div class="section">
+    <h3>Technologies Known</h3>
+
+    PHP:
+    <select required>
+        <option value="">Select</option>
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Expert</option>
+    </select>
+
+    MySQL:
+    <select required>
+        <option value="">Select</option>
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Expert</option>
+    </select>
+
+    Laravel:
+    <select required>
+        <option value="">Select</option>
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Expert</option>
+    </select>
+</div>
+
+
+<button type="submit" class="btn">Submit</button>
+<div class="error" id="formError"></div>
+
+</form>
+
+
+<script>
+function addEducationRow() {
+    const table = document.querySelector("#educationTable tbody");
+    const row = table.rows[0].cloneNode(true);
+    row.querySelectorAll("input").forEach(input => input.value = "");
+    table.appendChild(row);
+}
+
+function addExperienceRow() {
+    const table = document.querySelector("#experienceTable tbody");
+    const row = table.rows[0].cloneNode(true);
+    row.querySelectorAll("input").forEach(input => input.value = "");
+    table.appendChild(row);
+}
+
+function removeRow(btn) {
+    const row = btn.parentNode.parentNode;
+    const table = row.parentNode;
+    if (table.rows.length > 1) {
+        row.remove();
+    }
+}
+
+document.getElementById("jobForm").addEventListener("submit", function(e) {
+    const experienceRows = document.querySelectorAll("#experienceTable tbody tr");
+
+    for (let row of experienceRows) {
+        const from = row.cells[1].querySelector("input").value;
+        const to = row.cells[2].querySelector("input").value;
+
+        if (new Date(from) > new Date(to)) {
+            e.preventDefault();
+            document.getElementById("formError").innerText =
+                "Experience 'From' date cannot be greater than 'To' date.";
+            return;
+        }
+    }
+
+    document.getElementById("formError").innerText = "";
+});
+</script>
+
+</body>
+</html>

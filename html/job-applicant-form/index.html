@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <script src="./index.js"></script>
+    <fieldset>
+        <legend>Basic Details</legend>
+
+        <div>
+            <label for="first-name">First Name</label>
+            <input type="text" name="first-name" id="first-name">
+        </div>
+
+        <div>
+            <label for="last-name">Last Name</label>
+            <input type="text" name="last-name" id="last-name">
+        </div>
+
+
+        <div>
+            <label for="designation">Designation</label>
+            <input type="text" name="designation" id="designation">
+        </div>
+
+        <div>
+            <label for="address1">Address 1</label>
+            <input type="text" name="address1" id="address1">
+        </div>
+        <div>
+            <label for="address2">Address 2</label>
+            <input type="text" name="address2" id="address2">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email">
+        </div>
+        <div>
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone" id="phone">
+        </div>
+        <div>
+            <label for="city">City</label>
+            <input type="text" name="city" id="city">
+        </div>
+        <div>
+            <label for="states">State</label>
+            <select name="states" id="states">
+                <option value="gujarat">Gujarat</option>
+                <option value="gujarat">Gujarat2</option>
+                <option value="gujarat">Gujarat3</option>
+                <option value="gujarat">Gujarat4</option>
+            </select>
+        </div>
+        <div>
+            Gender
+            <input type="radio" name="gender" id="male">
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female">
+            <label for="female">Female</label>
+        </div>
+        <div>
+            <label for="zip">Zip Code</label>
+            <input type="text" name="zip" id="zip">
+        </div>
+
+        <div>
+            <label for="relationship">Relationship Status</label>
+            <select name="relationship" id="relationship">
+                <option value="single">Gujarat</option>
+                <option value="double">Double</option>
+                <option value="triple">Triple</option>
+                <option value="taken">Taken</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="dob">Date of Birth</label>
+            <input type="date" name="dob" id="dob">
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Education</legend>
+        <div>
+            <input type="button" value="+" onclick="addRow(this)">
+            <input type="button" value="-" onclick="removeRow()">
+            <table>
+                <thead>
+                    <th>Course</th>
+                    <th>Passing Year</th>
+                    <th>University/Board</th>
+                    <th>Result</th>
+                </thead>
+                <tbody>
+                    <tr class="prototype-row">
+                        <td><input type="text"></td>
+                        <td><input type="date"></td>
+                        <td><input type="checkbox"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Work Experience</legend>
+        <input type="button" value="+" onclick="addRow()">
+        <input type="button" value="-" onclick="removeRow()">
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Annual Package</th>
+                    <th>Reason to leave</th>
+                    <th>Ref. Contact Number</th>
+                    <th>Ref. Contact Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="prototype-row">
+                    <td><input type="text" name="Company"></td>
+                    <td><input type="date" name="from"></td>
+                    <td><input type="date" name="to"></td>
+                    <td><input type="text" name="reason-to-leave"></td>
+                    <td><input type="text" name="ref-contact-number"></td>
+                    <td><input type="text" name="ref-contact-name"></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+
+</html>
