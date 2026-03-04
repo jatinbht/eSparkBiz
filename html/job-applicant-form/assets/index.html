@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
-    <script src="./index.js"></script>
-    <fieldset>
+    <script src="../index.js"></script>
+    <!-- <fieldset>
         <legend>Basic Details</legend>
 
         <div>
@@ -84,13 +83,13 @@
             <label for="dob">Date of Birth</label>
             <input type="date" name="dob" id="dob">
         </div>
-    </fieldset>
+    </fieldset> -->
 
     <fieldset>
         <legend>Education</legend>
         <div>
-            <input type="button" value="+" onclick="addRow(this)">
-            <input type="button" value="-" onclick="removeRow()">
+            <input type="button" value="+" data-action="add">
+            <input type="button" value="-" data-action="remove">
             <table>
                 <thead>
                     <th>Course</th>
@@ -101,8 +100,9 @@
                 <tbody>
                     <tr class="prototype-row">
                         <td><input type="text"></td>
-                        <td><input type="date"></td>
-                        <td><input type="checkbox"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
+                        <td><input type="text"></td>
                     </tr>
                 </tbody>
             </table>
@@ -129,6 +129,7 @@
                     <td><input type="text" name="Company"></td>
                     <td><input type="date" name="from"></td>
                     <td><input type="date" name="to"></td>
+                    <td><input type="text" name="package"></td>
                     <td><input type="text" name="reason-to-leave"></td>
                     <td><input type="text" name="ref-contact-number"></td>
                     <td><input type="text" name="ref-contact-name"></td>
