@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <script src="../index.js"></script>
+    <script type="module" src="../view/index.js"></script>
     <!-- <fieldset>
         <legend>Basic Details</legend>
 
@@ -88,9 +88,9 @@
     <fieldset>
         <legend>Education</legend>
         <div>
-            <input type="button" value="+" data-action="add">
-            <input type="button" value="-" data-action="remove">
-            <table>
+            <input type="button" value="+" data-action="add" data-table="education" id="education">
+            <input type="button" value="-" data-action="remove" data-table="education">
+            <table data-table="education">
                 <thead>
                     <th>Course</th>
                     <th>Passing Year</th>
@@ -110,9 +110,9 @@
     </fieldset>
     <fieldset>
         <legend>Work Experience</legend>
-        <input type="button" value="+" onclick="addRow()">
-        <input type="button" value="-" onclick="removeRow()">
-        <table>
+        <input type="button" value="+" onclick="addRow()" data-table="experience" id="experience">
+        <input type="button" value="-" onclick="removeRow()" data-table="experience">
+        <table data-table="experience">
             <thead>
                 <tr>
                     <th>Company</th>

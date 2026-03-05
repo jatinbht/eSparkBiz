@@ -1,22 +1,25 @@
-class Table {
-    constructor(name) {
-        this.name = name
-        this.tbody = document.createElement('tbody');
+export class Table {
+    // static instances = {}
+    tableRegistry = new Map()
 
+    constructor(tableElement) {
+        this.table = tableElement;
+        this.tbody = tableElement.querySelector('tbody');
     }
 
-    getInstance(name) {
-        if (!(name instanceof Table)) {
-            instance = new Table(name);
+    static getInstance(name) {
+        if (!Table.instances[name]) {
+            const table = new Table(name);
+            Table.instances[name] = table;
         }
-        return instance;
+        return Table.instances[name];
     }
 
     addRow() {
-        const firstRow = tbody.firstElementChild;
+        const firstRow = this.tbody.firstElementChild;
 
         const clone = firstRow.cloneNode(true);
-        tbody.appendChild(clone);
+        this.tbody.appendChild(clone);
     }
 
     removeRow() {
