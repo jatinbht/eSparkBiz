@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Application Form</title>
+</head>
+<body>
+<script type="module" src="./validations.js"></script>
+<h2>Job Application Form</h2>
+
+<form id="jobForm">
+
+<div class="section">
+    <h3>Basic Details</h3>
+
+    First Name:
+    <input type="text" name="firstName" id="first-name" data-required="enabled">
+
+    Last Name:
+    <input type="text" name="lastName" data-required="enabled">
+
+    Email:
+    <input type="text" name="email" data-required="enabled">
+
+    Phone:
+    <input type="text" name="phone" data-required="enabled">
+
+    Date of Birth:
+    <input type="date" name="dob" data-required="enabled">
+</div>
+
+
+<div class="section">
+    <h3>Education Details</h3>
+
+    <table id="educationTable">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Board/University</th>
+                <th>Passing Year</th>
+                <th>Percentage</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" ></td>
+                <td><input type="text" ></td>
+                <td><input type="number" min="1950" max="2100" ></td>
+                <td><input type="number" min="0" max="100" step="0.01" ></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn" onclick="addEducationRow()">Add Education</button>
+</div>
+
+
+<div class="section">
+    <h3>Work Experience</h3>
+
+    <table id="experienceTable">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Designation</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" ></td>
+                <td><input type="date" ></td>
+                <td><input type="date" ></td>
+                <td><input type="text" ></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn" onclick="addExperienceRow()">Add Experience</button>
+</div>
+
+<div>
+    <fieldset>
+        languages
+    </fieldset>
+</div>
+
+<div class="section">
+    <h3>Technologies Known</h3>
+
+    PHP:
+    <select >
+        <option value="">Select</option>
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Expert</option>
+    </select>
+
+    MySQL:
+    <select >
+        <option value="">Select</option>
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Expert</option>
+    </select>
+
+    Laravel:
+    <select >
+        <option value="">Select</option>
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Expert</option>
+    </select>
+</div>
+
+
+<button type="submit" class="btn" onclick="validateForm()">Submit</button>
+<div class="error" id="formError"></div>
+
+</form>
+
+
+<script>
+function addEducationRow() {
+    const table = document.querySelector("#educationTable tbody");
+    const row = table.rows[0].cloneNode(true);
+    row.querySelectorAll("input").forEach(input => input.value = "");
+    table.appendChild(row);
+}
+
+function addExperienceRow() {
+    const table = document.querySelector("#experienceTable tbody");
+    const row = table.rows[0].cloneNode(true);
+    row.querySelectorAll("input").forEach(input => input.value = "");
+    table.appendChild(row);
+}
+
+function removeRow(btn) {
+    const row = btn.parentNode.parentNode;
+    const table = row.parentNode;
+    if (table.rows.length > 1) {
+        row.remove();
+    }
+}
+
+</script>
+
+</body>
+</html>

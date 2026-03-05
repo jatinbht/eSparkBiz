@@ -1,0 +1,263 @@
+<body>
+
+    <form>
+        <fieldset>
+            <legend>Basic details</legend>
+
+            First Name
+            <input type="text" name="first-name" class="required">
+            Last Name
+            <input type="text" name="last-name" class="required">
+
+            Designation
+            <input type="text" name="designation class=" required">
+
+            Address
+            <input type="text" name="address1" class="required">
+
+            Email
+            <input type="text" id="email" name="email">
+
+            Phone
+            <input type="text" name="phone" class="number">
+
+            City
+            <input type="text" name="city" class="required">
+
+            State
+            <select name="states" id="states">
+                <option value="gujarat">Gujarat</option>
+                <option value="gujarat">Gujarat2</option>
+                <option value="gujarat">Gujarat3</option>
+                <option value="gujarat">Gujarat4</option>
+            </select>
+
+            Gender
+            <input type="radio" name="gender" id="male">
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female">
+            <label for="female">Female</label>
+
+            Zip Code
+            <input type="text" name="zip" id="zip">
+
+            Relationship Status
+            <select name="relationship" id="relationship">
+                <option value="single">Gujarat</option>
+                <option value="double">Double</option>
+                <option value="triple">Triple</option>
+                <option value="taken">Taken</option>
+            </select>
+
+            Date of Birth
+            <input type="date" name="dob" class="date">
+
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Education Details</legend>
+
+            <table id="educationTable">
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Board/University</th>
+                        <th>Passing Year</th>
+                        <th>Percentage</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="required"></td>
+                        <td><input type="text" class="required"></td>
+                        <td><input type="text" class="year"></td>
+                        <td><input type="text"></td>
+                        <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="button" class="btn" onclick="addEducationRow()">Add Education</button>
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Work Experience</legend>
+
+            <table id="experienceTable">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Designation</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text"></td> <!-- no validation added -->
+                        <td><input type="date"></td> <!-- no validation added -->
+                        <td><input type="date"></td>
+                        <td><input type="text"></td>
+                        <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="button" class="btn" onclick="addExperienceRow()">Add Experience</button>
+        </fieldset>
+
+        <fieldset>
+            <legend>Languages Known</legend>
+            <table id="languageTable">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Read</th>
+                        <th>Write</th>
+                        <th>Speak</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Technologies</legend>
+            <table id="techTable">
+                <thead>
+                    <tr>
+                        <th>Technology</th>
+                        <th>Beginner</th>
+                        <th>Mediator</th>
+                        <th>Expert</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Reference Contacts</legend>
+            Name
+            <input type="text" name="name" class="required">
+            Contact Number
+            <input type="text" name="contact" id="phone">
+            Relation
+            <input type="text" name="relation" class="required">
+        </fieldset>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="validations2.js"></script>
+
+    <script>
+        function addEducationRow() {
+            const table = document.querySelector("#educationTable tbody");
+            const row = table.rows[0].cloneNode(true);
+            row.querySelectorAll("input").forEach(input => input.value = "");
+            table.appendChild(row);
+        }
+
+        function addExperienceRow() {
+            const table = document.querySelector("#experienceTable tbody");
+            const row = table.rows[0].cloneNode(true);
+            row.querySelectorAll("input").forEach(input => input.value = "");
+            table.appendChild(row);
+        }
+
+        function removeRow(btn) {
+            const row = btn.parentNode.parentNode;
+            const table = row.parentNode;
+            if (table.rows.length > 1) {
+                row.remove();
+            }
+        }
+
+    </script>
+
+    <script>
+        let languages = [
+            "Hindi",
+            "English",
+            "Gujarati",
+            'japanese'
+        ];
+
+        function renderLanguages() {
+            const tbody = document.querySelector("#languageTable tbody");
+            tbody.innerHTML = "";
+
+            languages.forEach((lang, index) => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+            <td>${lang}</td>
+            <td><input type="checkbox" name="read_${index}"></td>
+            <td><input type="checkbox" name="write_${index}"></td>
+            <td><input type="checkbox" name="speak_${index}"></td>
+        `;
+
+                tbody.appendChild(row);
+            });
+        }
+
+        renderLanguages();
+    </script>
+
+    <script>
+
+        let technologies = [
+            "PHP",
+            "MySQL",
+            "Laravel",
+            "Oracle"
+        ];
+
+        function renderTechnologies() {
+
+            const tbody = document.querySelector("#techTable tbody");
+            tbody.innerHTML = "";
+
+            technologies.forEach((tech, index) => {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                <td>${tech}</td>
+    
+                <td>
+                    <input type="radio" 
+                           name="tech_${index}" 
+                           value="beginner">
+                </td>
+    
+                <td>
+                    <input type="radio" 
+                           name="tech_${index}" 
+                           value="mediator">
+                </td>
+    
+                <td>
+                    <input type="radio" 
+                           name="tech_${index}" 
+                           value="expert">
+                </td>
+            `;
+
+                tbody.appendChild(row);
+
+            });
+
+        }
+
+        renderTechnologies();
+
+    </script>
+</body>
+
+</html>
