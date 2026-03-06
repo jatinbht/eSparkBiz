@@ -2,31 +2,53 @@
 
 <head>
     <style>
-        body{
+        body {
             border: 1px dotted black;
         }
-        table{
+
+        table {
             height: 100%;
             width: 100%;
             /* border: 2px solid black; */
         }
-        td{
+
+        td {
             border: 2px solid black;
         }
     </style>
 </head>
 
-<body onafterprint="afterPrint()" onbeforeprint="beforePrint()">
-    <script src="./index.js" ></script>
-
+<body onafterprint="afterPrintHandler()" onbeforeprint="beforePrintHandler()">
+    
     afterPrint, onbeforeprint
     <table>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td> beforeUnload <input id="name" /> </td>
+            <td>focus, blur, focusin, focusout <form onfocusin="focusInHandler()" onfocusout="focusOutHandler()"><input onfocus="focusHandler()" onblur="blurHandler()"><input></form></td>
+            <td>change, input <input oninput="inputHandler()" onchange="changeHandler()">
+                <select oninput="inputHandler()" onchange="changeHandler()">
+                    <option>Option1</option>
+                    <option>Option2</option>
+                    <option>Option3</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><div onclick="clickHandler()">click is bubbled to parent</div></td>
+            <td><div ondblclick="dlbClickHandler()">double click</div></td>
+            <td onmousedown="mouseDownHandler()" onmouseup="" onclick=""></td>
+            <td><div oncontextmenu="contextMenuHandler(event)">context menu disabled</div></td>
+            <!-- <td onmousemove="mouseMoveHandler()" onmouseover=""></td>
+            <td onmouseenter=""></td>
+            <td onmouseleave="mouseLeaveHandler()" onmouseout=""></td>
+            <td onmousemove="" onmouseover=""></td> -->
+        </tr>
+        <tr>
+            <td><input value="cut, copy, paste" oncopy="copyHandler(event)" oncut="cutHandler(event)" onpaste="pasteHandler(event)"></td>
         </tr>
     </table>
+
+    <script src="./index.js"></script>
 </body>
 
 </html>
