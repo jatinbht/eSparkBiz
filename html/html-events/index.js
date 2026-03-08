@@ -84,7 +84,8 @@ function handleDrop(e) {
 
 function stingifyDraggedData(e){
     const draggableElment = e.target
-    e.dataTransfer.setData('text/plain', draggableElment.innerText)
+
+    e.dataTransfer.setData('text/plain', draggableElment.id)
 }
 
 function allowDrop(e){
@@ -92,9 +93,9 @@ function allowDrop(e){
 }
 
 function appendItem(e){
-    // e.preventDefault()
     const dropZone = e.currentTarget
-    const draggedItem = e.dataTransfer.getData('text/plain')
+    const draggedItemID = e.dataTransfer.getData('text/plain')
+    const draggedItem = document.getElementById(draggedItemID)
     
-    dropZone.append(draggedItem)
+    dropZone.appendChild(draggedItem)
 }
