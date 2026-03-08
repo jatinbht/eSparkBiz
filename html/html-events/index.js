@@ -70,4 +70,31 @@ function pasteHandler(event){
     
 }
 
+function handleDragStart(e) {
+    stingifyDraggedData(e);
+}
 
+function handleDragOver(e) {
+    allowDrop(e);
+}
+
+function handleDrop(e) {
+    appendItem(e);
+}
+
+function stingifyDraggedData(e){
+    const draggableElment = e.target
+    e.dataTransfer.setData('text/plain', draggableElment.innerText)
+}
+
+function allowDrop(e){
+    e.preventDefault()
+}
+
+function appendItem(e){
+    // e.preventDefault()
+    const dropZone = e.currentTarget
+    const draggedItem = e.dataTransfer.getData('text/plain')
+    
+    dropZone.append(draggedItem)
+}
