@@ -15,5 +15,8 @@ app.get('/projects/html-events', (req, res) => {
 app.get('/projects/traffic-light', (req, res) => {
     res.sendFile(import.meta.dirname + '/public/projects/traffic-light/index.html')
 })
+app.get('/projects/job-applicant-form-v2', (req, res) => {
+    res.sendFile(import.meta.dirname + '/public/projects/job-applicant-form-v2/basic.html')
+})
 
 app.listen(PORT)
