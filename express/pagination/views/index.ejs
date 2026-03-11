@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <body>
     <table>
         <thead>
@@ -16,24 +17,26 @@
     </table>
     <form action="/" method="get">
         <input type="text" name="page" value="<%= currentPage %>">
-        <input type="submit" value="Search">
+        <input type="submit" value="Go">
     </form>
-    <input type="button" value="Next">
+
+    <% if (currentPage>0) { %>
+    <a href="/?page=<%= currentPage - 1 %>">Previous</a>
+    <% } %>
+    <% for( let i = 0; i < totalPages; i++ ) { %>
+        <a href="/?page=<%= 1+i %>"><%= i+1 %></a>
+    <% } %>
+    <% if (currentPage<totalPages) { %>
+    <a href="/?page=<%= currentPage + 1 %>">Next</a>
+    <% } %>
+    
     <script>
-        // function handleOnChange(){
-        //     updatePageNumber()
-        // }
-        // function updatePageNumber(){
-
-        // }
-
-        // document.addEventListener('submit', (event) => {
-        //     event.preventDefault();
-
-        //     function goto(pageNumber){
-                
-        //     }
-        // })
+        document.addEventListener('submit', validatePageNumber())
+        function validatePageNumber(){
+            // stub
+        }
     </script>
+
 </body>
+
 </html>

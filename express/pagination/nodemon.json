@@ -1,0 +1,7 @@
+{
+    "ext": "js,ejs,json",
+    "events": {
+        "start": "echo \"START $(date '+%H:%M:%S')\"",
+        "restart": "echo \"RESTART $(date '+%H:%M:%S')\""
+    }
+}

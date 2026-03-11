@@ -1,14 +1,18 @@
-import express from 'express'
+import express from 'express';
+const ROWS_PER_PAGE = 100; //! query this data from database (instead of hardcoding)
+const TOTAL_ROWS = 1000; //! query this data from database (instead of hardcoding)
 
-const app = express()
-app.set('view engine', 'ejs')
-let currentPage = 1
+const app = express();
+app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    currentPage = req.params.page
-    console.log('current page: ' + currentPage);
+    let page = Math.floor(Number(req.query.page));
+    const totalPages = Math.ceil(TOTAL_ROWS / ROWS_PER_PAGE);
+    let currentPage = page || 1;
+    if (!page || page < 1) return res.redirect('/?page=1');
+    res.render('index', { currentPage, totalPages });
+});
 
-    res.render('index', {currentPage: currentPage})
-})
 
-app.listen(3000)
+
+app.listen(3000);
