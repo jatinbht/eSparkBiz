@@ -1,5 +1,5 @@
 import { createConnection } from 'mysql2';
-import { address as _address, date } from 'faker';
+import { faker } from '@faker-js/faker';
 import moment from 'moment';
 
 // MySQL Database connection details
@@ -14,6 +14,7 @@ const connection = createConnection({
     user: DB_USER,
     password: DB_PASSWORD,
     database: DB_NAME,
+    port: 3307
 });
 
 // Function to generate random date of birth between 01-01-1990 and 30-12-2010
@@ -39,15 +40,16 @@ function generatePhoneNumber() {
 // Function to generate random address using Faker
 function generateAddress() {
     return (
-        _address.streetAddress() +
+        faker.location.streetAddress() +
         ', ' +
-        _address.city() +
+        faker.location.city() +
         ', ' +
-        _address.state() +
+        faker.location.state() +
         ', ' +
-        _address.zipCode()
+        faker.location.zipCode()
     );
 }
+
 
 // Function to generate a random city from Gujarat, India
 function generateCity() {
@@ -461,9 +463,9 @@ function insertData() {
         const lastName =
             lastNames[Math.floor(Math.random() * lastNames.length)];
         const phoneNumber = generatePhoneNumber();
-        const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}.${dob.split('-')[0]}.${i}@gamil.com`;
-        const address = generateAddress();
         const dob = generateDob();
+        const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}.${dob.split('-')[0]}.${i}@gmail.com`;
+        const address = generateAddress();
         const gender = generateGender(firstName);
         const city = generateCity();
 
@@ -478,23 +480,30 @@ function insertData() {
             city
         ];
 
-        // Execute the insert query
-        connection.execute(insertQuery, data, (err, results) => {
-            if (err) {
-                console.error('Error inserting data:', err);
-            }
-        });
+//         // Execute the insert query
+//         connection.execute(insertQuery, data, (err, results) => {
+//             if (err) {
+//                 console.error('Error inserting data:', err);
+//             }
+//         });
 
-        // Commit every 1000 inserts to avoid excessive memory usage
-        counter++;
-        if (counter % 1000 === 0) {
-            console.log(`Inserted ${counter} records...`);
-        }
-    }
+//         // Commit every 1000 inserts to avoid excessive memory usage
+//         counter++;
+//         if (counter % 1000 === 0) {
+//             console.log(`Inserted ${counter} records...`);
+//         }
+//     }
 
-    console.log('10,000 records inserted successfully.');
-    connection.end(); // Close the connection
-}
+//     console.log('10,000 records inserted successfully.');
+//     connection.end(); // Close the connection
+// }
+
+for (let i = 0; i < 10000; i++) {
+    connection.execute(insertQuery, data);
+ }
+ 
+ connection.end(); 
 
 // Start inserting the data
 insertData();
+    }}
