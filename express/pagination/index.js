@@ -2,14 +2,13 @@ import express from 'express'
 
 const app = express()
 app.set('view engine', 'ejs')
-const currentPage = 1
+let currentPage = 1
 
 app.get('/', (req, res) => {
-    res.render('index', {currentPage: currentPage})
-})
+    currentPage = req.params.page
+    console.log('current page: ' + currentPage);
 
-app.get('/pages/:pageNumber', (req, res) => {
-    console.log('Page Number: ' + req.params.pageNumber)
+    res.render('index', {currentPage: currentPage})
 })
 
 app.listen(3000)

@@ -14,26 +14,26 @@
             </tr>
         </thead>
     </table>
-    <form action="/pages/:pageNumber" method="get">
-        <input type="text" value="<%= currentPage %>">
+    <form action="/" method="get">
+        <input type="text" name="page" value="<%= currentPage %>">
         <input type="submit" value="Search">
     </form>
     <input type="button" value="Next">
     <script>
-        function handleOnChange(){
-            updatePageNumber()
-        }
-        function updatePageNumber(){
+        // function handleOnChange(){
+        //     updatePageNumber()
+        // }
+        // function updatePageNumber(){
 
-        }
+        // }
 
-        document.addEventListener('submit', (event) => {
-            event.preventDefault();
+        // document.addEventListener('submit', (event) => {
+        //     event.preventDefault();
 
-            function goto(pageNumber){
-
-            }
-        })
+        //     function goto(pageNumber){
+                
+        //     }
+        // })
     </script>
 </body>
 </html>
