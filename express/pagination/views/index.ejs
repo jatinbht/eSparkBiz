@@ -15,6 +15,26 @@
             </tr>
         </thead>
     </table>
+
+
+    <%= pageData %>
+    <% console.log('page data(from view): ' + pageData) %>
+
+    <% console.log('Page data: ' + pageData); %>
+    <h1>First Page</h1>
+
+    <% pageData.firstPage.forEach(row => { %> <%# if (pageData) { %>
+    <p><%= row.first_name %> - <%= row.id %></p>
+    <% }) %>
+    <%# } %>
+
+    <h1>Next Page</h1>
+
+    <% pageData.nextPage.forEach(row => { %>
+    <p><%= row.first_name %> - <%= row.id %></p>
+    <% }) %>
+
+
     <form action="/" method="get">
         <input type="text" name="page" value="<%= currentPage %>">
         <input type="submit" value="Go">
@@ -24,15 +44,16 @@
     <a href="/?page=<%= currentPage - 1 %>">Previous</a>
     <% } %>
     <% for( let i = 0; i < totalPages; i++ ) { %>
-        <a href="/?page=<%= 1+i %>"><%= i+1 %></a>
+    <a href="/?page=<%= 1+i %>"><%= i+1 %></a>
     <% } %>
     <% if (currentPage<totalPages) { %>
     <a href="/?page=<%= currentPage + 1 %>">Next</a>
     <% } %>
-    
+
     <script>
-        document.addEventListener('submit', validatePageNumber())
-        function validatePageNumber(){
+        document.addEventListener('submit', validatePageNumber)
+
+        function validatePageNumber() {
             // stub
         }
     </script>

@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import moment from 'moment';
 
 // MySQL Database connection details
-const DB_HOST = 'localhost';
+const DB_HOST = '127.0.0.1';
 const DB_USER = 'root';
 const DB_PASSWORD = 'root';
 const DB_NAME = 'applicant';
@@ -14,7 +14,7 @@ const connection = createConnection({
     user: DB_USER,
     password: DB_PASSWORD,
     database: DB_NAME,
-    port: 3307
+    // port: 3307
 });
 
 // Function to generate random date of birth between 01-01-1990 and 30-12-2010
@@ -69,7 +69,6 @@ function generateCity() {
         'Patan',
         'Morbi',
         'Bharuch',
-        'Gandhinagar',
         'Veraval',
         'Dahod',
         'Kheda',
@@ -254,11 +253,11 @@ function generateGender(firstName) {
     ];
 
     if (maleNames.includes(firstName)) {
-        return 'MALE';
+        return 'male';
     } else if (femaleNames.includes(firstName)) {
-        return 'FEMALE';
+        return 'female';
     } else {
-        return 'OTHER';
+        return 'other';
     }
 }
 
@@ -273,7 +272,7 @@ function generateGender(firstName) {
 
 // Prepare the query to insert the data
 const insertQuery = `
-  INSERT INTO students (
+  INSERT INTO applicant.applicants (
     first_name, last_name, phone, email, full_address, dob,
     gender, city
   ) 
@@ -457,53 +456,38 @@ const lastNames = [
 // Insert 10,000 records
 let counter = 0;
 function insertData() {
+
+    const promises = [];
+
     for (let i = 0; i < 10000; i++) {
-        const firstName =
-            firstNames[Math.floor(Math.random() * firstNames.length)];
-        const lastName =
-            lastNames[Math.floor(Math.random() * lastNames.length)];
+
+        const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+        const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
         const phoneNumber = generatePhoneNumber();
         const dob = generateDob();
-        const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}.${dob.split('-')[0]}.${i}@gmail.com`;
-        const address = generateAddress();
-        const gender = generateGender(firstName);
-        const city = generateCity();
+
+        const email = `${firstName}.${lastName}.${i}@gmail.com`.toLowerCase();
 
         const data = [
             firstName,
             lastName,
             phoneNumber,
             email,
-            address,
+            generateAddress(),
             dob,
-            gender,
-            city
+            generateGender(firstName).toLowerCase(),
+            generateCity()
         ];
 
-//         // Execute the insert query
-//         connection.execute(insertQuery, data, (err, results) => {
-//             if (err) {
-//                 console.error('Error inserting data:', err);
-//             }
-//         });
+        promises.push(connection.promise().execute(insertQuery, data));
+    }
 
-//         // Commit every 1000 inserts to avoid excessive memory usage
-//         counter++;
-//         if (counter % 1000 === 0) {
-//             console.log(`Inserted ${counter} records...`);
-//         }
-//     }
+    Promise.all(promises)
+        .then(() => {
+            console.log("Inserted 10000 rows");
+            connection.end();
+        })
+        .catch(err => console.error(err));
+}
 
-//     console.log('10,000 records inserted successfully.');
-//     connection.end(); // Close the connection
-// }
-
-for (let i = 0; i < 10000; i++) {
-    connection.execute(insertQuery, data);
- }
- 
- connection.end(); 
-
-// Start inserting the data
 insertData();
-    }}
