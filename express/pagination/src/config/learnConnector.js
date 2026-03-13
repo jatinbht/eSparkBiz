@@ -43,22 +43,27 @@ connection.connect((err) => {
 //     );
 // };
 
-export const getPageData = (page, callback) => {
-
-    const limit = 2;
-    const offset = (page - 1) * limit;
+export const getPageData = (params, callback) => {
+    const { page, rowsPerPage, sortMode, orderBy, offset } = params;
 
     connection.query(
-        'SELECT * FROM applicants ORDER BY id DESC LIMIT ? OFFSET ?',
-        [limit, offset],
+        `SELECT * FROM applicants ORDER BY ${orderBy} ${sortMode} LIMIT ? OFFSET ?`,
+        [rowsPerPage, offset],
         (err, results) => {
-
             if (err) return callback(err);
 
-            callback(null, {
-                firstPage: results
-            });
+            callback(null, results);
+        },
+    );
+};
 
+export const getApplicantCount = (callback) => {
+    connection.query('SELECT count(*) AS total FROM applicants', 
+        (err, results) => {
+            if (err) return callback(err);
+
+            callback(null, results[0].total);
+            // return results
         }
     );
 };

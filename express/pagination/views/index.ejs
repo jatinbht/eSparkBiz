@@ -14,25 +14,27 @@
                 <th>Gender</th>
             </tr>
         </thead>
+        <tbody>
+            <% if (pageData) { %>
+                <% pageData.forEach(applicant => { %>
+                    <tr>
+                        <td> <%= applicant.id %> </td>
+                        <td> <%= applicant.first_name %> </td>
+                        <td> <%= applicant.phone %> </td>
+                        <td> <%= applicant.email %> </td>
+                        <td> <%= applicant.full_address %> </td>
+                        <td> <%= applicant.dob.toLocaleDateString('en-GB') %> </td>
+                        <td> <%= applicant.gender %> </td>
+                        <td> <%= applicant.city %> </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <p>No data found.</p>
+            <% } %>
+        </tbody>
     </table>
 
 
-    <%= pageData %>
-    <% console.log('page data(from view): ' + pageData) %>
-
-    <% console.log('Page data: ' + pageData); %>
-    <h1>First Page</h1>
-
-    <% pageData.firstPage.forEach(row => { %> <%# if (pageData) { %>
-    <p><%= row.first_name %> - <%= row.id %></p>
-    <% }) %>
-    <%# } %>
-
-    <h1>Next Page</h1>
-
-    <% pageData.nextPage.forEach(row => { %>
-    <p><%= row.first_name %> - <%= row.id %></p>
-    <% }) %>
 
 
     <form action="/" method="get">
