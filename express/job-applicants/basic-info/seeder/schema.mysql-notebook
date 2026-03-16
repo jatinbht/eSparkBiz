@@ -2,7 +2,7 @@
     "type": "MySQLNotebook",
     "version": "1.0",
     "caption": "Script",
-    "content": "DROP TABLE applicants.applicant;\r\nCREATE DATABASE IF NOT EXISTS applicants;\r\nCREATE TABLE applicants.applicant(\r\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\r\n    first_name VARCHAR(20) NOT NULL,\r\n    last_name VARCHAR(20) NOT NULL,\r\n    designation VARCHAR(30) NOT NULL DEFAULT 'Intern',\r\n    full_address VARCHAR(255),\r\n    email VARCHAR(20) NOT NULL UNIQUE,\r\n    phone VARCHAR(10) NOT NULL UNIQUE,\r\n    city VARCHAR(30),\r\n    state VARCHAR(30) DEFAULT 'Gujarat',\r\n    gender ENUM('male', 'female', 'other') NOT NULL,\r\n    zip_code char(6),\r\n    relationship_status  ENUM('single', 'committed'),\r\n    dob DATE NOT NULL,\r\n    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP\r\n);\r\nshow DATABASES;\r\nshow tables from applicants;\r\nDESCRIBE applicants.applicant;\r\ninsert into applicants.applicant VALUE ()",
+    "content": "DROP TABLE applicants.applicant;\r\nCREATE DATABASE IF NOT EXISTS applicants;\r\nCREATE TABLE applicants.applicant(\r\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\r\n    first_name VARCHAR(20) NOT NULL,\r\n    last_name VARCHAR(20) NOT NULL,\r\n    designation VARCHAR(30) NOT NULL DEFAULT 'Intern',\r\n    full_address VARCHAR(255),\r\n    email VARCHAR(20) NOT NULL UNIQUE,\r\n    phone VARCHAR(10) NOT NULL UNIQUE,\r\n    city VARCHAR(30),\r\n    state VARCHAR(30) DEFAULT 'Gujarat',\r\n    gender ENUM('male', 'female', 'other') NOT NULL,\r\n    zip_code char(6),\r\n    relationship_status  ENUM('single', 'committed'),\r\n    dob DATE NOT NULL,\r\n    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP\r\n);\r\nshow DATABASES;\r\nshow tables from applicants;\r\nDESCRIBE applicants.applicant;\r\nINSERT INTO applicants.applicant (\r\n    first_name,\r\n    last_name,\r\n    designation,\r\n    email,\r\n    phone,\r\n    gender,\r\n    dob\r\n) VALUES (\r\n    'John',\r\n    'Doe',\r\n    'Intern',\r\n    'john.doe@example.com',\r\n    '1234567890',\r\n    'male',\r\n    '1990-01-01'\r\n);\r\n",
     "options": {
         "tabSize": 4,
         "indentSize": 4,
@@ -15,22 +15,22 @@
             {
                 "inSelectionMode": false,
                 "selectionStart": {
-                    "lineNumber": 19,
-                    "column": 16
+                    "lineNumber": 22,
+                    "column": 33
                 },
                 "position": {
-                    "lineNumber": 19,
-                    "column": 16
+                    "lineNumber": 22,
+                    "column": 33
                 }
             }
         ],
         "viewState": {
             "scrollLeft": 0,
             "firstPosition": {
-                "lineNumber": 1,
+                "lineNumber": 20,
                 "column": 1
             },
-            "firstPositionDeltaTop": 0
+            "firstPositionDeltaTop": 278
         },
         "contributionsState": {
             "editor.contrib.folding": {},
@@ -84,7 +84,7 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "00b2ee86-d3b3-4510-b302-59326c08c394"
+                        "936ebe79-0d7f-4f3f-be29-533b1f34992d"
                     ]
                 },
                 "currentHeight": 282.515625,
@@ -103,8 +103,8 @@
             },
             "data": [
                 {
-                    "tabId": "b24ef293-7fe7-4b91-9a5a-cf0cdffce834",
-                    "resultId": "00b2ee86-d3b3-4510-b302-59326c08c394",
+                    "tabId": "0d1d29c3-56f9-4a19-f465-7a839a95533c",
+                    "resultId": "936ebe79-0d7f-4f3f-be29-533b1f34992d",
                     "rows": [
                         {
                             "0": "applicant"
@@ -174,7 +174,7 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "d6b5970a-75af-4f8a-db0f-aa0cc83992f5"
+                        "c02593f6-eb14-4ad6-9c19-bfe6778b5a0d"
                     ]
                 },
                 "currentHeight": 90.875,
@@ -193,8 +193,8 @@
             },
             "data": [
                 {
-                    "tabId": "b24ef293-7fe7-4b91-9a5a-cf0cdffce834",
-                    "resultId": "d6b5970a-75af-4f8a-db0f-aa0cc83992f5",
+                    "tabId": "0d1d29c3-56f9-4a19-f465-7a839a95533c",
+                    "resultId": "c02593f6-eb14-4ad6-9c19-bfe6778b5a0d",
                     "rows": [
                         {
                             "0": "applicant"
@@ -240,7 +240,7 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "09511bcc-3259-4947-ff35-79cfe2b45e5a"
+                        "c4124caa-160b-44b1-c0f8-ca207bf4f894"
                     ]
                 },
                 "currentHeight": 36,
@@ -259,8 +259,8 @@
             },
             "data": [
                 {
-                    "tabId": "b24ef293-7fe7-4b91-9a5a-cf0cdffce834",
-                    "resultId": "09511bcc-3259-4947-ff35-79cfe2b45e5a",
+                    "tabId": "0d1d29c3-56f9-4a19-f465-7a839a95533c",
+                    "resultId": "c4124caa-160b-44b1-c0f8-ca207bf4f894",
                     "rows": [
                         {
                             "0": "id",
@@ -485,7 +485,7 @@
         {
             "state": {
                 "start": 22,
-                "end": 22,
+                "end": 39,
                 "language": "mysql",
                 "currentSet": 1,
                 "statements": [
@@ -493,10 +493,10 @@
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 41
+                            "length": 251
                         },
                         "contentStart": 0,
-                        "state": 3
+                        "state": 2
                     }
                 ]
             },

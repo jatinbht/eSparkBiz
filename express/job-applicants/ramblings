@@ -1,0 +1,10 @@
+# offset
+
+offset proportional ( page, rows per page)
+
+let rows-per-page = 2
+Serial number: 
+    Page 1: 2
+    Page 2: 4
+
+offset = rows-per-page * page-number
