@@ -8,6 +8,7 @@ async function initializeConnection(params) {
             user: 'root',
             password: 'root',
             database: 'applicants',
+            dateStrings: true // Tell MySQL driver not to convert to JS Date
         });
 
         console.log('Connected to MySQL');

@@ -5,12 +5,13 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "router.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "ejs": "^5.0.1",
+    "ejs-lint": "^2.0.1",
     "express": "^5.2.1",
     "mysql2": "^3.19.1"
   },

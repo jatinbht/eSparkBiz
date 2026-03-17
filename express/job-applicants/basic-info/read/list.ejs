@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <h1>Read Mode</h1>
+    <a href="/basic-info/create">Create Mode</a>
+    <a href="/basic-info/update">Edit Mode</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Designation</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Gender</th>
+                <th>Zip Code</th>
+                <th>Date of Birth</th>
+                <th>Relationship Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < pageData.length; i++) { %>
+            <%const applicant = pageData[i];%>
+            <tr>
+                <td><%= applicant.first_name + " " + applicant.last_name %></td>
+                <td><%= applicant.designation %></td>
+                <td><%= applicant.full_address %></td>
+                <td><%= applicant.email %></td>
+                <td><%= applicant.phone %></td>
+                <td><%= applicant.city %></td>
+                <td><%= applicant.state %></td>
+                <td><%= applicant.gender %></td>
+                <td><%= applicant.zip_code %></td>
+                <td><%= applicant.dob %></td>
+                <td><%= applicant.relationship_status %></td>
+                <td><a href="/basic-info/<%= applicant.id %>/edit">Edit</a></td>
+            </ tr>
+            <% } %>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
