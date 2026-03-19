@@ -7,7 +7,7 @@ CREATE TABLE applicants.applicant(
     last_name VARCHAR(20) NOT NULL,
     designation VARCHAR(30) NOT NULL DEFAULT 'Intern',
     full_address VARCHAR(255),
-    email VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(50) NOT NULL UNIQUE,
     phone VARCHAR(10) NOT NULL UNIQUE,
     city VARCHAR(30),
     state VARCHAR(30) DEFAULT 'Gujarat',

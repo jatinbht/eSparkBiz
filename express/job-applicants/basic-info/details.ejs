@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <fieldset>
+        <legend>Basic details</legend>
+                <input type="hidden" name="id" value="<%= applicant.id %>">
+                First Name
+                <input type="text" name="first-name" value="<%= applicant.first_name %>">
+                Last Name
+                <input type="text" name="last-name" value="<%= applicant.last_name %>">
+
+                Designation
+                <input type="text" name="designation" value="<%= applicant.designation %>">
+
+                Address
+                <input type="text" name="address" value="<%= applicant.address %>">
+
+                Email
+                <input type="text" name="email" value="<%= applicant.email %>">
+
+                Phone
+                <input type="text" name="phone" value="<%= applicant.phone %>">
+
+                City
+                <input type="text" name="city" value="<%= applicant.city %>">
+
+                State
+                <select name="states" value="<%= applicant.state %>">
+                    <% stateOptions.forEach(state => { %>
+                    <option value="state" <%= (applicant.state === state) ? 'selected' : '' %>><%= state.state %></option>
+                    <% }) %>
+                </select>
+
+                Gender
+                <input type="radio" name="gender" id="male" <%= (applicant.gender === 'male') ? 'checked' : '' %> > 
+                Male
+                <input type="radio" name="gender" id="female" <%= (applicant.gender === 'female') ? 'checked' : '' %> >
+                Female
+                <input type="radio" name="gender" id="other" <%= (applicant.gender === 'other') ? 'checked' : '' %> >
+                Other
+
+                Zip Code
+                <input type="text" name="zip" value="<%= applicant.zip_code %>">
+
+                Relationship Status
+                <select name="relationship">
+                    <option value="single" <%= (applicant.relationship_status === 'single') ? 'selected' : '' %> >Single</option>
+                    <option value="null" <%= (applicant.relationship_status === null) ? 'selected' : '' %>></option>
+                    <option value="Committed" <%= (applicant.relationship_status === 'committed') ? 'selected' : '' %> >Committed</option>
+                </select>
+
+                Date of Birth
+                <input type="date" name="dob" value="<%= applicant.dob %>">
+            </fieldset>
+            <a href="/basic-info/<%= applicant.id %>/edit">Edit</a>
+            <a href="/basic-info">List View</a>
+    </body>
+
+</html>

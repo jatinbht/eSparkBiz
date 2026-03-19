@@ -2,7 +2,7 @@
     "type": "MySQLNotebook",
     "version": "1.0",
     "caption": "Script",
-    "content": "DROP TABLE applicants.applicant;\r\nCREATE DATABASE IF NOT EXISTS applicants;\r\nCREATE TABLE applicants.applicant(\r\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\r\n    first_name VARCHAR(20) NOT NULL,\r\n    last_name VARCHAR(20) NOT NULL,\r\n    designation VARCHAR(30) NOT NULL DEFAULT 'Intern',\r\n    full_address VARCHAR(255),\r\n    email VARCHAR(20) NOT NULL UNIQUE,\r\n    phone VARCHAR(10) NOT NULL UNIQUE,\r\n    city VARCHAR(30),\r\n    state VARCHAR(30) DEFAULT 'Gujarat',\r\n    gender ENUM('male', 'female', 'other') NOT NULL,\r\n    zip_code char(6),\r\n    relationship_status  ENUM('single', 'committed'),\r\n    dob DATE NOT NULL,\r\n    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\r\n    is_deleted BOOLEAN DEFAULT TRUE\r\n\r\n);\r\nshow DATABASES;\r\nshow tables from applicants;\r\nDESCRIBE applicants.applicant;\r\nINSERT INTO applicants.applicant (\r\n    first_name,\r\n    last_name,\r\n    designation,\r\n    email,\r\n    phone,\r\n    gender,\r\n    dob\r\n) VALUES (\r\n    'John',\r\n    'Doe',\r\n    'Intern',\r\n    'john.doe@example.com',\r\n    '1234567890',\r\n    'male',\r\n    '1990-01-01'\r\n);\r\n\r\nselect distinct state from applicants.applicant WHERE state is NOT NULL;\r\n",
+    "content": "DROP TABLE applicants.applicant;\r\nCREATE DATABASE IF NOT EXISTS applicants;\r\nCREATE TABLE applicants.applicant(\r\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\r\n    first_name VARCHAR(20) NOT NULL,\r\n    last_name VARCHAR(20) NOT NULL,\r\n    designation VARCHAR(30) NOT NULL DEFAULT 'Intern',\r\n    full_address VARCHAR(255),\r\n    email VARCHAR(50) NOT NULL UNIQUE,\r\n    phone VARCHAR(20) NOT NULL UNIQUE,\r\n    city VARCHAR(30),\r\n    state VARCHAR(30) DEFAULT 'Gujarat',\r\n    gender ENUM('male', 'female', 'other') NOT NULL,\r\n    zip_code char(6),\r\n    relationship_status  ENUM('single', 'committed'),\r\n    dob DATE NOT NULL,\r\n    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\r\n    is_deleted BOOLEAN DEFAULT FALSE\r\n\r\n);\r\nshow DATABASES;\r\nshow tables from applicants;\r\nDESCRIBE applicants.applicant;\r\nINSERT INTO applicants.applicant (\r\n    first_name,\r\n    last_name,\r\n    designation,\r\n    email,\r\n    phone,\r\n    gender,\r\n    dob\r\n) VALUES (\r\n    'John',\r\n    'Doe',\r\n    'Intern',\r\n    'john.doe@example.com',\r\n    '1234567890',\r\n    'male',\r\n    '1990-01-01'\r\n);\r\n\r\nselect distinct state from applicants.applicant WHERE state is NOT NULL;\r\n\r\n",
     "options": {
         "tabSize": 4,
         "indentSize": 4,
@@ -15,22 +15,22 @@
             {
                 "inSelectionMode": false,
                 "selectionStart": {
-                    "lineNumber": 43,
-                    "column": 1
+                    "lineNumber": 18,
+                    "column": 37
                 },
                 "position": {
-                    "lineNumber": 43,
-                    "column": 1
+                    "lineNumber": 18,
+                    "column": 37
                 }
             }
         ],
         "viewState": {
-            "scrollLeft": 52,
+            "scrollLeft": 0,
             "firstPosition": {
-                "lineNumber": 24,
+                "lineNumber": 2,
                 "column": 1
             },
-            "firstPositionDeltaTop": 62
+            "firstPositionDeltaTop": -5
         },
         "contributionsState": {
             "editor.contrib.folding": {},
@@ -49,24 +49,24 @@
                         {
                             "type": 2,
                             "index": 0,
-                            "resultId": "4dc34ccc-1d60-4ceb-db7c-65dc202fc902",
-                            "content": "OK, 0 records retrieved in 4.103ms"
+                            "resultId": "ac7e10b7-049d-4960-b317-ce4c71db12ba",
+                            "content": "OK, 0 records retrieved in 3.599ms"
                         },
                         {
                             "type": 2,
                             "index": 1,
-                            "resultId": "43c68343-7c77-42f3-fc51-ab32ce99e7e2",
-                            "content": "OK, 1 row affected in 0.742ms"
+                            "resultId": "7f7c5530-0221-4168-84c9-ee27888a502c",
+                            "content": "OK, 1 row affected in 0.828ms"
                         },
                         {
                             "type": 2,
                             "index": 2,
-                            "resultId": "09d99541-9e49-4504-8d2f-f084eb7600f4",
-                            "content": "OK, 0 records retrieved in 6.608ms"
+                            "resultId": "2e7f0f89-68cd-469b-8cac-51a6bfc72fa5",
+                            "content": "OK, 0 records retrieved in 6.16ms"
                         }
                     ]
                 },
-                "currentHeight": 28,
+                "currentHeight": 61.984375,
                 "currentSet": 1,
                 "statements": [
                     {
@@ -91,7 +91,7 @@
                         "delimiter": ";",
                         "span": {
                             "start": 75,
-                            "length": 638
+                            "length": 639
                         },
                         "contentStart": 76,
                         "state": 3
@@ -108,7 +108,7 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "d68219b6-6e47-4430-883a-88beb83274de"
+                        "ef57377c-35c1-4ab9-f5c0-64a383d643da"
                     ]
                 },
                 "currentHeight": 36,
@@ -127,8 +127,8 @@
             },
             "data": [
                 {
-                    "tabId": "defd385e-62a6-40b7-baf2-fc1c260ff6da",
-                    "resultId": "d68219b6-6e47-4430-883a-88beb83274de",
+                    "tabId": "6f67b053-67a7-461d-b812-baf38bfefc97",
+                    "resultId": "ef57377c-35c1-4ab9-f5c0-64a383d643da",
                     "rows": [
                         {
                             "0": "applicant"
@@ -173,7 +173,7 @@
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 7 records retrieved in 0.595ms"
+                        "text": "OK, 7 records retrieved in 0.663ms"
                     },
                     "totalRowCount": 7,
                     "hasMoreRows": false,
@@ -192,7 +192,7 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "8640df40-dd2f-428e-fc56-2e20208b475e"
+                        "b0cc9059-8aae-420f-abc6-7955a2b9b2b6"
                     ]
                 },
                 "currentHeight": 36,
@@ -211,8 +211,8 @@
             },
             "data": [
                 {
-                    "tabId": "defd385e-62a6-40b7-baf2-fc1c260ff6da",
-                    "resultId": "8640df40-dd2f-428e-fc56-2e20208b475e",
+                    "tabId": "6f67b053-67a7-461d-b812-baf38bfefc97",
+                    "resultId": "b0cc9059-8aae-420f-abc6-7955a2b9b2b6",
                     "rows": [
                         {
                             "0": "applicant"
@@ -239,7 +239,7 @@
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 1 record retrieved in 0.875ms"
+                        "text": "OK, 1 record retrieved in 0.884ms"
                     },
                     "totalRowCount": 1,
                     "hasMoreRows": false,
@@ -258,7 +258,7 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "b13d25a5-927e-4977-faae-d23ac4c6aa33"
+                        "02f109e5-8dc1-4c6b-c012-6bf8ff828696"
                     ]
                 },
                 "currentHeight": 351.984375,
@@ -277,8 +277,8 @@
             },
             "data": [
                 {
-                    "tabId": "defd385e-62a6-40b7-baf2-fc1c260ff6da",
-                    "resultId": "b13d25a5-927e-4977-faae-d23ac4c6aa33",
+                    "tabId": "6f67b053-67a7-461d-b812-baf38bfefc97",
+                    "resultId": "02f109e5-8dc1-4c6b-c012-6bf8ff828696",
                     "rows": [
                         {
                             "0": "id",
@@ -322,7 +322,7 @@
                         },
                         {
                             "0": "email",
-                            "1": "varchar(20)",
+                            "1": "varchar(50)",
                             "2": "NO",
                             "3": "UNI",
                             "4": null,
@@ -330,7 +330,7 @@
                         },
                         {
                             "0": "phone",
-                            "1": "varchar(10)",
+                            "1": "varchar(20)",
                             "2": "NO",
                             "3": "UNI",
                             "4": null,
@@ -505,7 +505,7 @@
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 15 records retrieved in 1.164ms"
+                        "text": "OK, 15 records retrieved in 1.152ms"
                     },
                     "totalRowCount": 15,
                     "hasMoreRows": false,
@@ -527,8 +527,8 @@
                         {
                             "type": 2,
                             "index": 0,
-                            "resultId": "6793efde-6b7a-449c-b8e7-ada184f39bee",
-                            "content": "OK, 1 row affected in 1.294ms"
+                            "resultId": "04e77934-40ce-49df-893e-9972b5beacb9",
+                            "content": "OK, 1 row affected in 1.898ms"
                         }
                     ]
                 },
@@ -556,7 +556,7 @@
                 "result": {
                     "type": "resultIds",
                     "list": [
-                        "7f018a5f-970c-4220-cd02-6c9ba6026ed4"
+                        "e0bdd70f-b30a-4ca3-b30a-19925cf5b04f"
                     ]
                 },
                 "currentHeight": 90.109375,
@@ -575,8 +575,8 @@
             },
             "data": [
                 {
-                    "tabId": "defd385e-62a6-40b7-baf2-fc1c260ff6da",
-                    "resultId": "7f018a5f-970c-4220-cd02-6c9ba6026ed4",
+                    "tabId": "6f67b053-67a7-461d-b812-baf38bfefc97",
+                    "resultId": "e0bdd70f-b30a-4ca3-b30a-19925cf5b04f",
                     "rows": [
                         {
                             "0": "Gujarat"
@@ -603,7 +603,7 @@
                         }
                     ],
                     "executionInfo": {
-                        "text": "OK, 1 record retrieved in 0.645ms"
+                        "text": "OK, 1 record retrieved in 0.599ms"
                     },
                     "totalRowCount": 1,
                     "hasMoreRows": false,
@@ -630,6 +630,26 @@
                         },
                         "contentStart": 0,
                         "state": 3
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 44,
+                "end": 44,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
                     }
                 ]
             },

@@ -34,11 +34,11 @@
                 </select>
 
                 Gender
-                <input type="radio" name="gender" id="male" <%= (applicant.gender === 'male') ? 'checked' : '' %> > 
+                <input type="radio" name="gender" id="male" value="male" <%= (applicant.gender === 'male') ? 'checked' : '' %> > 
                 Male
-                <input type="radio" name="gender" id="female" <%= (applicant.gender === 'female') ? 'checked' : '' %> >
+                <input type="radio" name="gender" id="female" value="female" <%= (applicant.gender === 'female') ? 'checked' : '' %> >
                 Female
-                <input type="radio" name="gender" id="other" <%= (applicant.gender === 'other') ? 'checked' : '' %> >
+                <input type="radio" name="gender" id="other" value="other" <%= (applicant.gender === 'other') ? 'checked' : '' %> >
                 Other
 
                 Zip Code
