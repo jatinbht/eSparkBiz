@@ -5,6 +5,7 @@ async function initializeConnection(params) {
     try {
         connection = await createConnection({
             host: 'localhost',
+            port: 3307,
             user: 'root',
             password: 'root',
             database: 'applicants',

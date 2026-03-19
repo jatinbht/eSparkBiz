@@ -11,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.get('/basic-info', async (req, res) => {
+router.get('/', async (req, res) => {
     const limit = Number(req.query.rowsPerPage || 10);
     const offset = Number((req.query.pageNumber || 0) * limit);
 
@@ -25,7 +25,7 @@ router.get('/basic-info', async (req, res) => {
     }
 });
 
-router.get('/basic-info/:id/edit', async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
     const id = Number(req.params.id);
 
     const applicant = await getDetails(id);
@@ -37,7 +37,7 @@ router.get('/basic-info/:id/edit', async (req, res) => {
     });
 });
 
-router.post('/basic-info/save', async (req, res) => {
+router.post('/save', async (req, res) => {
     const id = req.body.id || '';
     if (id) {
         // update
@@ -56,7 +56,7 @@ router.post('/basic-info/save', async (req, res) => {
     }
 });
 
-router.get('/basic-info/:id/edit', async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
     const id = Number(req.params.id);
 
     const pageData = await getDetails(id);
@@ -69,7 +69,7 @@ router.get('/basic-info/:id/edit', async (req, res) => {
     });
 });
 
-router.get('/basic-info/create', async (req, res) => {
+router.get('/create', async (req, res) => {
     const stateOptions = await getStates();
     const applicant = {};
 
@@ -78,7 +78,7 @@ router.get('/basic-info/create', async (req, res) => {
         applicant,
     });
 });
-router.get('/basic-info/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const id = Number(req.params.id);
     // console.log('id: ', id);
 
