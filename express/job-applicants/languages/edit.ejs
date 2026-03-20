@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <fieldset>
+        <legend>Languages Known</legend>
+        <table id="languageTable">
+            <thead>
+                <th>
+                    <th>Language</th>
+                    <th>Read</th>
+                    <th>Write</th>
+                    <th>Speak</th>
+                </th>
+            </thead>
+            <tbody>
+                <% for( let i = 0; i < languages.length; i++ ) { %>
+                <tr>
+                    <td><%= languages.label %></td>
+                    <td><input type="checkbox" name="languages" id="<%= languages[i].is_beginner %>"> </td>
+                    <td><input type="checkbox" name="languages" id="<%= languages[i].is_intermediate %>"> </td>
+                    <td><input type="checkbox" name="languages" id="<%= languages[i].is_expert %>"> </td>
+                    
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+</html>

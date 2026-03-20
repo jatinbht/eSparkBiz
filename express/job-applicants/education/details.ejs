@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <fieldset>
+        <legend>Education Details</legend>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Board/University</th>
+                    <th>Passing Year</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for( let i = 0; i < educationDetails.length; i++ ) { %>
+                <tr>
+                    <td><input type="text" name="courses" value="<%= educationDetails[i].course %>"></td>
+                    <td><input type="text" name="boards_or_universities" value="<%= educationDetails[i].board_or_university %>"></td>
+                    <td><input type="number" name="passing_years" value="<%= educationDetails[i].passing_year %>"></td>
+                    <td><input type="number" name="percentages" value="<%= educationDetails[i].percentage %>"></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+    </fieldset>
+</body>
+
+</html>

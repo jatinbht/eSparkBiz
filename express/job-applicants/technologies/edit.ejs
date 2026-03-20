@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <fieldset>
+        <legend>Technologies</legend>
+        <table id="techTable">
+            <thead>
+                <tr>
+                    <th>Technology</th>
+                    <th>Beginner</th>
+                    <th>Mediator</th>
+                    <th>Expert</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form action="/technologies/save" method="post">
+                    <% for( let i = 0; i < technologies.length; i++ ) { %>
+                    <tr>
+                        <td><%= technologiesList[i] %></td>
+                        <td><input type="radio" name="technologiesList[i]" id="<%= technologies[i].is_beginner %>" onclick="handleClick" > </td>
+                        <td><input type="radio" name="technologiesList[i]" id="<%= technologies[i].is_intermediate %>" onclick="handleClick"> </td>
+                        <td><input type="radio" name="technologiesList[i]" id="<%= technologies[i].is_expert %>" onclick="handleClick"> </td>
+                    </tr>
+                    <% } %>
+                    <input type="submit" value="Submit">
+                </form>
+            </tbody>
+        </table>
+    </fieldset>
+
+<script>
+    function handleClick (e) {
+        unselectRadioBtn(e)
+    }
+    function unselectRadioBtn(e){
+        
+    }
+</script>
+</body>
+
+</html>

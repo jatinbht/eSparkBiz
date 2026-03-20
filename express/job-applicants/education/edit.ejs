@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <fieldset>
+        <legend>Education Details</legend>
+        <button type="button" onclick="addEducationRow()">Add Education</button>
+        <button type="button" onclick="removeRow()">Remove</button>
+
+        <form action="/education/save" method="post">
+            <select name="applicantId">
+                <% applicants.forEach(applicant => { %>
+                <option value="<%= (applicant.id) %>"><%= applicant.id + " " + applicant.first_name %></option>
+                <% }) %>
+            </select>
+            </button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Board/University</th>
+                        <th>Passing Year</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for( let i = 0; i < educationDetails.length; i++ ) { %>
+                    <tr>
+                        <td><input type="text" name="courses" value="<%= educationDetails[i].course %>"></td>
+                        <td><input type="text" name="boards_or_universities" value="<%= educationDetails[i].board_or_university %>"></td>
+                        <td><input type="number" name="passing_years" value="<%= educationDetails[i].passing_year %>"></td>
+                        <td><input type="number" name="percentages" value="<%= educationDetails[i].percentage %>"></td>
+                    </tr>
+                    <% } %>
+
+                </tbody>
+            </table>
+            <input type="submit" value="Submit">
+        </form>
+
+
+
+        <script>
+            function addEducationRow() {
+                const table = document.querySelector("table tbody");
+                const row = table.rows[0].cloneNode(true);
+                row.querySelectorAll("input").forEach(input => input.value = "");
+                table.appendChild(row);
+            }
+
+            function removeRow() {
+                const tbody = document.querySelector('table tbody')
+                const lastRow = document.querySelector('table tbody').lastElementChild
+                const rowCount = document.querySelector('table tbody').childElementCount
+
+                if (rowCount > 1) {
+                    tbody.removeChild(lastRow)
+                }
+            }
+        </script>
+    </fieldset>
+</body>
+
+</html>
