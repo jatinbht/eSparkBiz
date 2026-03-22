@@ -1,19 +1,24 @@
 import { Router } from 'express';
-import { getTechnologiesDetails, getTechnologiesList } from './model.js';
+import { getTechnologiesDetails, saveTechnologiesForApplicant } from './model.js';
+import {getApplicants} from '../helper/get-applicants.model.js'
+import { proficiencyLevels, technologiesList } from './service.js';
 
 const router = Router();
 
 export default router;
 
 router.get('/:applicantId', (req, res) => {
-    res.render('technologies/view');
+    res.render('technologies/edit');
 });
-router.get('/:applicantId/edit', (req, res) => {
-    const technologiesList = getTechnologiesList();
-    const technologiesDetails = getTechnologiesDetails(req.params.applicantId);
-    res.render('technologies/edit', { technologiesList, technologiesDetails });
+router.get('/:applicantId/edit', async(req, res) => {
+    const technologiesDetails = await getTechnologiesDetails(req.params.applicantId);
+    const applicants = await getApplicants();
+    res.render('technologies/edit', { technologiesList, technologies: technologiesDetails, applicants, proficiencyLevels });
 });
 
-router.get('/save', (req, res) => {
-    console.log(req.body);
+router.post('/save', async (req, res) => {
+    console.debug('req.body: ', req.body);
+    const insertId = await saveTechnologiesForApplicant(req.body)
+    console.debug('insertId ', insertId)
+    res.redirect(`/technologies/${req.body.applicantId}`)
 });

@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { commitData, getApplicantById as getEducationDetails, getApplicants } from "./model.js";
+import { commitData, getApplicantById as getEducationDetails } from "./model.js";
+import {getApplicants} from '../helper/get-applicants.model.js'
 
 const router = Router()
 router.get('/:applicantId', async (req, res) => {

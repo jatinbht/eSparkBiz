@@ -27,10 +27,5 @@ async function getApplicantById(applicantId) {
     return applicant
 }
 
-async function getApplicants() {
-    const statement = 'select * from applicants.applicant';
 
-    const [applicants] = await connection.query(statement);
-    return applicants;
-}
-export { commitData, getApplicantById, getApplicants };
+export { commitData, getApplicantById };

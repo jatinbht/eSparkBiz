@@ -2,7 +2,7 @@
     "type": "MySQLNotebook",
     "version": "1.0",
     "caption": "DB Notebook",
-    "content": "\\about\ncreate TABLE technologies(\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    applicant_id BIGINT UNSIGNED NOT NULL,\n    label varchar(50) NOT NULL,\n    is_beginner BOOLEAN DEFAULT TRUE,\n    is_intermediate BOOLEAN DEFAULT FALSE,\n    is_expert BOOLEAN DEFAULT FALSE,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),\n    CONSTRAINT fk_technologies_applicants FOREIGN KEY (applicant_id) REFERENCES applicants.applicant(id)\n);",
+    "content": "\\about\ncreate TABLE applicants.technologies(\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    applicant_id BIGINT UNSIGNED NOT NULL,\n    label varchar(50) NOT NULL,\n    proficiency ENUM('beginner', 'intermediate', 'expert') DEFAULT NULL,\n    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE NOW(),\n    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,\n    CONSTRAINT fk_technologies_applicants FOREIGN KEY (applicant_id) REFERENCES applicants.applicant(id),\n    UNIQUE (applicant_id, label),\n    INDEX idx_technologies_applicant_id (applicant_id)\n);\nINSERT INTO applicants.technologies (applicant_id, label, proficiency) VALUES (1, 'js', 'beginner');\nDROP TABLE applicants.technologies;\n",
     "options": {
         "tabSize": 4,
         "indentSize": 4,
@@ -15,22 +15,22 @@
             {
                 "inSelectionMode": false,
                 "selectionStart": {
-                    "lineNumber": 11,
-                    "column": 105
+                    "lineNumber": 15,
+                    "column": 36
                 },
                 "position": {
-                    "lineNumber": 11,
-                    "column": 105
+                    "lineNumber": 15,
+                    "column": 36
                 }
             }
         ],
         "viewState": {
             "scrollLeft": 0,
             "firstPosition": {
-                "lineNumber": 1,
+                "lineNumber": 2,
                 "column": 1
             },
-            "firstPositionDeltaTop": 0
+            "firstPositionDeltaTop": 130
         },
         "contributionsState": {
             "editor.contrib.folding": {},
@@ -53,7 +53,7 @@
                         }
                     ]
                 },
-                "currentHeight": 115.984375,
+                "currentHeight": 117.40625,
                 "currentSet": 1,
                 "statements": [
                     {
@@ -72,7 +72,103 @@
         {
             "state": {
                 "start": 2,
-                "end": 12,
+                "end": 13,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "ada02c1d-b8d6-4a29-fdcd-90f60e3d62e2",
+                            "content": "OK, 0 records retrieved in 2.2507193088531494s"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 601
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 14,
+                "end": 14,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "a5c1711d-a34a-4825-e3fa-9e6f7fc8746d",
+                            "content": "OK, 1 row affected in 125.474ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 100
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 15,
+                "end": 15,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "3ab3318a-76b4-4aaf-d70e-6f263c339144",
+                            "content": "OK, 0 records retrieved in 4.890506982803345s"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 35
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 16,
+                "end": 16,
                 "language": "mysql",
                 "currentSet": 1,
                 "statements": [
@@ -80,7 +176,7 @@
                         "delimiter": ";",
                         "span": {
                             "start": 0,
-                            "length": 498
+                            "length": 0
                         },
                         "contentStart": 0,
                         "state": 0
