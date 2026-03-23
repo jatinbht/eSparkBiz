@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <%- include('partials/search.ejs') %>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tbody>
+                <% for( let i = 0; i < applicantsCount; i++ ) { %>
+                <tr>
+                    <% for( let j = 0; j < applicantKeys.length; j++ ) { %>
+                    <td></td>
+                    <% } %>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+</body>
+</html>
