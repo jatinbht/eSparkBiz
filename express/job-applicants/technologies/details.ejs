@@ -9,16 +9,12 @@
                 <tr>
                     <th>Technology</th>
                     <th>Beginner</th>
-                    <th>Mediator</th>
+                    <th>Intermediate</th>
                     <th>Expert</th>
                 </tr>
             </thead>
             <tbody>
-                    <select name="applicantId">
-                        <% for( let i = 0; i < applicants.length; i++ ) { %>
-                        <option value="<%= applicants[i].id %>"><%= applicants[i].id + " " + applicants[i].first_name %></option>
-                        <% } %>
-                    </select>
+                <input type="hidden" name="applicant_id" value="<%= applicantId %>">
 
                     <% for( let i = 0; i < technologiesList.length; i++ ) { %>
                     <tr>
@@ -36,7 +32,6 @@
                     <% } %>
                 </tbody>
             </table>
-            <input type="submit" value="Submit">
 
     </fieldset>
 

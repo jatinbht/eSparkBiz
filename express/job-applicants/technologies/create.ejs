@@ -5,7 +5,15 @@
     <fieldset>
         <legend>Technologies</legend>
         <form action="/technologies/save" method="post">
-            <input type="hidden" name="applicant_id" value="<%= applicantId %>">
+            <select name="applicantId">
+                <% for( let i = 0; i < applicants.length; i++ ) { %>
+                <option value="<%= applicants[i].id %>" >
+                    <%= applicants[i].id + " " + applicants[i].first_name %>
+                </option>
+                <% } %>
+            </select>
+            <a href="/basic-info/create">OR Create new applicant</a>
+
             <table id="techTable">
                 <thead>
                     <tr>
@@ -22,15 +30,7 @@
                     <tr>
                         <td><%= technologiesList[i] %></td>
                         <% for( let j = 0; j < proficiencyLevels.length; j++ ) { %>
-                        <td>
-                            <input type="radio" 
-                            name="<%= technologiesList[i] %>" 
-                            onclick="handleClick()" 
-                            <% if (technologies[i]) { %> 
-                                <%= (technologies[i].proficiency === proficiencyLevels[j]) ? 'checked' : '' %> 
-                            <% } %> 
-                            value="<%= proficiencyLevels[j] %>"
-                            >
+                        <td><input type="radio" name="<%= technologiesList[i] %>" onclick="handleClick()" <% if (technologies[i]) { %> <%= (technologies[i].proficiency === proficiencyLevels[j]) ? 'checked' : '' %> <% } %> value=<%= proficiencyLevels[j] %>>
                         </td>
                         <% } %>
                     </tr>
