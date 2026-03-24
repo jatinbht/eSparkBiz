@@ -17,14 +17,21 @@
             </tr>
         </thead>
         <tbody>
-                <% for( let i = 0; i < applicantsCount; i++ ) { %>
-                <tr>
-                    <% for( let j = 0; j < applicantKeys.length; j++ ) { %>
-                    <td></td>
-                    <% } %>
-                </tr>
-                <% } %>
+            <% for( let i = 0; i < pageData.length; i++ ) { %>
+            <tr>
+                <td><%= pageData[i].id %></td>
+                <td><%= pageData[i].first_name + ' ' + pageData[i].last_name %></td>
+                <td><%= pageData[i].phone %></td>
+                <td><%= pageData[i].email %></td>
+                <td><%= pageData[i].full_address %></td>
+                <td><%= pageData[i].dob %></td>
+                <td><%= pageData[i].gender %></td>
+                <td><%= pageData[i].city %></td>
+            </tr>
+            <% } %>
         </tbody>
     </table>
+    <%- include('partials/pagination') %>
 </body>
+
 </html>
