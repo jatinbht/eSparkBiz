@@ -1,0 +1,319 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "\\about\ndrop DATABASE fetchapi;\ncreate DATABASE IF NOT EXISTS fetchapi; \nCREATE TABLE fetchapi.country(\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    label VARCHAR(100) NOT NULL\n);\n\ncreate TABLE fetchapi.state(\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    country_id BIGINT UNSIGNED NOT NULL,\n    label VARCHAR(100) NOT NULL,\n    CONSTRAINT fk_state_country FOREIGN KEY (country_id) REFERENCES country(id)\n);\n\ncreate TABLE fetchapi.city(\n    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,\n    state_id BIGINT UNSIGNED NOT NULL,\n    label VARCHAR(100) NOT NULL,\n    CONSTRAINT fk_city_state FOREIGN KEY (state_id) REFERENCES state(id)\n);\nshow TABLES from fetchapi;\n-- 24 Countries\nINSERT INTO fetchapi.country (id, label) VALUES\n(1, 'India'),\n(2, 'United States'),\n(3, 'Canada'),\n(4, 'United Kingdom'),\n(5, 'Australia'),\n(6, 'Germany'),\n(7, 'France'),\n(8, 'China'),\n(9, 'Japan'),\n(10, 'Brazil'),\n(11, 'South Africa'),\n(12, 'Russia'),\n(13, 'Mexico'),\n(14, 'Italy'),\n(15, 'Spain'),\n(16, 'Netherlands'),\n(17, 'Singapore'),\n(18, 'United Arab Emirates'),\n(19, 'Saudi Arabia'),\n(20, 'Turkey'),\n(21, 'Indonesia'),\n(22, 'South Korea'),\n(23, 'Argentina'),\n(24, 'Nigeria');\n\n-- 79 States/Regions\nINSERT INTO fetchapi.state (id, country_id, label) VALUES\n(1, 1, 'Gujarat'),\n(2, 1, 'Maharashtra'),\n(3, 1, 'Karnataka'),\n(4, 1, 'Tamil Nadu'),\n(5, 1, 'Delhi'),\n(6, 2, 'California'),\n(7, 2, 'Texas'),\n(8, 2, 'New York'),\n(9, 2, 'Florida'),\n(10, 2, 'Illinois'),\n(11, 3, 'Ontario'),\n(12, 3, 'Quebec'),\n(13, 3, 'British Columbia'),\n(14, 3, 'Alberta'),\n(15, 4, 'England'),\n(16, 4, 'Scotland'),\n(17, 4, 'Wales'),\n(18, 4, 'Northern Ireland'),\n(19, 5, 'New South Wales'),\n(20, 5, 'Victoria'),\n(21, 5, 'Queensland'),\n(22, 5, 'Western Australia'),\n(23, 6, 'Bavaria'),\n(24, 6, 'North Rhine-Westphalia'),\n(25, 6, 'Berlin'),\n(26, 7, 'Île-de-France'),\n(27, 7, 'Provence-Alpes-Côte d\\'Azur'),\n(28, 7, 'Auvergne-Rhône-Alpes'),\n(29, 8, 'Guangdong'),\n(30, 8, 'Beijing'),\n(31, 8, 'Shanghai'),\n(32, 8, 'Sichuan'),\n(33, 9, 'Tokyo'),\n(34, 9, 'Osaka'),\n(35, 9, 'Kanagawa'),\n(36, 9, 'Aichi'),\n(37, 10, 'São Paulo'),\n(38, 10, 'Rio de Janeiro'),\n(39, 10, 'Minas Gerais'),\n(40, 11, 'Gauteng'),\n(41, 11, 'Western Cape'),\n(42, 11, 'KwaZulu-Natal'),\n(43, 12, 'Moscow'),\n(44, 12, 'Saint Petersburg'),\n(45, 12, 'Novosibirsk'),\n(46, 13, 'Mexico City'),\n(47, 13, 'Jalisco'),\n(48, 13, 'Nuevo León'),\n(49, 14, 'Lombardy'),\n(50, 14, 'Lazio'),\n(51, 14, 'Campania'),\n(52, 15, 'Madrid'),\n(53, 15, 'Catalonia'),\n(54, 15, 'Andalusia'),\n(55, 16, 'North Holland'),\n(56, 16, 'South Holland'),\n(57, 16, 'Utrecht'),\n(58, 17, 'Singapore'),\n(59, 18, 'Dubai'),\n(60, 18, 'Abu Dhabi'),\n(61, 18, 'Sharjah'),\n(62, 19, 'Riyadh'),\n(63, 19, 'Makkah'),\n(64, 19, 'Eastern Province'),\n(65, 20, 'Istanbul'),\n(66, 20, 'Ankara'),\n(67, 20, 'Izmir'),\n(68, 21, 'Jakarta'),\n(69, 21, 'West Java'),\n(70, 21, 'East Java'),\n(71, 22, 'Seoul'),\n(72, 22, 'Busan'),\n(73, 22, 'Incheon'),\n(74, 23, 'Buenos Aires'),\n(75, 23, 'Córdoba'),\n(76, 23, 'Santa Fe'),\n(77, 24, 'Lagos'),\n(78, 24, 'Abuja'),\n(79, 24, 'Kano');\n\n-- 101 Cities\nINSERT INTO fetchapi.city (id, state_id, label) VALUES\n(1, 1, 'Ahmedabad'),\n(2, 1, 'Surat'),\n(3, 1, 'Vadodara'),\n(4, 2, 'Mumbai'),\n(5, 2, 'Pune'),\n(6, 2, 'Nagpur'),\n(7, 3, 'Bangalore'),\n(8, 3, 'Mysore'),\n(9, 4, 'Chennai'),\n(10, 4, 'Coimbatore'),\n(11, 5, 'New Delhi'),\n(12, 6, 'Los Angeles'),\n(13, 6, 'San Francisco'),\n(14, 6, 'San Diego'),\n(15, 7, 'Houston'),\n(16, 7, 'Dallas'),\n(17, 7, 'Austin'),\n(18, 8, 'New York City'),\n(19, 9, 'Miami'),\n(20, 9, 'Orlando'),\n(21, 10, 'Chicago'),\n(22, 11, 'Toronto'),\n(23, 11, 'Ottawa'),\n(24, 12, 'Montreal'),\n(25, 12, 'Quebec City'),\n(26, 13, 'Vancouver'),\n(27, 14, 'Calgary'),\n(28, 14, 'Edmonton'),\n(29, 15, 'London'),\n(30, 15, 'Manchester'),\n(31, 15, 'Birmingham'),\n(32, 16, 'Edinburgh'),\n(33, 16, 'Glasgow'),\n(34, 17, 'Cardiff'),\n(35, 18, 'Belfast'),\n(36, 19, 'Sydney'),\n(37, 20, 'Melbourne'),\n(38, 21, 'Brisbane'),\n(39, 22, 'Perth'),\n(40, 23, 'Munich'),\n(41, 23, 'Nuremberg'),\n(42, 24, 'Cologne'),\n(43, 24, 'Düsseldorf'),\n(44, 25, 'Berlin'),\n(45, 26, 'Paris'),\n(46, 27, 'Marseille'),\n(47, 27, 'Nice'),\n(48, 28, 'Lyon'),\n(49, 29, 'Guangzhou'),\n(50, 29, 'Shenzhen'),\n(51, 30, 'Beijing'),\n(52, 31, 'Shanghai'),\n(53, 32, 'Chengdu'),\n(54, 33, 'Tokyo'),\n(55, 34, 'Osaka'),\n(56, 35, 'Yokohama'),\n(57, 36, 'Nagoya'),\n(58, 37, 'São Paulo'),\n(59, 38, 'Rio de Janeiro'),\n(60, 39, 'Belo Horizonte'),\n(61, 40, 'Johannesburg'),\n(62, 40, 'Pretoria'),\n(63, 41, 'Cape Town'),\n(64, 42, 'Durban'),\n(65, 43, 'Moscow'),\n(66, 44, 'Saint Petersburg'),\n(67, 45, 'Novosibirsk'),\n(68, 46, 'Mexico City'),\n(69, 47, 'Guadalajara'),\n(70, 48, 'Monterrey'),\n(71, 49, 'Milan'),\n(72, 50, 'Rome'),\n(73, 51, 'Naples'),\n(74, 52, 'Madrid'),\n(75, 53, 'Barcelona'),\n(76, 54, 'Seville'),\n(77, 55, 'Amsterdam'),\n(78, 56, 'Rotterdam'),\n(79, 57, 'Utrecht'),\n(80, 58, 'Singapore'),\n(81, 59, 'Dubai'),\n(82, 60, 'Abu Dhabi'),\n(83, 61, 'Sharjah'),\n(84, 62, 'Riyadh'),\n(85, 63, 'Mecca'),\n(86, 64, 'Dammam'),\n(87, 65, 'Istanbul'),\n(88, 66, 'Ankara'),\n(89, 67, 'Izmir'),\n(90, 68, 'Jakarta'),\n(91, 69, 'Bandung'),\n(92, 70, 'Surabaya'),\n(93, 71, 'Seoul'),\n(94, 72, 'Busan'),\n(95, 73, 'Incheon'),\n(96, 74, 'Buenos Aires'),\n(97, 75, 'Córdoba'),\n(98, 76, 'Rosario'),\n(99, 77, 'Lagos'),\n(100, 78, 'Abuja'),\n(101, 79, 'Kano');\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 235,
+                    "column": 1
+                },
+                "position": {
+                    "lineNumber": 235,
+                    "column": 1
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 1,
+                "column": 1
+            },
+            "firstPositionDeltaTop": 0
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "content": "Welcome to the MySQL Shell - DB Notebook.\n\nPress Ctrl+Enter to execute the code block.\n\nExecute \\sql to switch to SQL, \\js to JavaScript and \\ts to TypeScript mode.\nExecute \\help or \\? for help;",
+                            "language": "ansi"
+                        }
+                    ]
+                },
+                "currentHeight": 115.984375,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 6
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 21,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "d4dc7027-8200-400b-b980-2ccd857a6132",
+                            "content": "OK, 3 rows affected in 8.553ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "2d966efd-3b80-401a-9691-c5982064f9b0",
+                            "content": "OK, 1 row affected in 1.411ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 2,
+                            "resultId": "5b668ab0-19c9-4e8f-8cc8-6e672cce8bb0",
+                            "content": "OK, 0 records retrieved in 5.431ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 3,
+                            "resultId": "6fab5c55-a4cd-4617-ced4-9b7458cd5d90",
+                            "content": "OK, 0 records retrieved in 6.876ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 4,
+                            "resultId": "7d4b059d-c241-42c8-d524-6b263ed79e43",
+                            "content": "OK, 0 records retrieved in 6.339ms"
+                        }
+                    ]
+                },
+                "currentHeight": 97.984375,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 23
+                        },
+                        "contentStart": 1,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 23,
+                            "length": 40
+                        },
+                        "contentStart": 24,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 63,
+                            "length": 118
+                        },
+                        "contentStart": 65,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 181,
+                            "length": 238
+                        },
+                        "contentStart": 183,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 419,
+                            "length": 228
+                        },
+                        "contentStart": 421,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 22,
+                "end": 22,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "efc78aef-4d08-47cd-bd94-a3a1b7a077ab"
+                    ]
+                },
+                "currentHeight": 138.484375,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 26
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "bdf9aab7-fc48-41b7-af75-a23c1e493afd",
+                    "resultId": "efc78aef-4d08-47cd-bd94-a3a1b7a077ab",
+                    "rows": [
+                        {
+                            "0": "city"
+                        },
+                        {
+                            "0": "country"
+                        },
+                        {
+                            "0": "state"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "Tables_in_fetchapi",
+                            "field": "0",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 3 records retrieved in 1.057ms"
+                    },
+                    "totalRowCount": 3,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 0,
+                    "sql": "show TABLES from fetchapi",
+                    "updatable": false
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 23,
+                "end": 234,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "index": 0,
+                            "resultId": "d070b54b-955b-4c43-a415-1e2d07f2eb4c",
+                            "content": "OK, 24 rows affected in 2.034ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 1,
+                            "resultId": "dc25b10b-53ed-480b-fbee-75a8a6b12c14",
+                            "content": "OK, 79 rows affected in 2.709ms"
+                        },
+                        {
+                            "type": 2,
+                            "index": 2,
+                            "resultId": "1840e5b1-744e-4f74-cab5-bdbe7b31c39d",
+                            "content": "OK, 101 rows affected in 3.565ms"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 498
+                        },
+                        "contentStart": 16,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 498,
+                            "length": 1858
+                        },
+                        "contentStart": 521,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 2356,
+                            "length": 2226
+                        },
+                        "contentStart": 2372,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 235,
+                "end": 235,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 2
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}

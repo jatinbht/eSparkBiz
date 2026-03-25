@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <select name="country" onchange="handleChange(event)">
+        <% for( let i = 0; i < countries.length; i++ ) { %>
+        <option value="<%= countries[i].id %>"><%= countries[i].label %></option>
+        <% } %>
+    </select>
+
+    <script>
+        async function handleChange(e){
+            const states = await fetchStates(e)
+            renderStatesCombobox(states)
+        }
+        async function fetchStates(e){
+            console.debug('e.value ', e.value)
+            const body = {
+                country: e.value
+            }
+            const response = await fetch('/fetch-states', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+            console.debug('response ', response)
+            const states = await response.json()
+            // console.debug('states ', states)
+            
+            return states;
+        }
+        function renderStatesCombobox(){
+            //TODO:
+        }
+    </script>
+</body>
+</html>
