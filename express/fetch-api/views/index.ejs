@@ -2,38 +2,78 @@
 <html lang="en">
 
 <body>
-    <select name="country" onchange="handleChange(event)">
+    <select name="country" id="country">
+        <option value="">Select country</option>
         <% for( let i = 0; i < countries.length; i++ ) { %>
         <option value="<%= countries[i].id %>"><%= countries[i].label %></option>
         <% } %>
     </select>
+    <select name="state" id="state">
+        <option value="">Select state</option>
+    </select>
+    <select name="city" id="city">
+        <option value="">Select city</option>
+    </select>
 
     <script>
-        async function handleChange(e){
-            const states = await fetchStates(e)
-            renderStatesCombobox(states)
+        document.querySelector('#country').addEventListener('change', handleCountryChange)
+        const stateSelect = document.querySelector('#state')
+        stateSelect.addEventListener('change', handleStateChange)
+        console.log(stateSelect)
+        const citySelect = document.querySelector('#city')
+
+        async function handleCountryChange(e) {
+            console.debug('e.value ', e.target.value)
+            console.debug('e ', e)
+            const states = await fetchStates(e.target.value)
+            renderStateCombobox(states)
         }
-        async function fetchStates(e){
-            console.debug('e.value ', e.value)
-            const body = {
-                country: e.value
-            }
-            const response = await fetch('/fetch-states', {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            })
+
+
+        async function fetchStates(countryId) {
+            console.debug('countryId ', countryId)
+            const response = await fetch(`/states?countryId=${countryId}`)
             console.debug('response ', response)
             const states = await response.json()
-            // console.debug('states ', states)
-            
+            console.debug('states ', states)
+
             return states;
         }
-        function renderStatesCombobox(){
-            //TODO:
+
+        function renderStateCombobox(states) {
+
+            for (let i = 0; i < states.length; i++) {
+                const option = document.createElement('option')
+                option.value = states[i].id
+                option.textContent = states[i].label
+                stateSelect.appendChild(option)
+            }
+        }
+
+        async function handleStateChange(e){
+            const stateId = e.target.value
+            console.debug('e.target.value ', e.target.value)
+            const cities = await fetchCities(stateId)
+            renderCitiesSelect(cities)
+        }
+
+        async function fetchCities(stateId) {
+            const response = await fetch(`/states/${stateId}/cities`)
+            const cities = await response.json()
+            console.debug('cities ', cities)
+            return cities
+        }
+
+        function renderCitiesSelect(cities){
+            for(let i = 0; i < cities.length; i++){
+                const city = cities[i]
+                const option = document.createElement('option')
+                option.value = city.id
+                option.textContent = city.label
+                citySelect.appendChild(option)
+            }
         }
     </script>
 </body>
+
 </html>

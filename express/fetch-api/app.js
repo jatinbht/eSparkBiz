@@ -1,5 +1,5 @@
 import express, { urlencoded } from 'express'
-import { getCountries, getStates } from './src/model.js';
+import { getCountries, getStates, getCities } from './src/model.js';
 
 const app = express()
 
@@ -12,12 +12,22 @@ app.get('/', async(req, res) => {
     console.debug('countries ', countries)
     res.render('index', {countries});
 });
-app.post('/fetch-states', async(req, res) => {
-    console.debug('req.body ', req.body)
-    console.debug('req.country ', req.country)
-    const country = req.body.country
-    const states = await getStates(country)
+app.get(`/states`, async(req, res) => {
+    console.debug('req.body ', req.query)
+    console.debug('req.country ', req.query.countryId)
+    const countryId = req.query.countryId
+
+    const states = await getStates(countryId)
     console.debug('states from app.js ', states)
-    return await states.json()
+    const stateJson = res.json(states)
+    // console.debug('stateJson ', stateJson)
+    return stateJson
+})
+
+app.get('/states/:stateId/cities', async(req, res) => {
+    console.debug(req.params.stateId)
+    const stateId = Number(req.params.stateId)
+    const cities = await getCities(stateId)
+    res.json(cities)
 })
 app.listen(3000)

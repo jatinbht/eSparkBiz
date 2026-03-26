@@ -15,13 +15,21 @@ async function getCountries() {
     return countries
 }
 
-async function getStates(country) {
-    const statement = `select * from fetchapi.states where country_id = ?`
-    const value = [country]
+async function getStates(countryId) {
+    const statement = `select * from fetchapi.state where country_id = ?`
+    const value = [countryId]
 
     const [states] = await connection.query(statement, value)
     console.debug('states ', states)
     return states
 }
 
-export {getCountries, getStates}
+async function getCities(stateId) {
+    const statement = `select * from fetchapi.city where state_id = ?`
+    const value = [stateId]
+
+    const [cities] = await connection.query(statement, value)
+    return cities
+}
+
+export {getCountries, getStates, getCities}
