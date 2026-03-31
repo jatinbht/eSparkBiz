@@ -1,0 +1,21 @@
+<body>
+<form onsubmit="return validateForm()">
+    <input type="text" id="name">
+    <input type="text" required minlength="5">
+    <span id="error"></span>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    function validateForm() {
+    let name = document.getElementById("name").value;
+
+    if (name === "") {
+        document.getElementById("error").innerText = "Name is required";
+        return false;
+    }
+
+    return true;
+    }
+</script>
+</body>

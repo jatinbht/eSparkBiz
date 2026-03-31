@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+    <body>
+        <input type="text" data-minlength="3" placeholder="Min 3 chars" />
+        <input type="text" data-minlength="5" placeholder="Min 5 chars" />
+
+        <script>
+            document.addEventListener('input', function (e) {
+                const field = e.target;
+                const min = field.dataset.minlength;
+
+                if (min && field.value.length < min) {
+                    field.setCustomValidity(
+                        `Minimum ${min} characters required`,
+                    );
+                } else {
+                    field.setCustomValidity('');
+                }
+                field.reportValidity();
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<body>
+    <form id="form">
+        <input name="username" required data-minlength="3" />
+
+        <input name="password" required data-minlength="6" />
+
+        <input name="confirmPassword" required data-match="password" />
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('form');
+
+        form.addEventListener('input', validateField);
+        form.addEventListener('submit', handleSubmit);
+
+        function validateField(e) {
+            const field = e.target;
+
+            field.setCustomValidity('');
+
+            const min = field.dataset.minlength;
+            const match = field.dataset.match;
+
+            if (min && field.value.length < min) {
+                field.setCustomValidity(`Minimum ${min} characters required`);
+            }
+
+            if (match) {
+                const other = form.elements[match]; // IMP: special syntax
+                if (field.value !== other.value) {
+                    field.setCustomValidity('Fields do not match');
+                }
+            }
+        }
+
+        function handleSubmit(e) {
+            if (!form.reportValidity()) {
+                e.preventDefault();
+                form.querySelector(':invalid').focus();
+            }
+        }
+    </script>
+</body>

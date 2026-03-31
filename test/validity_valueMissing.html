@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+    <body>
+        <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter name"
+            required
+            oninput="validate(this)"
+        />
+
+        <script>
+            function validate(field) {
+                if (field.validity.valueMissing) {
+                    field.setCustomValidity('Field is required');
+                } else {
+                    field.setCustomValidity('');
+                }
+                field.reportValidity();
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<input type="text" id="nameInput" placeholder="Enter name" oninput="validate(event)" />
+
+<script>
+  function validate(event) {
+    const field = event.target;
+
+    if (field.value.length < 3) {
+      field.setCustomValidity("Minimum 3 characters required");
+      field.reportValidity();
+    } else {
+      field.setCustomValidity("");
+      field.reportValidity();
+    }
+  }
+</script>
+
+</body>
+</html>
