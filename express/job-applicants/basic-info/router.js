@@ -56,19 +56,6 @@ router.post('/save', async (req, res) => {
     }
 });
 
-router.get('/:id/edit', async (req, res) => {
-    const id = Number(req.params.id);
-
-    const pageData = await getDetails(id);
-    const applicant = pageData[0];
-
-    const stateOptions = await getStates();
-    res.render(path.join(import.meta.dirname, 'edit.ejs'), {
-        applicant,
-        stateOptions,
-    });
-});
-
 router.get('/create', async (req, res) => {
     const stateOptions = await getStates();
     const applicant = {};
