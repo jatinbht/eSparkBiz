@@ -7,7 +7,9 @@ import {
     setIsDeleted,
     updateApplicant,
     createApplicant,
-} from './read.module.js';
+} from './read.model.js';
+import { createBasicInfoValidators } from './validator.js';
+import { validateRequest } from './middleware.js';
 
 const router = express.Router();
 
@@ -37,8 +39,9 @@ router.get('/:id/edit', async (req, res) => {
     });
 });
 
-router.post('/save', async (req, res) => {
+router.post('/save', createBasicInfoValidators, validateRequest, async (req, res) => {
     const id = req.body.id || '';
+    console.debug(req.body)
     if (id) {
         // update
         const stateOptions = await getStates();

@@ -1,0 +1,21 @@
+import { validationResult } from 'express-validator';
+
+function validateRequest(req, res, next) {
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+        const errorMap = result.array().reduce((acc, error) => {
+            if (!acc[error.path]) {
+                acc[error.path] = [];
+            }
+            acc[error.path].push(`${error.msg} ${error.value}`);
+            return acc;
+        }, {});
+
+        return res.send(errorMap);
+    }
+
+    next();
+}
+
+export { validateRequest };
