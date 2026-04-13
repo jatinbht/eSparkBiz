@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 
-function validateRequest(req, res, next) { //TODO: can error handling in this be centralized?
+function validateRequest(req, res, next) {
     const result = validationResult(req);
 
     if (!result.isEmpty()) {

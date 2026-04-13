@@ -1,4 +1,5 @@
 import { createConnection } from 'mysql2/promise';
+import AppError from '../utils/AppError.js';
 
 let connection;
 async function initializeConnection() {
@@ -14,7 +15,9 @@ async function initializeConnection() {
 
         console.log('Connected to MySQL');
     } catch (error) {
-        console.error('Error connecting to MySQL:', error); //TODO: centralize error handling
+        // console.error('Error connecting to MySQL:', error); //TODO: centralize error handling
+        throw new AppError('Failed: Connector to MySQL', 500, error);
+        
     }
 }
 

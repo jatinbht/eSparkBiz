@@ -1,19 +1,30 @@
+import handleAsync from '../../utils/async-handler.js';
+import AppError from '../../utils/AppError.js';
 import { getApplicants, getApplicantById, createApplicant } from './model.js';
 
-async function listApplicants(req, res, next) {
-    console.debug('listApplicants called')
+const listApplicants = handleAsync(async (req, res) => {
     const applicants = await getApplicants();
-    res.status(200).json(applicants)
-}
+    if (!applicants) {
+        // return res.status(404).json({ message: 'Applicant not found' });
+        throw new AppError('Applicants not found', 404);
+    }
+    res.status(200).json(applicants);
+});
 
-async function getApplicantDetails(req, res, next) {
-    const applicant = await getApplicantById(req.params.id)
-    res.status(200).json(applicant)
-}
+const getApplicantDetails = handleAsync(async (req, res) => {
+    const id = req.params.id
+    const [applicant] = await getApplicantById(id);
+    if (!applicant) {
+        // return res.status(404).json({ message: 'Applicant not found' });
+        // throw new Error('Applicant not found');
+        throw new AppError('Applicant not found', 404)
+    }
+    res.status(200).json(applicant);
+});
 
-async function addApplicant(req, res, next){
-    const result = await createApplicant(req.body)
-    res.status(201).json(result)
+async function addApplicant(req, res) {
+    const result = await createApplicant(req.body);
+    res.status(201).json(result);
 }
 
 export { addApplicant, listApplicants, getApplicantDetails };
