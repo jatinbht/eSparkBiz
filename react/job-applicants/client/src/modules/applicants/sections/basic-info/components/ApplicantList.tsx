@@ -1,6 +1,7 @@
 // import { useEffect, useState } from 'react';
 import ApplicantItem from './ApplicantItem';
 import { useLoaderData } from 'react-router';
+import type { BasicInfo } from '@job-applicants/schemas';
 
 const ApplicantList = () => {
     // const [applicants, setApplicants] = useState([])
@@ -18,7 +19,8 @@ const ApplicantList = () => {
     //     loadApplicantData();
     // }, []);
 
-    const applicants = useLoaderData()
+    // const applicants = useLoaderData() as Awaited<ReturnType<typeof loadApplicants>>; //this is better (React Router recommended)
+    const applicants = useLoaderData() as BasicInfo[]
 
     return (
         <table>
@@ -40,7 +42,7 @@ const ApplicantList = () => {
             <tbody>
                 {applicants.map((a) => (
                     <ApplicantItem
-                        key={a.id + a.fist_name + a.last_name}
+                        key={a.id}
                         applicant={a}
                     />
                 ))}

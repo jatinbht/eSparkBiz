@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 
-function validateRequest(req, res, next) {
+function validateRequestExpressValidator(req, res, next) {
     const result = validationResult(req);
 
     if (!result.isEmpty()) {
@@ -18,4 +18,23 @@ function validateRequest(req, res, next) {
     next();
 }
 
-export { validateRequest };
+// server/src/middleware/request-validator.js
+function validateRequestZod(schema) {
+    return (req, res, next) => {
+        // .safeParse() returns { success, data, error } instead of throwing
+        const result = schema.safeParse(req.body);
+
+        if (!result.success) {
+            // result.error.flatten() gives you { fieldErrors: { field: ['message'] } }
+            // which is already the shape you were manually building with .reduce()
+            return res.status(400).json(result.error.flatten().fieldErrors);
+        }
+
+        // result.data is the parsed AND sanitized data — Zod strips unknown fields
+        // and applies transformations (trim, toLowerCase) automatically
+        req.body = result.data;
+        next();
+    };
+}
+
+export { validateRequestZod, validateRequestExpressValidator};

@@ -12,6 +12,7 @@ import { param } from 'express-validator';
 
 export const idValidator = [
     param('id').isInt({ min: 1 })
+        .toInt()
         // .withMessage('ID must be a positive integer'),
 ];
 

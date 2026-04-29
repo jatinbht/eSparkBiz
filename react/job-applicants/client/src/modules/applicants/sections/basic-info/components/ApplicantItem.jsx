@@ -1,6 +1,5 @@
 const ApplicantItem = ({ applicant }) => {
     return (
-        <>
             <tr>
                 <td>{applicant.first_name}</td>
                 <td>{applicant.designation}</td>
@@ -12,9 +11,8 @@ const ApplicantItem = ({ applicant }) => {
                 <td>{applicant.gender}</td>
                 <td>{applicant.zip_code}</td>
                 <td>{applicant.relationship_status}</td>
-                <td>{applicant.dob}</td>
+                <td>{applicant.dob?.toLocaleDateString()}</td>
             </tr>
-        </>
     );
 };
 

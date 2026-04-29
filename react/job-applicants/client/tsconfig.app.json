@@ -22,6 +22,10 @@
     "noFallthroughCasesInSwitch": true,
 
     "allowJs": true,
+
+    "paths": {
+      "@job-applicants/schemas/*": ["../packages/schemas/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "../packages/schemas"]
 }
