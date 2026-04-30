@@ -1,8 +1,22 @@
 import { connection } from "../../config/connector.js";
 
-async function findAll(){
-    const statement = `SELECT * FROM applicants.applicant`
-    const [rows] = await connection.query(statement)
+const allowedSortColumns = [
+    "id",
+    "first_name",
+    "last_name",
+    "created_at"
+]
+
+async function findAll({ limit, offset, column = "id", order = "DESC" }){
+    if (!allowedSortColumns.includes(column)) {
+        column = "id"
+    }
+
+    const statement = `SELECT * FROM applicants.applicant ORDER BY ${column} ${order} LIMIT ? OFFSET ?`
+    const values = [limit, offset]
+
+
+    const [rows] = await connection.query(statement, values)
     return rows
 }
 
