@@ -8,16 +8,20 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/app.js"
+    "dev": "tsx watch --env-file=.env src/app.js",
+    "db:codegen": "dotenv -e .env -- kysely-codegen --dialect mysql --out-file src/db/db-types.ts",
+    "db:codegen:watch": "nodemon --watch src --ext sql,ts --exec \"npm run db:codegen\""
   },
   "dependencies": {
     "@job-applicants/schemas": "file:../packages/schemas",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
+    "kysely": "^0.28.16",
     "mysql2": "^3.21.1"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
+    "kysely-codegen": "^0.20.0",
     "nodemon": "^3.1.14",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"

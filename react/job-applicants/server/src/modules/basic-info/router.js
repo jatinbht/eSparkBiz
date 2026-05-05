@@ -6,10 +6,11 @@ import * as controller from './controller.js';
 import { validateRequestExpressValidator, validateRequestZod } from "../../middleware/request-validator.js";
 import idValidator from "../../middleware/id-validator.js";
 import { createBasicInfoSchema } from '@job-applicants/schemas';
+import { basicInfoQuerySchema } from "./validator.zod.js";
 
 const router = Router()
 console.debug('router.js executed')
-router.get('/', controller.list)
+router.get('/', validateRequestZod(basicInfoQuerySchema, "query"), controller.list)
 router.get('/:id', 
     idValidator, 
     validateRequestExpressValidator, 
@@ -17,7 +18,7 @@ router.get('/:id',
 )
 // applicantApiRouter.post('/', createBasicInfoValidators, validateRequest, createApplicant)
 
-router.post('/', validateRequestZod(createBasicInfoSchema), controller.create);
+router.post('/', validateRequestZod(createBasicInfoSchema, 'body'), controller.create);
 
 
 

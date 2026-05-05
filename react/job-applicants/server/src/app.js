@@ -1,3 +1,4 @@
+// import 'dotenv/config';
 import e, { urlencoded } from 'express';
 import {
     applicantApiRouter,
