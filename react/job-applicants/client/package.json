@@ -10,12 +10,12 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.2.2",
+        "@job-applicants/schemas": "file:../packages/schemas",
+        "@tailwindcss/vite": "^4.3.0",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
         "react-router": "^7.14.1",
-        "tailwindcss": "^4.2.2",
-        "@job-applicants/schemas": "file:../packages/schemas"
+        "tailwindcss": "^4.3.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.4",

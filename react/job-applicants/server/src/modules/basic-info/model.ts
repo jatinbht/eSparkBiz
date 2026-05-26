@@ -39,6 +39,7 @@ type FindAllParams = {
 
 export async function findAll({limit, offset, sortBy = 'id', order = 'asc'}: FindAllParams){
     console.debug(limit, offset, sortBy, order)
+
     return await db
         .selectFrom("applicant")
         .selectAll()
@@ -48,20 +49,50 @@ export async function findAll({limit, offset, sortBy = 'id', order = 'asc'}: Fin
         .execute()
 }
 
-// async function findById(id) {
-//     const statement = `SELECT * FROM applicants.applicant where id = ?`
-//     const value = id
-//     const [rows] = await connection.query(statement, value)
+// // applicant.repository.ts
 
-//     return [rows]
+// export async function findPaginated({ limit, offset }) {
+// const [rows, total] = await Promise.all([
+//     db
+//     .selectFrom("applicant")
+//     .selectAll()
+//     .limit(limit)
+//     .offset(offset)
+//     .execute(),
+
+//     db
+//     .selectFrom("applicant")
+//     .select((eb) => eb.fn.countAll().as("count"))
+//     .executeTakeFirst(),
+// ])
+
+// return {
+//     rows,
+//     total: Number(total.count),
+// }
 // }
 
-// async function insert(body) {
-//     const statement = `insert into applicants.applicant (first_name, last_name, designation, full_address, email, phone, city, gender, zip_code, relationship_status, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-//     const values = [body.first_name, body.last_name, body.designation, body.full_address, body.email, body.phone, body.city, body.gender, body.zip_code, body.relationship_status, body.dob]
+export async function getCount() {
+    return await db
+        .selectFrom("applicant")
+        .select((eb) => eb.fn.countAll().as("count"))
+        .executeTakeFirst()
+}
+
+async function findById(id) {
+    const statement = `SELECT * FROM applicants.applicant where id = ?`
+    const value = id
+    const [rows] = await connection.query(statement, value)
+
+    return [rows]
+}
+
+async function insert(body) {
+    const statement = `insert into applicants.applicant (first_name, last_name, designation, full_address, email, phone, city, gender, zip_code, relationship_status, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    const values = [body.first_name, body.last_name, body.designation, body.full_address, body.email, body.phone, body.city, body.gender, body.zip_code, body.relationship_status, body.dob]
     
-//     const result = await connection.query(statement, values)
-//     return result
-// }
+    const result = await connection.query(statement, values)
+    return result
+}
 
 // export {getApplicants, getApplicantById, insertApplicant }

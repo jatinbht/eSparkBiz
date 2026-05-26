@@ -1,18 +1,26 @@
-import { Outlet } from "react-router"
+import { Outlet } from 'react-router';
+import Header from '../components/Header';
 
 const ApplicantsLayoutPage = () => {
     return (
         <>
-        {/* tabs */}
-        Basic info
-        Education
-        Experience
-        Technologies
-        {/* tabs */}
+            <div
+                className="
+                    min-h-screen
+                    overflow-x-hidden
 
-        <Outlet />
+                    bg-white
+                    text-black
+
+                    dark:bg-gray-800
+                    dark:text-white
+                "
+            >
+                <Header />
+                <Outlet />
+            </div>
         </>
-    )
-}
+    );
+};
 
-export default ApplicantsLayoutPage
+export default ApplicantsLayoutPage;

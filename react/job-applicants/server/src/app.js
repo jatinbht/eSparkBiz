@@ -1,3 +1,10 @@
+// app.js becomes:
+
+// 1. connect DB
+// 2. initialize middleware
+// 3. register routes
+// 4. start server
+
 // import 'dotenv/config';
 import e, { urlencoded } from 'express';
 import {
@@ -5,8 +12,10 @@ import {
     // applicantRouter,
 } from './modules/basic-info/router.js';
 import handleError from './middleware/error-handler.js';
+import { initializeConnection } from './db/mysql2.connector.js';
 
 const app = e();
+
 
 app.use(urlencoded({ extended: true }));
 // app.use(e.json()); //React frontend sends JSON request bodies via POST.
@@ -17,4 +26,14 @@ app.use('/api/applicants', applicantApiRouter);
 
 app.use(handleError)
 
-app.listen(3000);
+try {
+    await initializeConnection();
+
+    app.listen(3000, () => {
+        console.log('Server running');
+    });
+}
+catch (error) {
+    console.error(error);
+    process.exit(1);
+}

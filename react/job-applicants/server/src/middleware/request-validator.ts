@@ -22,7 +22,15 @@ function validateRequestExpressValidator(req, res, next) {
 function validateRequestZod(schema, validationTarget: 'body' | 'query') {
     return (req, res, next) => {
         // .safeParse() returns { success, data, error } instead of throwing
-        const result = schema.parse(req[validationTarget]);
+        console.debug('raw query:', req[validationTarget])
+        console.debug('limit value:', req[validationTarget]['limit'], typeof req[validationTarget]['limit'])
+        
+        // const result = schema.parse(req[validationTarget]);
+        const raw = Object.assign({}, req[validationTarget])
+        console.debug('raw after assign:', raw)
+        console.debug('emptyToDefault result for undefined:', ((v) => (v === '' || v === undefined) ? 10 : v)(raw.limit))
+        const result = schema.parse(raw)
+
 
         // if (!result.success) {
         //     // result.error.flatten() gives you { fieldErrors: { field: ['message'] } }
@@ -33,6 +41,7 @@ function validateRequestZod(schema, validationTarget: 'body' | 'query') {
         // result.data is the parsed AND sanitized data — Zod strips unknown fields
         // and applies transformations (trim, toLowerCase) automatically
         res.locals[validationTarget] = result;
+        console.debug(`middleware: res.locals.${validationTarget} `, res.locals[validationTarget])
         next();
     };
 }

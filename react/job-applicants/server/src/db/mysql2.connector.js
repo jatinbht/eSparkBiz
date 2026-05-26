@@ -3,7 +3,7 @@ import AppError from '../utils/AppError.js';
 
 let connection;
 async function initializeConnection() {
-    try {
+    // try {
         connection = await createConnection({
             host: 'localhost',
             port: 3307,
@@ -14,13 +14,14 @@ async function initializeConnection() {
         });
 
         console.log('Connected to MySQL');
-    } catch (error) {
-        // console.error('Error connecting to MySQL:', error); //TODO: centralize error handling
-        throw new AppError('Failed: Connector to MySQL', 500, error);
+    // } catch (error) {
+    //     // console.error('Error connecting to MySQL:', error); //TODO: centralize error handling
+    //     // throw new AppError('Failed: Connector to MySQL', 503, error); //this is wrong
+    //     throw new Error('Failed to connect to MySQL. Check Docker!', {
+    //         cause: error
+    //     });
         
-    }
+    // }
 }
 
-await initializeConnection();
-
-export { connection };
+export { connection, initializeConnection };
