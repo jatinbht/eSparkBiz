@@ -24,6 +24,7 @@
     "allowJs": true,
 
     "paths": {
+      "@/*": ["./src/*"],
       "@job-applicants/schemas/*": ["../packages/schemas/*"]
     }
   },
