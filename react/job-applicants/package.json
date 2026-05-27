@@ -1,6 +1,15 @@
 {
+  "private": true,
+  "workspaces": [
+    "client",
+    "server",
+    "packages/*"
+  ],
   "scripts": {
-    "db:codegen": "npm run db:codegen --prefix server"
+    "db:codegen": "npm run db:codegen --prefix server",
+    "dev:client": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\""
   },
   "devDependencies": {
     "dotenv-cli": "^11.0.0"
