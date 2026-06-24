@@ -1,0 +1,4 @@
+$kind: http-request
+name: /api/applicants/filter-options
+url: "{{baseUrl}}/api/applicants/filter-options"
+method: GET

@@ -1,29 +1,29 @@
 import handleAsync from '../../utils/async-handler.js';
 import AppError from '../../utils/AppError.js';
 import * as Applicants from './model.js';
-import { basicInfoQuerySchema } from './validator.zod.js';
-import type {Request, Response} from 'express'
+import type { BasicInfoQuery } from './dto.js';
+import { json, type Request, type Response } from 'express';
 import * as service from './service.js';
 
 const list = handleAsync(async (req: Request, res: Response) => {
-    console.debug('req.query ', req.query)
-    console.debug('res.locals.query ', res.locals.query)
+    console.debug('req.query ', req.query);
+    console.debug('res.locals.query ', res.locals.query);
     // const parsed = basicInfoQuerySchema.safeParse(req.query)
     // console.debug('parsed ', parsed)
-    const {limit, page, sortBy, order} = res.locals.query
-    
-    const result = await service.listPaginatedApplicants({limit, page, sortBy, order})
+    // const {limit, page, sortOn, order} = res.locals.query
+
+    const query = res.locals.query as BasicInfoQuery;
+    const result = await service.listPaginatedApplicants(query);
 
     // if (applicants.length === 0) {
     //     // return res.status(404).json({ message: 'Applicant not found' });
     //     throw new AppError('Applicants not found', 404);
     // }
 
-    const pageCount = result.pagination.pageCount
-    if (page > pageCount) {
-        const params = new URLSearchParams(req.query);
+    if (result.pagination.pageCount > 0 && query.page > result.pagination.pageCount) {
+        const params = new URLSearchParams(req.query as any); //todo: i think this can be marked as 'any'. because we know that req.query would be validated by Zod and if not, it would not have had even reached here (there would have been an error)
 
-        params.set('page', String(pageCount));
+        params.set('page', String(result.pagination.pageCount));
 
         return res.redirect(302, `?${params.toString()}`);
     }
@@ -31,26 +31,49 @@ const list = handleAsync(async (req: Request, res: Response) => {
     res.status(200).json(result);
 });
 
+// export const distinct = handleAsync(async (req: Request, res: Response) => {
+//     // console.log(req.params)
+//     console.log('res.locals.column', res.locals.column);
+//     console.log('res.locals.params.column', res.locals.params.column);
+    
+//     const column = res.locals.params.column
+//     const result = await Applicants.findDistinct(column)
+//     // console.log(result);
+//     const values = result.map(row => Object.values(row)[0]);
+//     // result.map(Object(result))
+//     res.json(values);
 
-import { matchedData } from "express-validator";
+// })
 
-const show = handleAsync(async (req, res) => {
+export const filterOptions = handleAsync (async(req: Request, res: Response) => {
+    const result = await service.getFilterOptions()    
+    res.json(result)
+})
+
+
+
+import { matchedData } from 'express-validator';
+
+const show = handleAsync(async (req: Request, res: Response) => {
     const params = matchedData(req, { locations: ['params'] });
-    const id = params.id
+    const id = params.id;
 
     const [applicant] = await Applicants.findById(id);
     if (!applicant) {
         // return res.status(404).json({ message: 'Applicant not found' });
         // throw new Error('Applicant not found');
-        throw new AppError('Applicant not found', 404)
+        throw new AppError('Applicant not found', 404);
     }
     res.status(200).json(applicant);
 });
 
-const create = handleAsync(async(req, res) => {
-    const payload = matchedData(req, { locations: ['body'], includeOptionals: true });
+const create = handleAsync(async (req: Request, res: Response) => {
+    const payload = matchedData(req, {
+        locations: ['body'],
+        includeOptionals: true,
+    });
     const result = await Applicants.insert(payload);
     res.status(201).json(result);
-})
+});
 
-export { create , list, show };
+export { create, list, show };

@@ -1,0 +1,7 @@
+workspace:
+  id: dc304e7a-a16c-45c9-8823-752a718ce6fb
+cloudResources:
+  collections:
+    ../postman/collections/Job Applicants API: 47476519-a5b3a541-a271-46db-b65d-de9e48cce145
+  environments:
+    ../postman/environments/applicants2.environment.yaml: 47476519-19fbe7cc-2e4f-4249-85e0-49bef0bccce0

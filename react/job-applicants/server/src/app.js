@@ -21,6 +21,8 @@ app.use(urlencoded({ extended: true }));
 // app.use(e.json()); //React frontend sends JSON request bodies via POST.
 
 app.get('/ping', (req, res) => res.send('pong'))
+app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
+
 app.use('/api/applicants', applicantApiRouter);
 // app.use('/applicants', applicantRouter);
 
@@ -37,3 +39,10 @@ catch (error) {
     console.error(error);
     process.exit(1);
 }
+
+
+import { generateOpenApiDocument } from './openapi.js';
+import swaggerUi from 'swagger-ui-express';
+
+const spec = generateOpenApiDocument();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));

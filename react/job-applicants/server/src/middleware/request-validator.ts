@@ -1,6 +1,9 @@
 import { validationResult } from "express-validator";
 
-function validateRequestExpressValidator(req, res, next) {
+import { NextFunction, Request, Response } from "express";
+import type { z } from 'zod';
+
+export function validateRequestExpressValidator(req: Request, res: Response, next: NextFunction) {
     const result = validationResult(req);
 
     if (!result.isEmpty()) {
@@ -19,8 +22,8 @@ function validateRequestExpressValidator(req, res, next) {
 }
 
 // server/src/middleware/request-validator.js
-function validateRequestZod(schema, validationTarget: 'body' | 'query') {
-    return (req, res, next) => {
+export function validateRequestZod(schema: z.ZodType, validationTarget: 'body' | 'query' | 'params') {
+    return (req: Request, res: Response, next: NextFunction) => {
         // .safeParse() returns { success, data, error } instead of throwing
         console.debug('raw query:', req[validationTarget])
         console.debug('limit value:', req[validationTarget]['limit'], typeof req[validationTarget]['limit'])
@@ -45,5 +48,3 @@ function validateRequestZod(schema, validationTarget: 'body' | 'query') {
         next();
     };
 }
-
-export { validateRequestZod, validateRequestExpressValidator};

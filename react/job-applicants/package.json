@@ -12,6 +12,7 @@
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\""
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "dotenv-cli": "^11.0.0"
   }
 }

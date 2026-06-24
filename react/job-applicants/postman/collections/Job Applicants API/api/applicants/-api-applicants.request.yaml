@@ -1,0 +1,136 @@
+$kind: http-request
+name: /api/applicants
+url: "{{baseUrl}}/api/applicants?limit=10&page=1&sortOn=id&order=asc&city=string&designation=string&state=string&gender=male&relationship_status=single&dob_from=1990-01-01&dob_to=2000-12-31"
+method: GET
+queryParams:
+  - key: limit
+    value: "10"
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "default": 10,
+            "minimum": 1,
+            "maximum": 100,
+            "example": 10
+          }
+        }
+      }
+  - key: page
+    value: "1"
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "default": 1,
+            "example": 1
+          }
+        }
+      }
+  - key: sortOn
+    value: id
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "default": "id",
+            "enum": [
+              "id",
+              "first_name",
+              "last_name",
+              "created_at",
+              "email"
+            ]
+          }
+        }
+      }
+  - key: order
+    value: asc
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "default": "asc",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        }
+      }
+  - key: city
+    value: string
+    $type: string
+  - key: designation
+    value: string
+    $type: string
+  - key: state
+    value: string
+    $type: string
+  - key: gender
+    value: male
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "other"
+            ]
+          }
+        }
+      }
+  - key: relationship_status
+    value: single
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "enum": [
+              "single",
+              "committed"
+            ]
+          }
+        }
+      }
+  - key: dob_from
+    value: 1990-01-01
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "date",
+            "example": "1990-01-01"
+          }
+        }
+      }
+  - key: dob_to
+    value: 2000-12-31
+    $type: |-
+      {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "format": "date",
+            "example": "2000-12-31"
+          }
+        }
+      }
+examples: ./.resources/-api-applicants.resources/examples
+order: 1000

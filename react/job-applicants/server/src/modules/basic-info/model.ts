@@ -1,10 +1,13 @@
-import { db } from "../../db/kysely.connector.js";
-import { connection } from "../../db/mysql2.connector.js";
-import type { DB } from "../../db/db-types.js";
+import { db } from '../../db/kysely.connector.js';
+import { connection } from '../../db/mysql2.connector.js';
+import type { DB } from '../../db/db-types.js';
 
-db.selectFrom("applicant").selectAll().limit(1).execute()
-    .then(() => console.debug("DB connection OK"))
-    .catch((err) => console.error("DB connection FAILED", err));
+db.selectFrom('applicant')
+    .selectAll()
+    .limit(1)
+    .execute()
+    .then(() => console.debug('DB connection OK'))
+    .catch((err) => console.error('DB connection FAILED', err));
 
 //NOTE: MYSQL2 VERSION
 // const allowedSortColumns = [
@@ -15,38 +18,63 @@ db.selectFrom("applicant").selectAll().limit(1).execute()
 // ]
 
 // async function findAll({ limit, offset, column = "id", order = "DESC" }){
-    //     if (!allowedSortColumns.includes(column)) {
-        //         column = "id"
+//     if (!allowedSortColumns.includes(column)) {
+//         column = "id"
 //     }
 
 //     const statement = `SELECT * FROM applicants.applicant ORDER BY ${column} ${order} LIMIT ? OFFSET ?`
 //     const values = [limit, offset]
 
-
 //     const [rows] = await connection.query(statement, values)
 //     return rows
 // }
 
-
-type ApplicantColumn = keyof DB["applicant"];
+type ApplicantColumn = keyof DB['applicant'];
 
 type FindAllParams = {
     limit: number;
     offset: number;
-    sortBy?: ApplicantColumn;
-    order?: "asc" | "desc";
+    sortOn?: ApplicantColumn;
+    order?: 'asc' | 'desc';
+    filters?: Partial<Record<ApplicantColumn, string>>;
+    dob_from?: Date;
+    dob_to?: Date;
 };
 
-export async function findAll({limit, offset, sortBy = 'id', order = 'asc'}: FindAllParams){
-    console.debug(limit, offset, sortBy, order)
+export async function findAll({
+    limit,
+    offset,
+    sortOn = 'id',
+    order = 'asc',
+    filters,
+    dob_from,
+    dob_to,
+}: FindAllParams) {
+    console.debug(limit, offset, sortOn, order);
 
-    return await db
-        .selectFrom("applicant")
-        .selectAll()
-        .orderBy(sortBy, order)
-        .limit(limit)
-        .offset(offset)
-        .execute()
+    let query = db.selectFrom('applicant').selectAll();
+
+    if (filters) {
+        for (const [column, value] of Object.entries(filters)) {
+            if (value === undefined) continue;
+            query = query.where(column as ApplicantColumn, '=', value);
+        }
+        if (dob_from) query = query.where('dob', '>=', dob_from);
+        if (dob_to) query = query.where('dob', '<=', dob_to);
+    }
+
+    return query.orderBy(sortOn, order).limit(limit).offset(offset).execute();
+}
+
+export async function findDistinct<K extends ApplicantColumn>(
+    column: K,
+) {
+    return db
+        .selectFrom('applicant')
+        .select(column)
+        .distinct()
+        .orderBy(column)
+        .execute();
 }
 
 // // applicant.repository.ts
@@ -72,27 +100,54 @@ export async function findAll({limit, offset, sortBy = 'id', order = 'asc'}: Fin
 // }
 // }
 
-export async function getCount() {
-    return await db
-        .selectFrom("applicant")
-        .select((eb) => eb.fn.countAll().as("count"))
-        .executeTakeFirst()
+export async function getCount(
+    filters?: Partial<Record<ApplicantColumn, string>>,
+    dob_from?: Date,
+    dob_to?: Date,
+) {
+    let query = db
+        .selectFrom('applicant')
+        .select((eb) => eb.fn.countAll().as('count'));
+
+    if (filters) {
+        for (const [column, value] of Object.entries(filters)) {
+            if (value === undefined) continue;
+            query = query.where(column as ApplicantColumn, '=', value);
+
+        }
+    }
+    if (dob_from) query = query.where('dob', '>=', dob_from);
+    if (dob_to) query = query.where('dob', '<=', dob_to);
+
+    return query.executeTakeFirstOrThrow();
 }
 
-async function findById(id) {
-    const statement = `SELECT * FROM applicants.applicant where id = ?`
-    const value = id
-    const [rows] = await connection.query(statement, value)
+export async function findById(id: number) {
+    const statement = `SELECT * FROM applicants.applicant where id = ?`;
+    const value = id;
+    const [rows] = await connection.query(statement, value);
 
-    return [rows]
+    return [rows];
 }
 
-async function insert(body) {
-    const statement = `insert into applicants.applicant (first_name, last_name, designation, full_address, email, phone, city, gender, zip_code, relationship_status, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    const values = [body.first_name, body.last_name, body.designation, body.full_address, body.email, body.phone, body.city, body.gender, body.zip_code, body.relationship_status, body.dob]
-    
-    const result = await connection.query(statement, values)
-    return result
+export async function insert(body) {
+    const statement = `insert into applicants.applicant (first_name, last_name, designation, full_address, email, phone, city, gender, zip_code, relationship_status, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const values = [
+        body.first_name,
+        body.last_name,
+        body.designation,
+        body.full_address,
+        body.email,
+        body.phone,
+        body.city,
+        body.gender,
+        body.zip_code,
+        body.relationship_status,
+        body.dob,
+    ];
+
+    const result = await connection.query(statement, values);
+    return result;
 }
 
 // export {getApplicants, getApplicantById, insertApplicant }

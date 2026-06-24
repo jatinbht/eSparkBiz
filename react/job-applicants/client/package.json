@@ -10,8 +10,12 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@base-ui/react": "^1.5.0",
         "@job-applicants/schemas": "file:../packages/schemas",
+        "@job-applicants/shared": "file:../packages/shared",
+
         "@tailwindcss/vite": "^4.3.0",
+        "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
@@ -21,6 +25,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.39.4",
+        "@tanstack/react-table": "^8.21.3",
         "@types/node": "^24.12.4",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
@@ -29,6 +34,7 @@
         "eslint-plugin-react-hooks": "^7.0.1",
         "eslint-plugin-react-refresh": "^0.5.2",
         "globals": "^17.4.0",
+        "lucide-react": "^1.17.0",
         "typescript": "~6.0.2",
         "typescript-eslint": "^8.58.0",
         "vite": "^8.0.4"

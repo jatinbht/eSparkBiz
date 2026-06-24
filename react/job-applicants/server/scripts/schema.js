@@ -35,13 +35,13 @@ await connection.query(`
     
         full_address VARCHAR(255),
     
-        email VARCHAR(50) NOT NULL UNIQUE,
+        email VARCHAR(100) NOT NULL UNIQUE,
     
         phone CHAR(10) NOT NULL UNIQUE,
     
         city VARCHAR(30),
     
-        state ENUM('gujarat','rajasthan'),
+        state varchar(30),
     
         gender ENUM('male','female','other') NOT NULL,
     

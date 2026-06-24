@@ -10,7 +10,13 @@
         "allowJs": true,
         "noEmit": true,
 
-        "types": ["node"]
+        "types": ["node"],
+
+        "paths": {
+            "@/*": ["./src/*"],
+            "@job-applicants/shared/*": ["../packages/shared/*"]
+
+        }
     },
     "include": ["src", "src/modules/basic-info/.validator.express-validator.js"],
     "exclude": ["node_modules"]
