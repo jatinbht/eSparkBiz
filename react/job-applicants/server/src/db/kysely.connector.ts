@@ -1,9 +1,9 @@
 // db.ts
 import { Kysely, MysqlDialect } from "kysely";
-import type { DB } from "../db/db-types.ts";
 import { createPool } from "mysql2";
+import { DBOverride } from "./db-overrides.js";
 
-export const db = new Kysely<DB>({
+export const db = new Kysely<DBOverride>({
   dialect: new MysqlDialect({
     pool: createPool({
       host: process.env.DB_HOST,

@@ -1,6 +1,7 @@
 import { db } from '../../db/kysely.connector.js';
 import { connection } from '../../db/mysql2.connector.js';
 import type { DB } from '../../db/db-types.js';
+import { ApplicantColumn, FindAllParams, GetCountParams } from './types.js';
 
 db.selectFrom('applicant')
     .selectAll()
@@ -28,18 +29,6 @@ db.selectFrom('applicant')
 //     const [rows] = await connection.query(statement, values)
 //     return rows
 // }
-
-type ApplicantColumn = keyof DB['applicant'];
-
-type FindAllParams = {
-    limit: number;
-    offset: number;
-    sortOn?: ApplicantColumn;
-    order?: 'asc' | 'desc';
-    filters?: Partial<Record<ApplicantColumn, string>>;
-    dob_from?: Date;
-    dob_to?: Date;
-};
 
 export async function findAll({
     limit,
@@ -100,11 +89,12 @@ export async function findDistinct<K extends ApplicantColumn>(
 // }
 // }
 
-export async function getCount(
-    filters?: Partial<Record<ApplicantColumn, string>>,
-    dob_from?: Date,
-    dob_to?: Date,
-) {
+export async function getCount({
+    filters,
+    dob_from,
+    dob_to
+}: GetCountParams
+)  {
     let query = db
         .selectFrom('applicant')
         .select((eb) => eb.fn.countAll().as('count'));

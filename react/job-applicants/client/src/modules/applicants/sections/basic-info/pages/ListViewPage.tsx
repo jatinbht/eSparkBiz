@@ -7,7 +7,7 @@ import { getFilterOptions } from '../api';
 import type { loadApplicants } from '../loaders';
 import type { SortingState } from '@tanstack/react-table';
 import { FilterBar } from '@/modules/applicants/components/FilterBar';
-import { type ActiveFilters, type BasicInfoFilterColumn, type BasicInfoFilterOptions } from "@job-applicants/shared/types";
+import type { ActiveFilters, BasicInfoFilterColumn, BasicInfoFilterOptions } from "@job-applicants/shared/types";
 import { basicInfoFilterableColumns } from '@job-applicants/shared/constants';
 
 const ListViewPage = () => {
