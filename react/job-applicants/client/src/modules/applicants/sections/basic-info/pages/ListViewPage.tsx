@@ -7,8 +7,9 @@ import { getFilterOptions } from '../api';
 import type { loadApplicants } from '../loaders';
 import type { SortingState } from '@tanstack/react-table';
 import { FilterBar } from '@/modules/applicants/components/FilterBar';
-import type { ActiveFilters, BasicInfoFilterColumn, BasicInfoFilterOptions } from "@job-applicants/shared/types";
+import type { ActiveFilters, ActiveFilterValue, BasicInfoFilterColumn, BasicInfoFilterOptions } from "@job-applicants/shared/types";
 import { basicInfoFilterableColumns } from '@job-applicants/shared/constants';
+import { valueToParams } from '@/modules/applicants/utils/filterUtils';
 
 const ListViewPage = () => {
     const { applicants, pagination } = useLoaderData() as Awaited<ReturnType<typeof loadApplicants>>;
@@ -43,14 +44,16 @@ const ListViewPage = () => {
         setPendingColumn(null);
         setPendingValues([]);
     }
+    
 
-    function applyFilter(column: BasicInfoFilterColumn, values: string[]) {
-        setActiveFilters((prev) => ({ ...prev, [column]: values }));
+    function applyFilter(column: BasicInfoFilterColumn, value: ActiveFilterValue) {
+        setActiveFilters((prev) => ({ ...prev, [column]: value }));
         setPendingColumn(null);
         setPendingValues([]);
+        const config = basicInfoFilterableColumns.find((col) => col.key === column)!;
         const params = new URLSearchParams(searchParams);
-        params.delete(column);
-        values.forEach((v) => params.append(column, v));
+        config.paramKeys.forEach((key) => params.delete(key));
+        valueToParams(column, value).forEach(([k, v]) => params.append(k, v));
         params.set('page', '1');
         setSearchParams(params);
     }
@@ -61,8 +64,9 @@ const ListViewPage = () => {
             delete next[column];
             return next;
         });
+        const config = basicInfoFilterableColumns.find((col) => col.key === column)!;
         const params = new URLSearchParams(searchParams);
-        params.delete(column);
+        config.paramKeys.forEach((key) => params.delete(key));
         params.set('page', '1');
         setSearchParams(params);
     }
@@ -73,7 +77,9 @@ const ListViewPage = () => {
         setPendingValues([]);
         setIsFilterBarVisible(false);
         const params = new URLSearchParams(searchParams);
-        basicInfoFilterableColumns.forEach((col) => params.delete(col.key));
+        basicInfoFilterableColumns.forEach((col) => {
+            col.paramKeys.forEach((key) => params.delete(key));
+        });
         params.set('page', '1');
         setSearchParams(params);
     }

@@ -10,7 +10,7 @@ const list = handleAsync(async (req: Request, res: Response) => {
     console.debug('res.locals.query ', res.locals.query);
     // const parsed = basicInfoQuerySchema.safeParse(req.query)
     // console.debug('parsed ', parsed)
-    // const {limit, page, sortOn, order} = res.locals.query
+    // const {pageSize, page, sortOn, order} = res.locals.query
 
     const query = res.locals.query as BasicInfoQuery;
     const result = await service.listPaginatedApplicants(query);

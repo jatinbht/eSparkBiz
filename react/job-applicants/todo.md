@@ -1,0 +1,2 @@
+- [x] add 'shadcn' as table/data-grid: to enable sorting, filtering, searching
+- [ ] Shared API Contracts

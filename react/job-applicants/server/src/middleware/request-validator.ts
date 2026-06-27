@@ -26,12 +26,12 @@ export function validateRequestZod(schema: z.ZodType, validationTarget: 'body' |
     return (req: Request, res: Response, next: NextFunction) => {
         // .safeParse() returns { success, data, error } instead of throwing
         console.debug('raw query:', req[validationTarget])
-        console.debug('limit value:', req[validationTarget]['limit'], typeof req[validationTarget]['limit'])
+        console.debug('pageSize value:', req[validationTarget]['pageSize'], typeof req[validationTarget]['pageSize'])
         
         // const result = schema.parse(req[validationTarget]);
         const raw = Object.assign({}, req[validationTarget])
         console.debug('raw after assign:', raw)
-        console.debug('emptyToDefault result for undefined:', ((v) => (v === '' || v === undefined) ? 10 : v)(raw.limit))
+        console.debug('emptyToDefault result for undefined:', ((v) => (v === '' || v === undefined) ? 10 : v)(raw.pageSize))
         const result = schema.parse(raw)
 
 

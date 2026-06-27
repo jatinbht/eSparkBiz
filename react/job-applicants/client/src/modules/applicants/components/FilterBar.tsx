@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { basicInfoFilterableColumns } from '@job-applicants/shared/constants';
-import type { BasicInfoFilterColumn, BasicInfoFilterOptions, ActiveFilters } from '@job-applicants/shared/types';
+import type { BasicInfoFilterColumn, BasicInfoFilterOptions, ActiveFilters, ActiveFilterValue, DateRangeValue } from '@job-applicants/shared/types';
 import { Plus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/style.css';
 
 type FilterBarProps = {
     activeFilters: ActiveFilters;
@@ -11,7 +13,7 @@ type FilterBarProps = {
     pendingColumn: BasicInfoFilterColumn | null;
     pendingValues: string[];
     onSelectColumn: (column: BasicInfoFilterColumn) => void;
-    onApplyFilter: (column: BasicInfoFilterColumn, values: string[]) => void;
+    onApplyFilter: (column: BasicInfoFilterColumn, value: ActiveFilterValue) => void;    
     onRemoveFilter: (column: BasicInfoFilterColumn) => void;
     onChangePendingValues: (values: string[]) => void;
     onClearPending: () => void;
@@ -34,6 +36,7 @@ export function FilterBar({
     const [isColumnPickerOpen, setIsColumnPickerOpen] = useState(false);
     const popoverRef = useRef<HTMLDivElement>(null);
     const pendingChipRef = useRef<HTMLDivElement>(null);
+    const [pendingDateRange, setPendingDateRange] = useState<{ from?: Date; to?: Date }>({});
 
     useEffect(() => {
         function handleClick(e: MouseEvent) {
@@ -67,19 +70,21 @@ export function FilterBar({
             {/* Applied chips */}
             {appliedColumns.map((col) => {
                 const config = basicInfoFilterableColumns.find((c) => c.key === col)!;
-                const values = activeFilters[col]!;
-                const label = `${config.label}: ${values.join(', ')}`;
+                const value = activeFilters[col]!;
+
+                let label: string;
+                if (Array.isArray(value)) {
+                    label = `${config.label}: ${value.join(', ')}`;
+                } else {
+                    const from = value.from ? new Date(value.from).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null;
+                    const to = value.to ? new Date(value.to).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null;
+                    label = `${config.label}: ${from ?? ''}${from && to ? ' → ' : ''}${to ?? ''}`;
+                }
 
                 return (
-                    <div
-                        key={col}
-                        className="flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800 max-w-48"
-                    >
+                    <div key={col} className="flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800 max-w-48">
                         <span className="truncate">{label}</span>
-                        <button
-                            onClick={() => onRemoveFilter(col)}
-                            className="ml-1 shrink-0 rounded-full hover:bg-blue-200 p-0.5"
-                        >
+                        <button onClick={() => onRemoveFilter(col)} className="ml-1 shrink-0 rounded-full hover:bg-blue-200 p-0.5">
                             <X className="h-3 w-3" />
                         </button>
                     </div>
@@ -87,69 +92,84 @@ export function FilterBar({
             })}
 
             {/* Pending chip */}
-            {pendingColumn && (
-                <div
-                    ref={pendingChipRef}
-                    className="relative"
-                >
-                    {/* trigger label */}
-                    <div className="flex items-center gap-1 rounded-full border border-blue-400 bg-white px-3 py-1 text-sm text-blue-800">
-                        <span className="font-medium">
-                            {basicInfoFilterableColumns.find((c) => c.key === pendingColumn)?.label}
-                        </span>
-                        <X
-                            onClick={onClearPending}
-                            className="h-3 w-3 cursor-pointer opacity-50 hover:opacity-100"
-                        />
-                    </div>
+            {pendingColumn && (() => {
+                const config = basicInfoFilterableColumns.find((c) => c.key === pendingColumn)!;
+                return (
+                    <div ref={pendingChipRef} className="relative">
+                        <div className="flex items-center gap-1 rounded-full border border-blue-400 bg-white px-3 py-1 text-sm text-blue-800">
+                            <span className="font-medium">{config.label}</span>
+                            <X onClick={onClearPending} className="h-3 w-3 cursor-pointer opacity-50 hover:opacity-100" />
+                        </div>
 
-                    {/* dropdown */}
-                    <div className="absolute left-0 top-full z-50 mt-1 w-56 rounded-md border bg-white shadow-lg">
-                        {loadingFilters ? (
-                            <p className="px-3 py-2 text-sm text-gray-400 italic">Loading...</p>
-                        ) : (
-                            <>
-                                <div className="max-h-48 overflow-y-auto">
-                                    {(filterOptions?.[pendingColumn] ?? []).map((opt) => (
-                                        <label
-                                            key={opt}
-                                            className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer text-sm"
+                        <div className="absolute left-0 top-full z-50 mt-1 rounded-md border bg-white shadow-lg">
+                            {config.type === 'daterange' ? (
+                                <div className="p-2">
+                                    <DayPicker
+                                        mode="range"
+                                        captionLayout="dropdown"
+                                        selected={{ from: pendingDateRange.from, to: pendingDateRange.to }}
+                                        onSelect={(range) => setPendingDateRange({ from: range?.from, to: range?.to })}
+                                    />
+                                    <div className="flex justify-end gap-2 border-t px-3 py-2">
+                                        <button onClick={onClearPending} className="text-xs text-gray-400 hover:text-gray-600">
+                                            Cancel
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                const value: DateRangeValue = {
+                                                    from: pendingDateRange.from?.toISOString().slice(0, 10),
+                                                    to: pendingDateRange.to?.toISOString().slice(0, 10),
+                                                };
+                                                if (value.from || value.to) {
+                                                    onApplyFilter(pendingColumn, value);
+                                                }
+                                            }}
+                                            disabled={!pendingDateRange.from && !pendingDateRange.to}
+                                            className="text-xs text-blue-600 hover:text-blue-800 disabled:opacity-40"
                                         >
-                                            <input
-                                                type="checkbox"
-                                                checked={pendingValues.includes(opt)}
-                                                onChange={() => togglePendingValue(opt)}
-                                                className="rounded"
-                                            />
-                                            <span>{opt}</span>
-                                        </label>
-                                    ))}
+                                            Apply
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <div className="flex items-center justify-end gap-2 border-t px-3 py-2">
-                                    <button
-                                        onClick={onClearPending}
-                                        className="text-xs text-gray-400 hover:text-gray-600"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            if (pendingValues.length > 0) {
-                                                onApplyFilter(pendingColumn, pendingValues);
-                                            }
-                                        }}
-                                        disabled={pendingValues.length === 0}
-                                        className="text-xs text-blue-600 hover:text-blue-800 disabled:opacity-40"
-                                    >
-                                        Apply
-                                    </button>
-                                </div>
-                            </>
-                        )}
+                            ) : (
+                                <>
+                                    {loadingFilters ? (
+                                        <p className="px-3 py-2 text-sm text-gray-400 italic">Loading...</p>
+                                    ) : (
+                                        <>
+                                            <div className="max-h-48 overflow-y-auto">
+                                                {(filterOptions?.[pendingColumn] ?? []).map((opt) => (
+                                                    <label key={opt} className="flex items-center gap-2 px-3 py-1.5 hover:bg-gray-50 cursor-pointer text-sm">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={pendingValues.includes(opt)}
+                                                            onChange={() => togglePendingValue(opt)}
+                                                            className="rounded"
+                                                        />
+                                                        <span>{opt}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                            <div className="flex justify-end gap-2 border-t px-3 py-2">
+                                                <button onClick={onClearPending} className="text-xs text-gray-400 hover:text-gray-600">Cancel</button>
+                                                <button
+                                                    onClick={() => {
+                                                        if (pendingValues.length > 0) onApplyFilter(pendingColumn, pendingValues);
+                                                    }}
+                                                    disabled={pendingValues.length === 0}
+                                                    className="text-xs text-blue-600 hover:text-blue-800 disabled:opacity-40"
+                                                >
+                                                    Apply
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
+                                </>
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
+                );
+            })()}
 
             {/* + Add Filter */}
             <div className="relative" ref={popoverRef}>

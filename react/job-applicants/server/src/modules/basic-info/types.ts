@@ -3,7 +3,7 @@ import { DB } from '@/db/db-types.js';
 export type ApplicantColumn = keyof DB['applicant'];
 
 export type FindAllParams = {
-    limit: number;
+    pageSize: number;
     offset: number;
     sortOn?: ApplicantColumn;
     order?: 'asc' | 'desc';

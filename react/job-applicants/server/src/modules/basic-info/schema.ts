@@ -3,11 +3,11 @@ import { z } from 'zod';
 
 extendZodWithOpenApi(z);
 
-const emptyToDefault = (defaultVal) => (v) =>
+const emptyToDefault = (defaultVal) => (v) => 
     v === '' || v === undefined ? defaultVal : v;
 
 export const basicInfoQuerySchema = z.object({
-    limit: z
+    pageSize: z
         .preprocess(emptyToDefault(10), z.coerce.number().min(1).max(100))
         .default(10)
         .openapi({ example: 10 }),
@@ -29,8 +29,8 @@ export const basicInfoQuerySchema = z.object({
     gender: z.enum(['male', 'female', 'other']).optional(),
     relationship_status: z.enum(['single', 'committed']).optional(),
 
-    dob_from: z.coerce.date().optional().openapi({ example: '1990-01-01' }),
-    dob_to: z.coerce.date().optional().openapi({ example: '2000-12-31' }),
+    dob_from: z.iso.date().optional().openapi({ example: '1990-01-01' }),
+    dob_to: z.iso.date().optional().openapi({ example: '2000-12-31' }),
 
 });
 

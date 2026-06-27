@@ -23,15 +23,15 @@ db.selectFrom('applicant')
 //         column = "id"
 //     }
 
-//     const statement = `SELECT * FROM applicants.applicant ORDER BY ${column} ${order} LIMIT ? OFFSET ?`
-//     const values = [limit, offset]
+//     const statement = `SELECT * FROM applicants.applicant ORDER BY ${column} ${order} pageSize ? OFFSET ?`
+//     const values = [pageSize, offset]
 
 //     const [rows] = await connection.query(statement, values)
 //     return rows
 // }
 
 export async function findAll({
-    limit,
+    pageSize,
     offset,
     sortOn = 'id',
     order = 'asc',
@@ -39,7 +39,7 @@ export async function findAll({
     dob_from,
     dob_to,
 }: FindAllParams) {
-    console.debug(limit, offset, sortOn, order);
+    console.debug(pageSize, offset, sortOn, order);
 
     let query = db.selectFrom('applicant').selectAll();
 
@@ -52,7 +52,7 @@ export async function findAll({
         if (dob_to) query = query.where('dob', '<=', dob_to);
     }
 
-    return query.orderBy(sortOn, order).limit(limit).offset(offset).execute();
+    return query.orderBy(sortOn, order).limit(pageSize).offset(offset).execute();
 }
 
 export async function findDistinct<K extends ApplicantColumn>(
@@ -68,12 +68,12 @@ export async function findDistinct<K extends ApplicantColumn>(
 
 // // applicant.repository.ts
 
-// export async function findPaginated({ limit, offset }) {
+// export async function findPaginated({ pageSize, offset }) {
 // const [rows, total] = await Promise.all([
 //     db
 //     .selectFrom("applicant")
 //     .selectAll()
-//     .limit(limit)
+//     .limit(pageSize)
 //     .offset(offset)
 //     .execute(),
 

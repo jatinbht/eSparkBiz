@@ -13,11 +13,11 @@
         "@base-ui/react": "^1.5.0",
         "@job-applicants/schemas": "file:../packages/schemas",
         "@job-applicants/shared": "file:../packages/shared",
-
         "@tailwindcss/vite": "^4.3.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "react": "^19.2.4",
+        "react-day-picker": "^10.0.1",
         "react-dom": "^19.2.4",
         "react-router": "^7.14.1",
         "tailwind-merge": "^3.6.0",

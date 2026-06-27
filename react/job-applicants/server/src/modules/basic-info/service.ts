@@ -4,38 +4,16 @@ import { BasicInfoQuery } from './dto.js';
 import { pluckFirstColumn } from '../../utils/shape-shifter.js';
 import { BasicInfoFilterOptions } from '@job-applicants/shared/types.js'
 
-export async function listPaginatedApplicants(
-    query: BasicInfoQuery /* removed {limit, page, sortOn, order} */,
-) {
-    const {
-        page,
-        limit,
-        sortOn,
-        order,
-        city,
-        designation,
-        state,
-        gender,
-        relationship_status,
-        dob_from,
-        dob_to,
-    } = query;
+export async function listPaginatedApplicants( query: BasicInfoQuery /* removed {pageSize, page, sortOn, order} */ ) {
+    const { page, pageSize, sortOn, order, city, designation, state, gender, relationship_status, dob_from, dob_to } = query;
     const filters = { city, designation, state, gender, relationship_status };
 
-    const offset = (page - 1) * limit;
+    const offset = (page - 1) * pageSize;
 
-    const rows = await Applicants.findAll({
-        limit,
-        offset,
-        sortOn,
-        order,
-        filters,
-        dob_from,
-        dob_to,
-    });
+    const rows = await Applicants.findAll({ pageSize, offset, sortOn, order, filters, dob_from, dob_to });
 
     // console.debug('applicants ', rows)
-    const total = await Applicants.getCount(filters, dob_from, dob_to);
+    const total = await Applicants.getCount({filters, dob_from, dob_to});
     const totalCount = Number(total.count);
 
     return {
@@ -43,9 +21,9 @@ export async function listPaginatedApplicants(
         pagination: {
             page,
             offset,
-            limit,
+            pageSize,
             total: totalCount,
-            pageCount: Math.ceil(totalCount / limit),
+            pageCount: Math.ceil(totalCount / pageSize),
         },
     };
 }

@@ -1,4 +1,4 @@
-import type { ColumnDef, RowData } from '@tanstack/react-table';
+import type { CellContext, ColumnDef, RowData } from '@tanstack/react-table';
 import type { BasicInfo } from '@job-applicants/schemas';
 import { ArrowUpDown, ListFilter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -28,13 +28,24 @@ function filterableHeader(key: BasicInfoFilterColumn): ColumnDef<BasicInfo>['hea
 const filterableColumnDefs: ColumnDef<BasicInfo>[] = basicInfoFilterableColumns.map((col) => ({
     accessorKey: col.key,
     header: filterableHeader(col.key),
+    ...(col.key === 'dob' && {
+        cell: ({ getValue }: CellContext<BasicInfo, unknown>) => {
+            const value = getValue() as string | null;
+            if (!value) return '—';
+            return new Date(value).toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+            });
+        },
+    }),
 }));
 
 export const columns: ColumnDef<BasicInfo>[] = [
-    {
-        accessorKey: 'id',
-        header: 'ID',
-    },
+    // {
+    //     accessorKey: 'id',
+    //     header: 'ID',
+    // },
     {
         accessorKey: 'first_name',
         header: ({ column }) => (
@@ -70,10 +81,6 @@ export const columns: ColumnDef<BasicInfo>[] = [
     {
         accessorKey: 'zip_code',
         header: 'Zip Code',
-    },
-    {
-        accessorKey: 'dob',
-        header: 'Date of Birth',
     },
     ...filterableColumnDefs,
 ];
