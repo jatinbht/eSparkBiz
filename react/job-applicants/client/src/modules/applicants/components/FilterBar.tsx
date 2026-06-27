@@ -64,6 +64,25 @@ export function FilterBar({
         );
     }
 
+    // #TITLE: calendar
+    function toLocalDateString(date: Date): string {
+        return [
+            date.getFullYear(),
+            String(date.getMonth() + 1).padStart(2, '0'),
+            String(date.getDate()).padStart(2, '0'),
+        ].join('-');
+    }
+    
+    function parseInputDate(input: string): Date | undefined {
+        const parsed = new Date(input);
+        return isNaN(parsed.getTime()) ? undefined : parsed;
+    }
+    
+    function formatDisplayDate(date: Date | undefined): string {
+        if (!date) return '';
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
     return (
         <div className="flex flex-wrap items-center gap-2 p-2 border-b">
 
@@ -103,22 +122,61 @@ export function FilterBar({
 
                         <div className="absolute left-0 top-full z-50 mt-1 rounded-md border bg-white shadow-lg">
                             {config.type === 'daterange' ? (
-                                <div className="p-2">
+                                <div className="p-3 w-fit">
+                                    {/* From / To text inputs */}
+                                    <div className="flex gap-2 mb-3">
+                                        <div className="flex items-center gap-1 border rounded px-2 py-1 text-sm flex-1">
+                                            <input
+                                                className="outline-none w-full"
+                                                placeholder="Start date"
+                                                value={formatDisplayDate(pendingDateRange.from)}
+                                                onChange={(e) => {
+                                                    const parsed = parseInputDate(e.target.value);
+                                                    setPendingDateRange((prev) => ({ ...prev, from: parsed }));
+                                                }}
+                                            />
+                                            {pendingDateRange.from && (
+                                                <button onClick={() => setPendingDateRange((prev) => ({ ...prev, from: undefined }))}>
+                                                    <X className="h-3 w-3 text-gray-400 hover:text-gray-600" />
+                                                </button>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center gap-1 border rounded px-2 py-1 text-sm flex-1">
+                                            <input
+                                                className="outline-none w-full"
+                                                placeholder="End date"
+                                                value={formatDisplayDate(pendingDateRange.to)}
+                                                onChange={(e) => {
+                                                    const parsed = parseInputDate(e.target.value);
+                                                    setPendingDateRange((prev) => ({ ...prev, to: parsed }));
+                                                }}
+                                            />
+                                            {pendingDateRange.to && (
+                                                <button onClick={() => setPendingDateRange((prev) => ({ ...prev, to: undefined }))}>
+                                                    <X className="h-3 w-3 text-gray-400 hover:text-gray-600" />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Calendar */}
                                     <DayPicker
                                         mode="range"
                                         captionLayout="dropdown"
                                         selected={{ from: pendingDateRange.from, to: pendingDateRange.to }}
                                         onSelect={(range) => setPendingDateRange({ from: range?.from, to: range?.to })}
                                     />
-                                    <div className="flex justify-end gap-2 border-t px-3 py-2">
+
+                                    <div className="flex justify-end gap-2 border-t pt-2 mt-1">
                                         <button onClick={onClearPending} className="text-xs text-gray-400 hover:text-gray-600">
                                             Cancel
                                         </button>
                                         <button
                                             onClick={() => {
                                                 const value: DateRangeValue = {
-                                                    from: pendingDateRange.from?.toISOString().slice(0, 10),
-                                                    to: pendingDateRange.to?.toISOString().slice(0, 10),
+                                                    // timezone fix — use local date not UTC
+                                                    from: pendingDateRange.from ? toLocalDateString(pendingDateRange.from) : undefined,
+                                                    to: pendingDateRange.to ? toLocalDateString(pendingDateRange.to) : undefined,
                                                 };
                                                 if (value.from || value.to) {
                                                     onApplyFilter(pendingColumn, value);
