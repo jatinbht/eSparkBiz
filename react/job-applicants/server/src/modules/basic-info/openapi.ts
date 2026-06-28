@@ -35,9 +35,9 @@ basicInfoRegistry.registerPath({
 // });
 
 basicInfoRegistry.registerPath({
-        method: 'get',
-        path: '/api/applicants/filter-options',
-        responses: {
-            200: { description: 'Filter options (distinct values) for applicants' },
-        },
-    });
+    method: 'get',
+    path: '/api/applicants/filter-options',
+    responses: {
+        200: { description: 'Filter options (distinct values) for applicants' },
+    },
+});
