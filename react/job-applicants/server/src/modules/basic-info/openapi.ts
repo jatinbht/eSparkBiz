@@ -33,3 +33,11 @@ basicInfoRegistry.registerPath({
 //         200: { description: 'Distinct values for the given column' },
 //     },
 // });
+
+basicInfoRegistry.registerPath({
+        method: 'get',
+        path: '/api/applicants/filter-options',
+        responses: {
+            200: { description: 'Filter options (distinct values) for applicants' },
+        },
+    });

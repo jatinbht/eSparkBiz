@@ -1,10 +1,11 @@
 $kind: http-request
 name: /api/applicants
-url: "{{baseUrl}}/api/applicants?limit=10&page=1&sortOn=id&order=asc&city=string&designation=string&state=string&gender=male&relationship_status=single&dob_from=1990-01-01&dob_to=2000-12-31"
+url: "{{baseUrl}}/api/applicants"
 method: GET
 queryParams:
   - key: limit
     value: "10"
+    disabled: true
     $type: |-
       {
         "type": "object",
@@ -20,6 +21,7 @@ queryParams:
       }
   - key: page
     value: "1"
+    disabled: true
     $type: |-
       {
         "type": "object",
@@ -33,6 +35,7 @@ queryParams:
       }
   - key: sortOn
     value: id
+    disabled: true
     $type: |-
       {
         "type": "object",
@@ -52,6 +55,7 @@ queryParams:
       }
   - key: order
     value: asc
+    disabled: true
     $type: |-
       {
         "type": "object",
@@ -68,15 +72,19 @@ queryParams:
       }
   - key: city
     value: string
+    disabled: true
     $type: string
   - key: designation
     value: string
+    disabled: true
     $type: string
   - key: state
     value: string
+    disabled: true
     $type: string
   - key: gender
     value: male
+    disabled: true
     $type: |-
       {
         "type": "object",
@@ -93,6 +101,7 @@ queryParams:
       }
   - key: relationship_status
     value: single
+    disabled: true
     $type: |-
       {
         "type": "object",
@@ -108,6 +117,7 @@ queryParams:
       }
   - key: dob_from
     value: 1990-01-01
+    disabled: true
     $type: |-
       {
         "type": "object",
@@ -121,6 +131,7 @@ queryParams:
       }
   - key: dob_to
     value: 2000-12-31
+    disabled: true
     $type: |-
       {
         "type": "object",
