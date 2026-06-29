@@ -1,6 +1,7 @@
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import { basicInfoQuerySchema } from './schema.js';
 import { z } from 'zod';
+import { idSchema } from '@job-applicants/schemas';
 
 export const basicInfoRegistry = new OpenAPIRegistry();
 
@@ -35,9 +36,22 @@ basicInfoRegistry.registerPath({
 // });
 
 basicInfoRegistry.registerPath({
-        method: 'get',
-        path: '/api/applicants/filter-options',
-        responses: {
-            200: { description: 'Filter options (distinct values) for applicants' },
+    method: 'get',
+    path: '/api/applicants/filter-options',
+    responses: {
+        200: { description: 'Filter options (distinct values) for applicants' },
+    },
+});
+
+basicInfoRegistry.registerPath({
+    method: 'get',
+    path: '/api/applicants/{id}',
+    request: {
+        params: idSchema,
+    },
+    responses: {
+        200: {
+            description: 'Details of an applicant',
         },
-    });
+    },
+});

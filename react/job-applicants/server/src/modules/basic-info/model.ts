@@ -114,6 +114,8 @@ export async function getCount({
 
 export async function findById(id: number) {
     const statement = `SELECT * FROM applicants.applicant where id = ?`;
+    console.log('id', id);
+    
     const value = id;
     const [rows] = await connection.query(statement, value);
 

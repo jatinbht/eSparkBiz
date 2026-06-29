@@ -1,5 +1,5 @@
 import handleAsync from '../../utils/async-handler.js';
-import AppError from '../../utils/AppError.js';
+import AppError from '../../api/errors/AppError.js';
 import * as Applicants from './model.js';
 import type { BasicInfoQuery } from './dto.js';
 import { json, type Request, type Response } from 'express';
@@ -53,16 +53,24 @@ export const filterOptions = handleAsync (async(req: Request, res: Response) => 
 
 
 import { matchedData } from 'express-validator';
+import { ErrorCode } from '@/api/errors/codes.js';
 
 const show = handleAsync(async (req: Request, res: Response) => {
-    const params = matchedData(req, { locations: ['params'] });
-    const id = params.id;
+    // const params = matchedData(req, { locations: ['params'] });
+    // const id = params.id;
+    const id = res.locals.params.id
+    // console.log('id', id, typeof id);
+
 
     const [applicant] = await Applicants.findById(id);
     if (!applicant) {
         // return res.status(404).json({ message: 'Applicant not found' });
         // throw new Error('Applicant not found');
-        throw new AppError('Applicant not found', 404);
+        throw new AppError({
+            status: 404,
+            code: ErrorCode.NOT_FOUND,
+            message: "Applicant not found",
+        });
     }
     res.status(200).json(applicant);
 });

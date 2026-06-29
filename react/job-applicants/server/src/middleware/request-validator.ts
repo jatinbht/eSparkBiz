@@ -1,19 +1,26 @@
-import { validationResult } from "express-validator";
+import { type FieldValidationError, validationResult } from "express-validator";
 
 import { NextFunction, Request, Response } from "express";
-import type { z } from 'zod';
+import { z } from 'zod';
+import { validationErrorsToErrorMap } from "@/utils/shape-shifter.js";
+import { ErrorCode } from "@/api/errors/codes.js";
 
 export function validateRequestExpressValidator(req: Request, res: Response, next: NextFunction) {
-    const result = validationResult(req);
+    const result = validationResult(req).formatWith(
+        error => error as FieldValidationError
+    );
+    // const result = validationResult(req);
 
     if (!result.isEmpty()) {
-        const errorMap = result.array().reduce((acc, error) => {
-            if (!acc[error.path]) {
-                acc[error.path] = [];
-            }
-            acc[error.path].push(`${error.msg} ${error.value}`);
-            return acc;
-        }, {});
+        // const errorMap = result.array().reduce((acc, error) => {
+        //     if (!acc[error.path]) {
+        //         acc[error.path] = [];
+        //     }
+        //     acc[error.path].push(`${error.msg} ${error.value}`);
+        //     return acc;
+        // }, {});
+    
+        const errorMap = validationErrorsToErrorMap(result.array());
 
         return res.json(errorMap);
     }
@@ -25,25 +32,28 @@ export function validateRequestExpressValidator(req: Request, res: Response, nex
 export function validateRequestZod(schema: z.ZodType, validationTarget: 'body' | 'query' | 'params') {
     return (req: Request, res: Response, next: NextFunction) => {
         // .safeParse() returns { success, data, error } instead of throwing
-        console.debug('raw query:', req[validationTarget])
-        console.debug('pageSize value:', req[validationTarget]['pageSize'], typeof req[validationTarget]['pageSize'])
         
         // const result = schema.parse(req[validationTarget]);
         const raw = Object.assign({}, req[validationTarget])
         console.debug('raw after assign:', raw)
         console.debug('emptyToDefault result for undefined:', ((v) => (v === '' || v === undefined) ? 10 : v)(raw.pageSize))
-        const result = schema.parse(raw)
+        // const result = schema.parse(raw)
+        const result = schema.safeParse(req.params);
 
 
-        // if (!result.success) {
-        //     // result.error.flatten() gives you { fieldErrors: { field: ['message'] } }
-        //     // which is already the shape you were manually building with .reduce()
-        //     return res.status(400).json(result.error.flatten().fieldErrors);
-        // }
+        if (!result.success) {
+            // result.error.flatten() gives you { fieldErrors: { field: ['message'] } }
+            // which is already the shape you were manually building with .reduce()
+            return res.status(400).json({
+                code: ErrorCode.VALIDATION_ERROR,
+                message: "One or more validation errors occurred.",
+                errors: z.flattenError(result.error).fieldErrors,
+            });
+        }
 
         // result.data is the parsed AND sanitized data — Zod strips unknown fields
         // and applies transformations (trim, toLowerCase) automatically
-        res.locals[validationTarget] = result;
+        res.locals[validationTarget] = result.data;
         console.debug(`middleware: res.locals.${validationTarget} `, res.locals[validationTarget])
         next();
     };
