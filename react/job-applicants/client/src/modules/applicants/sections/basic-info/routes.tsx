@@ -3,6 +3,7 @@ import { ListViewPage } from './pages/ListViewPage';
 import { loadApplicants } from './loaders';
 import { ApplicantsError } from './ApplicantsError';
 import { LoadingApplicants } from './LoadingApplicants';
+import { DetailViewPage } from './pages/DetailViewPage';
 
 const list = [
     {
@@ -17,7 +18,9 @@ const list = [
 const detail = [
     {
         path: 'basic-info',
-        // element: <DetailViewPage />
+        element: <DetailViewPage />,
+        errorElement: <ApplicantsError />,
+        hydrateFallbackElement: <LoadingApplicants />
     },
 ] satisfies RouteObject[];
 

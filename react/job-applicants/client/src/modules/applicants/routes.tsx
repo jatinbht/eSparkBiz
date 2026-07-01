@@ -11,17 +11,18 @@ const applicantsRoutes = [
             //NOTE: LIST SECTION
             ...basicInfoRoutes.list,
             // ...educationRoutes
-        ],
-    },
-    //NOTE: APPLICANT CONTEXT
-    {
-        path: ':id',
-        children: [
-            ...basicInfoRoutes.detail,
+
+            //NOTE: APPLICANT CONTEXT
             {
-                path: 'edit',
-                // element:
-                children: [...basicInfoRoutes.edit],
+                path: ':id',
+                children: [
+                    ...basicInfoRoutes.detail,
+                    {
+                        path: 'edit',
+                        // element:
+                        children: [...basicInfoRoutes.edit],
+                    },
+                ],
             },
         ],
     },
