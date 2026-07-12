@@ -31,5 +31,5 @@
         }
     },
 
-    "include": ["src", "../packages/schemas", "../packages/shared/constants.ts"]
+    "include": ["src", "../packages/schemas", "../packages/shared/BasicInfoFields.ts", "src/modules/applicants/sections/basic-info/components/.ApplicantItem.jsx", "src/modules/applicants/sections/basic-info/components/.ApplicantList.tsx", "src/modules/applicants/sections/basic-info/components/fields/location/.StateField.tsxField.tsx", "src/modules/applicants/sections/basic-info/components/fields/location/.CityFielsrc/modules/applicants/sections/basic-info/components/fields/location/.CountryField.tsx/.CountryField.tsx", "src/modules/applicants/components/.Form.tsx", "../packages/shared/date.ts"]
 }

@@ -1,47 +1,38 @@
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { NavLink } from "react-router";
+
 const Header = () => {
-    const toggleTheme = () => {
-        document.documentElement.classList.toggle('dark');
-    };
 
     return (
-        <header
-            className="
-                flex
-                justify-between
-                items-center
-                p-4
-                border-b
+        <header className="border-b bg-background">
+    <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+        {/* Left */}
+        {/* Left */}
+        <nav className="flex items-center gap-6">
+            <NavLink to="/applicants/basic-info">
+                Basic Info
+            </NavLink>
 
-                bg-gray-200
-                text-black
+            <NavLink to="/applicants/education">
+                Education
+            </NavLink>
 
-                dark:bg-gray-900
-                dark:text-white
-            "
-            >
+            <NavLink to="/applicants/experience">
+                Experience
+            </NavLink>
 
-            {/* tabs (yet to be developed)*/}
-            Basic info
-            Education
-            Experience
-            Technologies
-            {/* tabs */}
+            <NavLink to="/applicants/technologies">
+                Technologies
+            </NavLink>
+        </nav>
 
-            <button
-                onClick={toggleTheme}
-                className="
-                    rounded
-                    border
-                    px-3
-                    py-1
-                    hover:bg-gray-100
-
-                    dark:hover:bg-gray-800
-                "
-            >
-                Toggle Theme
-            </button>
-        </header>
+        {/* Right */}
+        {/* <div className="flex items-center gap-3"> */}
+            <ThemeToggle />
+            {/* <UserMenu /> */}
+        {/* </div> */}
+    </div>
+</header>
     );
 };
 

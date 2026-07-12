@@ -1,0 +1,34 @@
+{
+    "editor.hover.sticky": true,
+    "editor.hover.delay": 300,
+    "editor.suggest.showStatusBar": true,
+    "editor.suggest.showInlineDetails": true,
+    "editor.suggest.preview": true,
+    "editor.suggest.previewMode": "subwordSmart",
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    "editor.parameterHints.enabled": true,
+    "editor.snippetSuggestions": "inline",
+    "editor.suggest.matchOnWordStartOnly": false,
+    "typescript.suggest.autoImports": true,
+    "javascript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.tsserver.maxTsServerMemory": 4096,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+
+    "js/ts.suggest.autoImports": true,
+    "js/ts.updateImportsOnFileMove.enabled": "always",
+    "js/ts.tsserver.maxMemory": 4096,
+
+    "js/ts.inlayHints.parameterNames.enabled": "all",
+    "js/ts.inlayHints.variableTypes.enabled": true,
+    "js/ts.inlayHints.functionLikeReturnTypes.enabled": true,
+    "js/ts.inlayHints.propertyDeclarationTypes.enabled": true
+}

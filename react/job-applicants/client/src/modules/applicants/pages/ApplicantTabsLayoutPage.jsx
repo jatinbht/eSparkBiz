@@ -4,20 +4,12 @@ import Header from '../components/Header';
 const ApplicantsLayoutPage = () => {
     return (
         <>
-            <div
-                className="
-                    min-h-screen
-                    overflow-x-hidden
-
-                    bg-white
-                    text-black
-
-                    dark:bg-gray-800
-                    dark:text-white
-                "
-            >
+            <div className="min-h-screen bg-background text-foreground">
                 <Header />
-                <Outlet />
+
+                <main className="mx-auto max-w-7xl px-6 py-8">
+                    <Outlet />
+                </main>
             </div>
         </>
     );

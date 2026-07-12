@@ -1,4 +1,4 @@
 import { z } from 'zod';
-import { basicInfoQuerySchema } from './schema.js';
+import { BasicInfoQuerySchema } from './schema.js';
 
-export type BasicInfoQuery = z.infer<typeof basicInfoQuerySchema>;
+export type BasicInfoQuery = z.infer<typeof BasicInfoQuerySchema>;

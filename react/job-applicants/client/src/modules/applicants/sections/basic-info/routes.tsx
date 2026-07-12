@@ -3,6 +3,8 @@ import { ListViewPage } from './pages/ListViewPage';
 import { loadApplicants } from './loaders';
 import { ApplicantsError } from './ApplicantsError';
 import { LoadingApplicants } from './LoadingApplicants';
+import { DetailViewPage } from './pages/DetailViewPage';
+import { CreatePage } from './pages/CreatePage';
 
 const list = [
     {
@@ -17,15 +19,29 @@ const list = [
 const detail = [
     {
         path: 'basic-info',
-        // element: <DetailViewPage />
+        element: <DetailViewPage />,
+        errorElement: <ApplicantsError />,
+        hydrateFallbackElement: <LoadingApplicants />
     },
 ] satisfies RouteObject[];
 
 const edit = [
     {
         path: 'basic-info',
-        // element:  
+        // element:  <DetailEditPage />,
+        errorElement: <ApplicantsError />,
+        hydrateFallbackElement: <LoadingApplicants />
     },
 ] satisfies RouteObject[];
+
+//NOTE: create is /route in /applicants/routes.tsx
+// const create = [
+//     {
+//         path: 'basic-info',
+//         element:  <CreatePage />,
+//         errorElement: <ApplicantsError />,
+//         hydrateFallbackElement: <LoadingApplicants />
+//     },
+// ] satisfies RouteObject[];
 
 export default { list, detail, edit };

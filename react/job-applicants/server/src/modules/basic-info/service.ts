@@ -1,8 +1,7 @@
-import { basicInfoFilterableColumns } from '@job-applicants/shared/constants.js';
 import * as Applicants from './model.js';
 import { BasicInfoQuery } from './dto.js';
 import { pluckFirstColumn } from '../../utils/shape-shifter.js';
-import { BasicInfoFilterOptions } from '@job-applicants/shared/types.js'
+import { basicInfoFields, BasicInfoFilterOptions, isFilterableField } from '@job-applicants/shared/constants/BasicInfoFields.js';
 
 export async function listPaginatedApplicants( query: BasicInfoQuery /* removed {pageSize, page, sortOn, order} */ ) {
     const { page, pageSize, sortOn, order, city, designation, state, gender, relationship_status, dob_from, dob_to } = query;
@@ -44,17 +43,35 @@ export async function getFilterOptions() {
     //     // relationship_status: pluckFirstColumn(await Applicants.findDistinct('relationship_status')),
     // };
 
-    const result: BasicInfoFilterOptions = {} as BasicInfoFilterOptions;
+    const result: BasicInfoFilterOptions = {};
 
-    for (const column of basicInfoFilterableColumns) {
-        if (column.type === 'distinct') {
-            result[column.key] = pluckFirstColumn(
-                await Applicants.findDistinct(column.key),
-            );
-        }
+    // for (const column of basicInfoFilterableColumns) {
+    //     if (column.type === 'distinct') {
+    //         result[column.key] = pluckFirstColumn(
+    //             await Applicants.findDistinct(column.key),
+    //         );
+    //     }
 
-        if (column.type === 'enum') {
-            result[column.key] = column.options;
+    //     if (column.type === 'enum') {
+    //         result[column.key] = column.options;
+    //     }
+    // }
+
+    const filterableFields = basicInfoFields.filter(isFilterableField);
+
+    for (const field of filterableFields) {
+        // if (!field.filter) continue; // no longer needs, because the type guard already guarantees it.
+
+        switch (field.filter.type) {
+            case 'distinct':
+                result[field.key] = pluckFirstColumn(
+                    await Applicants.findDistinct(field.dbColumn),
+                );
+                break;
+
+            case 'enum':
+                result[field.key] = [...field.filter.options];
+                break;
         }
     }
 

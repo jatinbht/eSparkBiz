@@ -1,7 +1,9 @@
 import { db } from '../../db/kysely.connector.js';
-import { connection } from '../../db/mysql2.connector.js';
+// import { connection } from '../../db/mysql2.connector.js';
 import type { DB } from '../../db/db-types.js';
 import { ApplicantColumn, FindAllParams, GetCountParams } from './types.js';
+import { CreateBasicInfo } from '@job-applicants/schemas';
+import { toApplicantInsert } from './mapper.js';
 
 db.selectFrom('applicant')
     .selectAll()
@@ -46,18 +48,20 @@ export async function findAll({
     if (filters) {
         for (const [column, value] of Object.entries(filters)) {
             if (value === undefined) continue;
-            query = query.where(column as ApplicantColumn, '=', value);
+            query = query.where(column as ApplicantColumn, '=', value); //this prevents injection using Kyesely types
         }
         if (dob_from) query = query.where('dob', '>=', dob_from);
         if (dob_to) query = query.where('dob', '<=', dob_to);
     }
 
-    return query.orderBy(sortOn, order).limit(pageSize).offset(offset).execute();
+    return query
+        .orderBy(sortOn, order)
+        .limit(pageSize)
+        .offset(offset)
+        .execute();
 }
 
-export async function findDistinct<K extends ApplicantColumn>(
-    column: K,
-) {
+export async function findDistinct<K extends ApplicantColumn>(column: K) {
     return db
         .selectFrom('applicant')
         .select(column)
@@ -89,12 +93,7 @@ export async function findDistinct<K extends ApplicantColumn>(
 // }
 // }
 
-export async function getCount({
-    filters,
-    dob_from,
-    dob_to
-}: GetCountParams
-)  {
+export async function getCount({ filters, dob_from, dob_to }: GetCountParams) {
     let query = db
         .selectFrom('applicant')
         .select((eb) => eb.fn.countAll().as('count'));
@@ -103,7 +102,6 @@ export async function getCount({
         for (const [column, value] of Object.entries(filters)) {
             if (value === undefined) continue;
             query = query.where(column as ApplicantColumn, '=', value);
-
         }
     }
     if (dob_from) query = query.where('dob', '>=', dob_from);
@@ -112,32 +110,52 @@ export async function getCount({
     return query.executeTakeFirstOrThrow();
 }
 
+// export async function findById(id: number) {
+//     const statement = `SELECT * FROM applicants.applicant where id = ?`;
+//     console.log('id', id);
+
+//     const value = id;
+//     const [rows] = await connection.query(statement, value);
+
+//     return [rows];
+// }
+
 export async function findById(id: number) {
-    const statement = `SELECT * FROM applicants.applicant where id = ?`;
-    const value = id;
-    const [rows] = await connection.query(statement, value);
-
-    return [rows];
+    return db
+        .selectFrom('applicant')
+        .selectAll()
+        .where('id', '=', id)
+        .executeTakeFirst();
 }
 
-export async function insert(body) {
-    const statement = `insert into applicants.applicant (first_name, last_name, designation, full_address, email, phone, city, gender, zip_code, relationship_status, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [
-        body.first_name,
-        body.last_name,
-        body.designation,
-        body.full_address,
-        body.email,
-        body.phone,
-        body.city,
-        body.gender,
-        body.zip_code,
-        body.relationship_status,
-        body.dob,
-    ];
+// export async function insert(body) {
+//     const statement = `insert into applicants.applicant (first_name, last_name, designation, full_address, email, phone, city, gender, zip_code, relationship_status, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+//     const values = [
+//         body.first_name,
+//         body.last_name,
+//         body.designation,
+//         body.full_address,
+//         body.email,
+//         body.phone,
+//         body.city,
+//         body.gender,
+//         body.zip_code,
+//         body.relationship_status,
+//         body.dob,
+//     ];
 
-    const result = await connection.query(statement, values);
-    return result;
+//     const result = await connection.query(statement, values);
+//     return result;
+// }
+// type Dob = CreateBasicInfo['dob'];
+export async function insert(body: CreateBasicInfo) {
+    // const row = toApplicantInsert(body);
+
+    // const s: string = body.dob; // should compile
+
+    // const d: Date = row.dob; // currently compiles according to your hover
+    return db
+        .insertInto('applicant')
+        .values(toApplicantInsert(body))
+        .executeTakeFirst();
 }
-
-// export {getApplicants, getApplicantById, insertApplicant }

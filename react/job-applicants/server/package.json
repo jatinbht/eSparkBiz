@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch --env-file=.env src/app.js",
-    "db:codegen": "dotenv -e .env -- kysely-codegen --dialect mysql --out-file src/db/db-types.ts",
+    "db:codegen": "dotenv -e .env -- kysely-codegen --config-file kysely-codegen.config.js",
     "db:codegen:watch": "nodemon --watch src --ext sql,ts --exec \"npm run db:codegen\""
   },
   "dependencies": {
