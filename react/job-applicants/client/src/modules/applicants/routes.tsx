@@ -1,4 +1,7 @@
 import ApplicantTabsLayoutPage from './pages/ApplicantTabsLayoutPage.jsx';
+import { ApplicantsError } from './sections/basic-info/ApplicantsError.tsx';
+import { LoadingApplicants } from './sections/basic-info/LoadingApplicants.tsx';
+import { CreatePage } from './sections/basic-info/pages/CreatePage.tsx';
 import basicInfoRoutes from './sections/basic-info/routes.tsx';
 import { Navigate, type RouteObject } from 'react-router';
 
@@ -23,6 +26,15 @@ const applicantsRoutes = [
                         children: [...basicInfoRoutes.edit],
                     },
                 ],
+            },
+            {
+                path: 'new',
+                // children: [
+                //     ...basicInfoRoutes.create
+                // ]
+                element: <CreatePage />,
+                errorElement: <ApplicantsError />,
+                hydrateFallbackElement: <LoadingApplicants />,
             },
         ],
     },

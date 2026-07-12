@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router';
 import { buttonVariants } from '@/components/ui/button';
-import { buildApplicantsQueryParams } from '../utils/applicantsQueryParamBuilder';
+import { buildApplicantsQueryParams } from '../lib/applicantsQueryParamBuilder';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

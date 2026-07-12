@@ -4,6 +4,7 @@ import { loadApplicants } from './loaders';
 import { ApplicantsError } from './ApplicantsError';
 import { LoadingApplicants } from './LoadingApplicants';
 import { DetailViewPage } from './pages/DetailViewPage';
+import { CreatePage } from './pages/CreatePage';
 
 const list = [
     {
@@ -27,8 +28,20 @@ const detail = [
 const edit = [
     {
         path: 'basic-info',
-        // element:  
+        // element:  <DetailEditPage />,
+        errorElement: <ApplicantsError />,
+        hydrateFallbackElement: <LoadingApplicants />
     },
 ] satisfies RouteObject[];
+
+//NOTE: create is /route in /applicants/routes.tsx
+// const create = [
+//     {
+//         path: 'basic-info',
+//         element:  <CreatePage />,
+//         errorElement: <ApplicantsError />,
+//         hydrateFallbackElement: <LoadingApplicants />
+//     },
+// ] satisfies RouteObject[];
 
 export default { list, detail, edit };

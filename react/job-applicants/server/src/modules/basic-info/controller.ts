@@ -5,7 +5,7 @@ import type { BasicInfoQuery } from './dto.js';
 import { json, type Request, type Response } from 'express';
 import * as service from './service.js';
 
-const list = handleAsync(async (req: Request, res: Response) => {
+export const list = handleAsync(async (req: Request, res: Response) => {
     console.debug('req.query ', req.query);
     console.debug('res.locals.query ', res.locals.query);
     // const parsed = basicInfoQuerySchema.safeParse(req.query)
@@ -52,17 +52,17 @@ export const filterOptions = handleAsync (async(req: Request, res: Response) => 
 
 
 
-import { matchedData } from 'express-validator';
+// import { matchedData } from 'express-validator';
 import { ErrorCode } from '@/api/errors/codes.js';
 
-const show = handleAsync(async (req: Request, res: Response) => {
+export const show = handleAsync(async (req: Request, res: Response) => {
     // const params = matchedData(req, { locations: ['params'] });
     // const id = params.id;
     const id = res.locals.params.id
     // console.log('id', id, typeof id);
 
 
-    const [applicant] = await Applicants.findById(id);
+    const applicant = await Applicants.findById(id);
     if (!applicant) {
         // return res.status(404).json({ message: 'Applicant not found' });
         // throw new Error('Applicant not found');
@@ -75,13 +75,8 @@ const show = handleAsync(async (req: Request, res: Response) => {
     res.status(200).json(applicant);
 });
 
-const create = handleAsync(async (req: Request, res: Response) => {
-    const payload = matchedData(req, {
-        locations: ['body'],
-        includeOptionals: true,
-    });
+export const create = handleAsync(async (req: Request, res: Response) => {
+    const payload = res.locals.body;
     const result = await Applicants.insert(payload);
     res.status(201).json(result);
 });
-
-export { create, list, show };

@@ -29,7 +29,7 @@ export function validateRequestExpressValidator(req: Request, res: Response, nex
 }
 
 // server/src/middleware/request-validator.js
-export function validateRequestZod(schema: z.ZodType, validationTarget: 'body' | 'query' | 'params') {
+export function validateRequestZod(schema: z.ZodType, validationTarget: "query" | "params" | "body" | "cookies" | "headers") {
     return (req: Request, res: Response, next: NextFunction) => {
         // .safeParse() returns { success, data, error } instead of throwing
         
@@ -38,7 +38,7 @@ export function validateRequestZod(schema: z.ZodType, validationTarget: 'body' |
         console.debug('raw after assign:', raw)
         console.debug('emptyToDefault result for undefined:', ((v) => (v === '' || v === undefined) ? 10 : v)(raw.pageSize))
         // const result = schema.parse(raw)
-        const result = schema.safeParse(req.params);
+        const result = schema.safeParse(req[validationTarget]);
 
 
         if (!result.success) {
@@ -54,6 +54,7 @@ export function validateRequestZod(schema: z.ZodType, validationTarget: 'body' |
         // result.data is the parsed AND sanitized data — Zod strips unknown fields
         // and applies transformations (trim, toLowerCase) automatically
         res.locals[validationTarget] = result.data;
+        console.debug('result: ', result, 'result.data: ', result.data)
         console.debug(`middleware: res.locals.${validationTarget} `, res.locals[validationTarget])
         next();
     };

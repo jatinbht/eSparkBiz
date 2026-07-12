@@ -1,7 +1,7 @@
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import { basicInfoQuerySchema } from './schema.js';
+import { BasicInfoQuerySchema } from './schema.js';
 import { z } from 'zod';
-import { idSchema } from '@job-applicants/schemas';
+import { IdSchema } from '@job-applicants/schemas';
 
 export const basicInfoRegistry = new OpenAPIRegistry();
 
@@ -10,7 +10,7 @@ basicInfoRegistry.registerPath({
     path: '/api/applicants',
     // summary: 'List paginated applicants',
     request: {
-        query: basicInfoQuerySchema,
+        query: BasicInfoQuerySchema,
     },
     responses: {
         200: {
@@ -47,7 +47,7 @@ basicInfoRegistry.registerPath({
     method: 'get',
     path: '/api/applicants/{id}',
     request: {
-        params: idSchema,
+        params: IdSchema,
     },
     responses: {
         200: {

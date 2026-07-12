@@ -11,30 +11,30 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 
 export interface Applicant {
   city: string | null;
-  created_at: Generated<Date>;
+  createdAt: Generated<Date>;
   designation: Generated<string>;
   dob: Date;
-  email: string;
-  first_name: string;
-  full_address: string | null;
+  email: string | null;
+  firstName: string;
+  fullAddress: string | null;
   gender: "female" | "male" | "other";
   id: Generated<number>;
-  is_deleted: Generated<number | null>;
-  last_name: string;
+  isDeleted: Generated<number | null>;
+  lastName: string;
   phone: string;
-  relationship_status: "committed" | "single" | null;
+  relationshipStatus: "committed" | "single" | null;
   state: Generated<string | null>;
-  zip_code: string | null;
+  zipCode: string | null;
 }
 
 export interface Technologies {
-  applicant_id: number;
-  created_at: Generated<Date | null>;
+  applicantId: number;
+  createdAt: Generated<Date | null>;
   id: Generated<number>;
-  is_deleted: Generated<number>;
+  isDeleted: Generated<number>;
   label: string;
   proficiency: "beginner" | "expert" | "intermediate" | null;
-  updated_at: Generated<Date | null>;
+  updatedAt: Generated<Date | null>;
 }
 
 export interface DB {

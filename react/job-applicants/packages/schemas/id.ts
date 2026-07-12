@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const idSchema = z.object({
+export const IdSchema = z.object({
     id: z.coerce
         .number({
             error: 'Applicant ID must be a number.',
