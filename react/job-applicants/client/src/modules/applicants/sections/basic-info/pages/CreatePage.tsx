@@ -41,8 +41,8 @@ export function CreatePage() {
                     <TabsContent value="technologies">Technologies</TabsContent>
                 </Tabs>
 
-                {/* <Button type="submit">Create Applicant</Button> */}
-                <form.Subscribe
+                <Button type="submit">Create Applicant</Button>
+                {/* <form.Subscribe
                     selector={(state) => ({
                         canSubmit: state.canSubmit,
                         isSubmitting: state.isSubmitting,
@@ -56,7 +56,7 @@ export function CreatePage() {
                             {isSubmitting ? 'Creating...' : 'Create Applicant'}
                         </Button>
                     )}
-                </form.Subscribe>
+                </form.Subscribe> */}
             </form>
         </section>
     );

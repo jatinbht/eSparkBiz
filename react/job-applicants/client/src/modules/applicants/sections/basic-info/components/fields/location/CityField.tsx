@@ -13,8 +13,8 @@ export function CityField({ form }: Props) {
     return (
         <form.Subscribe
             selector={(state) => ({
-                countryCode: state.values.country_code,
-                stateCode: state.values.state_code,
+                countryCode: state.values.country,
+                stateCode: state.values.state,
             })}
         >
             {({ countryCode, stateCode }) => (

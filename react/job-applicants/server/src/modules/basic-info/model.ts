@@ -154,8 +154,10 @@ export async function insert(body: CreateBasicInfo) {
     // const s: string = body.dob; // should compile
 
     // const d: Date = row.dob; // currently compiles according to your hover
-    return db
+    const result = await db
         .insertInto('applicant')
         .values(toApplicantInsert(body))
         .executeTakeFirst();
+
+    return result.insertId;
 }

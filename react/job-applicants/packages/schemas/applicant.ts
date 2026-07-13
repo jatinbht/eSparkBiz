@@ -1,6 +1,6 @@
 // import { z } from 'zod';
 import * as z from "zod";
-import { PhoneSchema } from "./validators/phone";
+import { PhoneSchema } from "./validators/phone.js";
 
 const emptyStringToNull = (value: unknown) =>
     value === '' ? null : value;
@@ -21,8 +21,8 @@ export const BasicInfoSchema = z.object({
     designation: z.string().nullable(),
     email: z.string(),
     phone: z.string(),
-    country_code: z.string().nullable(),
-    state_code: z.string().nullable(),
+    country: z.string().nullable(),
+    state: z.string().nullable(),
     city: z.string().nullable(),
     gender: z.enum(['male', 'female', 'other']),
     zipCode: z.string().nullable(),
@@ -42,11 +42,11 @@ export const CreateBasicInfoSchema = z.object({
     designation: z.string().trim().min(1),
     email: z.string().email(),
     phone: PhoneSchema,
-    country_code: z.preprocess(
+    country: z.preprocess(
         emptyStringToNull,
         z.string().min(2).nullable()
     ),
-    state_code: z.preprocess(
+    state: z.preprocess(
         emptyStringToNull,
         // value => {
         //     if (value === '') return null;

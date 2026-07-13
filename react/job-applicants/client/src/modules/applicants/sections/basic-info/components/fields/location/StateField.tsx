@@ -7,15 +7,15 @@ type Props = {
     form: ApplicantForm;
 };
 
-const stateFieldDefinition = getFormFieldDefinition('state_code');
+const stateFieldDefinition = getFormFieldDefinition('state');
 
 export function StateField({ form }: Props) {
     return (
         <form.Subscribe
-            selector={(state) => state.values.country_code}
+            selector={(state) => state.values.country}
         >
             {(countryCode) => (
-                <form.Field name="state_code">
+                <form.Field name="state">
                     {(field) => (
                         <FormField
                             fieldDefinition={stateFieldDefinition}

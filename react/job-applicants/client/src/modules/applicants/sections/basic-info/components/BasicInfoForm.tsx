@@ -14,8 +14,8 @@ type BasicInfoFormProps = {
 };
 
 const LOCATION_KEYS = new Set([
-    'country_code',
-    'state_code',
+    'country',
+    'state',
     'city',
 ]);
 
