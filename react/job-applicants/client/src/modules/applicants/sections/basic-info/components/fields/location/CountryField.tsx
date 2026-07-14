@@ -7,11 +7,11 @@ type Props = {
     form: ApplicantForm;
 };
 
-const countryFieldDefinition = getFormFieldDefinition('country_code');
+const countryFieldDefinition = getFormFieldDefinition('country');
 
 export function CountryField({ form }: Props) {
     return (
-        <form.Field name="country_code">
+        <form.Field name="country">
             {(field) => (
                 <FormField
                     fieldDefinition={countryFieldDefinition}

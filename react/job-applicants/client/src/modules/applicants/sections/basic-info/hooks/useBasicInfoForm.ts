@@ -12,6 +12,7 @@ export const useApplicantForm = () => {
     //   onBlur
     },
     onSubmit: async ({ value }) => {
+      console.log('Submitting: ', value);
       await createApplicant(value);
     },
   });

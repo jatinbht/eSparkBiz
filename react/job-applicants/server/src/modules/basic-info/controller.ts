@@ -77,6 +77,10 @@ export const show = handleAsync(async (req: Request, res: Response) => {
 
 export const create = handleAsync(async (req: Request, res: Response) => {
     const payload = res.locals.body;
-    const result = await Applicants.insert(payload);
-    res.status(201).json(result);
+    console.log("Validated payload:", res.locals.body);
+    const id = await Applicants.insert(payload);
+    const applicant = await Applicants.findById(id);
+    // console.dir(applicant, { depth: null });
+    // console.log(applicant);
+    res.status(201).json(applicant);
 });

@@ -172,7 +172,7 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
     },
 
     {
-        key: 'country_code',
+        key: 'country',
         dbColumn: 'country',
         label: 'Country',
         fieldType: 'select',
@@ -185,7 +185,7 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
     },
 
     {
-        key: 'state_code',
+        key: 'state',
         dbColumn: 'state',
         label: 'State',
         fieldType: 'select',

@@ -26,12 +26,12 @@ import { InputField } from './InputField';
 import { SelectField } from './SelectField';
 import { RadioField } from './RadioField';
 import { DateField } from './DateField';
-import { PhoneInput } from './PhoneField';
+import { PhoneField } from './PhoneField';
 
 const FIELD_COMPONENTS = {
     text: InputField,
     email: InputField,
-    tel: PhoneInput,
+    tel: PhoneField,
     date: DateField,
     select: SelectField,
     radio: RadioField,
