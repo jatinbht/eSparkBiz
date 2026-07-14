@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { basicInfoFilterableColumns } from '@job-applicants/shared/constants';
 import type { BasicInfoFilterColumn, BasicInfoFilterOptions, ActiveFilters, ActiveFilterValue, DateRangeValue } from '@job-applicants/shared/types';
 import { Plus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
+import { filterableBasicInfoFields } from '@job-applicants/shared/constants';
 
 type FilterBarProps = {
     activeFilters: ActiveFilters;
@@ -52,7 +52,7 @@ export function FilterBar({
     }, [onClearPending]);
 
     const appliedColumns = Object.keys(activeFilters) as BasicInfoFilterColumn[];
-    const remainingColumns = basicInfoFilterableColumns.filter(
+    const remainingColumns = filterableBasicInfoFields.filter(
         (col) => !activeFilters[col.key] && col.key !== pendingColumn
     );
 
@@ -88,7 +88,7 @@ export function FilterBar({
 
             {/* Applied chips */}
             {appliedColumns.map((col) => {
-                const config = basicInfoFilterableColumns.find((c) => c.key === col)!;
+                const config = filterableBasicInfoFields.find((c) => c.key === col)!;
                 const value = activeFilters[col]!;
 
                 let label: string;
@@ -112,7 +112,7 @@ export function FilterBar({
 
             {/* Pending chip */}
             {pendingColumn && (() => {
-                const config = basicInfoFilterableColumns.find((c) => c.key === pendingColumn)!;
+                const config = filterableBasicInfoFields.find((c) => c.key === pendingColumn)!;
                 return (
                     <div ref={pendingChipRef} className="relative">
                         <div className="flex items-center gap-1 rounded-full border border-blue-400 bg-white px-3 py-1 text-sm text-blue-800">
@@ -121,7 +121,7 @@ export function FilterBar({
                         </div>
 
                         <div className="absolute left-0 top-full z-50 mt-1 rounded-md border bg-white shadow-lg">
-                            {config.type === 'daterange' ? (
+                            {config.filter.type === 'daterange' ? (
                                 <div className="p-3 w-fit">
                                     {/* From / To text inputs */}
                                     <div className="flex gap-2 mb-3">

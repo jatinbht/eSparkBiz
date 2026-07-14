@@ -8,8 +8,8 @@ import type { loadApplicants } from '../loaders';
 import type { SortingState } from '@tanstack/react-table';
 import { FilterBar } from '@/modules/applicants/components/FilterBar';
 import type { ActiveFilters, ActiveFilterValue, BasicInfoFilterColumn, BasicInfoFilterOptions } from "@job-applicants/shared/types";
-import { basicInfoFilterableColumns } from '@job-applicants/shared/constants';
-import { valueToParams } from '@/modules/applicants/utils/filterUtils';
+import { valueToParams } from '@/modules/applicants/lib/filterUtils';
+import { filterableBasicInfoFields } from '@job-applicants/shared/constants';
 
 const ListViewPage = () => {
     const { applicants, pagination } = useLoaderData() as Awaited<ReturnType<typeof loadApplicants>>;
@@ -50,9 +50,9 @@ const ListViewPage = () => {
         setActiveFilters((prev) => ({ ...prev, [column]: value }));
         setPendingColumn(null);
         setPendingValues([]);
-        const config = basicInfoFilterableColumns.find((col) => col.key === column)!;
+        const config = filterableBasicInfoFields.find((field) => field.key === column)!;
         const params = new URLSearchParams(searchParams);
-        config.paramKeys.forEach((key) => params.delete(key));
+        config.filter.paramKeys.forEach((key) => params.delete(key));
         valueToParams(column, value).forEach(([k, v]) => params.append(k, v));
         params.set('page', '1');
         setSearchParams(params);
@@ -64,9 +64,9 @@ const ListViewPage = () => {
             delete next[column];
             return next;
         });
-        const config = basicInfoFilterableColumns.find((col) => col.key === column)!;
+        const config = filterableBasicInfoFields.find((field) => field.key === column)!;
         const params = new URLSearchParams(searchParams);
-        config.paramKeys.forEach((key) => params.delete(key));
+        config.filter.paramKeys.forEach((key) => params.delete(key));
         params.set('page', '1');
         setSearchParams(params);
     }
@@ -77,8 +77,8 @@ const ListViewPage = () => {
         setPendingValues([]);
         setIsFilterBarVisible(false);
         const params = new URLSearchParams(searchParams);
-        basicInfoFilterableColumns.forEach((col) => {
-            col.paramKeys.forEach((key) => params.delete(key));
+        filterableBasicInfoFields.forEach((field) => {
+            field.filter.paramKeys.forEach((key) => params.delete(key));
         });
         params.set('page', '1');
         setSearchParams(params);
@@ -98,7 +98,7 @@ const ListViewPage = () => {
     }, [sorting]);
 
     return (
-        <>
+        <div className="space-y-6">
             {isFilterBarVisible && (
                 <FilterBar
                     activeFilters={activeFilters}
@@ -124,7 +124,7 @@ const ListViewPage = () => {
             />
 
             <PageNavigation pageCount={pageCount} />
-        </>
+        </div>
     );
 };
 

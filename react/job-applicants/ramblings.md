@@ -31,3 +31,18 @@ async function get(path: string, params?: Record<string, string>) {
 
 export const http = { get }
 ```
+
+```
+function matchedData(req: {
+ [k: string]: any;
+ body: any;
+ cookies?: Record<string, any>;
+ headers?: Record<string, any>;
+ params?: Record<string, any>;
+ query?: Record<string, any>;
+}, options?: {
+ includeOptionals: boolean | undefined;
+ locations: ("query" | "params" | "body" | "cookies" | "headers")[] | undefined;
+ onlyValidData: boolean | undefined;
+}): {}
+```

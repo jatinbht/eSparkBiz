@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "type": "module",
     "main": "./index.ts",
-
     "dependencies": {
+        "libphonenumber-js": "^1.13.8",
         "zod": "^4.3.6"
     }
 }

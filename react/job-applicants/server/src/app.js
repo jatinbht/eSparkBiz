@@ -23,6 +23,8 @@ app.use(urlencoded({ extended: true }));
 app.get('/ping', (req, res) => res.send('pong'))
 app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
 
+app.use(e.json()); // for POST
+
 app.use('/api/applicants', applicantApiRouter);
 // app.use('/applicants', applicantRouter);
 

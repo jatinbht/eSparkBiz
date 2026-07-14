@@ -1,5 +1,5 @@
 import { createConnection } from 'mysql2/promise';
-import AppError from '../utils/AppError.js';
+import AppError from '../api/errors/AppError.js';
 
 let connection;
 async function initializeConnection() {

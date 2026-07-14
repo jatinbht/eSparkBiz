@@ -3,10 +3,10 @@ import { z } from 'zod';
 
 extendZodWithOpenApi(z);
 
-const emptyToDefault = (defaultVal) => (v) => 
-    v === '' || v === undefined ? defaultVal : v;
+const emptyToDefault = <T>(defaultValue: T) => (value: unknown): unknown =>
+        value === '' || value === undefined ? defaultValue : value;
 
-export const basicInfoQuerySchema = z.object({
+export const BasicInfoQuerySchema = z.object({
     pageSize: z
         .preprocess(emptyToDefault(10), z.coerce.number().min(1).max(100))
         .default(10)
@@ -18,7 +18,7 @@ export const basicInfoQuerySchema = z.object({
         .openapi({ example: 1 }),
 
     sortOn: z
-        .enum(['id', 'first_name', 'last_name', 'created_at', 'email'])
+        .enum(['id', 'firstName', 'lastName', 'createdAt', 'email'])
         .default('id'),
 
     order: z.enum(['asc', 'desc']).default('asc'),
@@ -31,7 +31,6 @@ export const basicInfoQuerySchema = z.object({
 
     dob_from: z.iso.date().optional().openapi({ example: '1990-01-01' }),
     dob_to: z.iso.date().optional().openapi({ example: '2000-12-31' }),
-
 });
 
 // export const distinctColumnSchema = z.object({

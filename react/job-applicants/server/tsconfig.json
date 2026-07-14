@@ -15,9 +15,12 @@
         "paths": {
             "@/*": ["./src/*"],
             "@job-applicants/shared/*": ["../packages/shared/*"]
-
         }
     },
-    "include": ["src", "src/modules/basic-info/.validator.express-validator.js"],
+    "include": [
+        "src",
+        "src/modules/basic-info/.validator.express-validator.js",
+        "kysely-codegen.config.js"
+    ],
     "exclude": ["node_modules"]
 }
