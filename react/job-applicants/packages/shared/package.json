@@ -3,6 +3,7 @@
     "type": "module",
     "exports": {
         "./constants": "./constants/index.js",
-        "./types": "./types/types.js" 
-    }
+        "./types": "./types/types.js"
+    },
+    "version": "1.0.0"
 }

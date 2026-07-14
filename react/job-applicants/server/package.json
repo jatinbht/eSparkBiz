@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "api",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -13,7 +13,7 @@
     "db:codegen:watch": "nodemon --watch src --ext sql,ts --exec \"npm run db:codegen\""
   },
   "dependencies": {
-    "@job-applicants/schemas": "file:../packages/schemas",
+    "@job-applicants/schemas": "*",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
     "kysely": "^0.28.16",
