@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router';
 import applicantsRoutes from '../modules/applicants/routes.tsx';
-import Root from '../Root';
+import Root from '../Root.jsx';
 
 const routes = [
     {
