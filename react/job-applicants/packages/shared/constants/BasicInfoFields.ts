@@ -7,8 +7,8 @@
 //     { key: 'dob',                 label: 'Date of Birth',       type: 'daterange',  paramKeys: ['dob_from', 'dob_to'] },
 // ] as const;
 
-import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
-import type { BasicInfoFieldDefinition } from '../types';
+import type { BasicInfo, CreateBasicInfo } from "@job-applicants/schemas/applicant";
+import type { BasicInfoFieldDefinition } from '../types/fieldDefinition';
 import { today } from '../date';
 
 type Visibility = 'table' | 'form' | 'detail';
@@ -413,3 +413,14 @@ export function getFormFieldDefinition(
 
     return field;
 }
+
+
+export type BasicInfoFilterColumn = typeof filterableBasicInfoFields [number]['key'];
+
+export type BasicInfoFilterType = typeof filterableBasicInfoFields [number]['type'];
+
+export type DateRangeValue = { from?: string; to?: string };
+
+export type ActiveFilterValue = string[] | DateRangeValue;
+
+export type ActiveFilters = Partial<Record<BasicInfoFilterColumn, ActiveFilterValue>>;

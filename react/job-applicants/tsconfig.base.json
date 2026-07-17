@@ -1,0 +1,4 @@
+{
+  "$comment": "Temporary placeholder. Move shared compilerOptions here as the monorepo matures.",
+  "compilerOptions": {}
+}

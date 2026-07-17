@@ -1,18 +1,19 @@
 {
   "private": true,
-  "workspaces": [
-    "client",
-    "server",
-    "packages/*"
-  ],
   "scripts": {
-    "db:codegen": "npm run db:codegen --prefix server",
-    "dev:client": "npm run dev -w client",
-    "dev:server": "npm run dev -w server",
-    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\""
+    "db:codegen": "npm run db:codegen -w api",
+    "dev": "concurrently \"npm:dev:web\" \"npm:dev:api\"",
+    "dev:web": "npm run dev -w web",
+    "dev:api": "npm run dev -w api",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
-    "dotenv-cli": "^11.0.0"
-  }
+    "dotenv-cli": "^11.0.0",
+    "typescript": "^6.0.3"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
