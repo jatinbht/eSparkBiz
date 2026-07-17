@@ -1,6 +1,6 @@
 import { Field, FieldError, FieldLabel } from '@job-applicants/ui/field';
 
-import type { FormBasicInfoField, Option } from '@job-applicants/shared/constants/BasicInfoFields';
+import type { FormBasicInfoField, Option } from '@job-applicants/shared';
 import type { AnyFieldApi } from '@tanstack/react-form';
 
 import { renderFieldComponent } from './renderField';

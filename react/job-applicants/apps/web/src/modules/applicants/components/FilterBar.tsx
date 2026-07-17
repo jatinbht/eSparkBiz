@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import type { BasicInfoFilterColumn, BasicInfoFilterOptions, ActiveFilters, ActiveFilterValue, DateRangeValue } from '@job-applicants/shared/constants/BasicInfoFields';
+import type { BasicInfoFilterColumn, BasicInfoFilterOptions, ActiveFilters, ActiveFilterValue, DateRangeValue } from '@job-applicants/shared';
 import { Plus, X } from 'lucide-react';
 import { Button } from "@job-applicants/ui/button";
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
-import { filterableBasicInfoFields } from '@job-applicants/shared/constants/BasicInfoFields'
+import { filterableBasicInfoFields } from '@job-applicants/shared'
 
 type FilterBarProps = {
     activeFilters: ActiveFilters;

@@ -1,6 +1,6 @@
 import { Label } from '@job-applicants/ui/label';
 import { RadioGroup, RadioGroupItem } from '@job-applicants/ui/radio-group';
-import type { RadioFieldDefinition } from '@job-applicants/shared/types/fieldDefinition';
+import type { RadioFieldDefinition } from '@job-applicants/shared';
 import type { AnyFieldApi } from '@tanstack/react-form';
 
 

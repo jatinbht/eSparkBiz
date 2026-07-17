@@ -1,4 +1,4 @@
-import { getFormFieldDefinition } from "@job-applicants/shared/constants/BasicInfoFields";
+import { getFormFieldDefinition } from '@job-applicants/shared';
 import type { ApplicantForm } from "../../../hooks/useBasicInfoForm";
 import { getCityOptions } from "../../../lib/location";
 import { FormField } from "../FormField";

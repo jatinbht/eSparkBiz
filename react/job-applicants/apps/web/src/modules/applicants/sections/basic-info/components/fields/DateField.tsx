@@ -12,13 +12,13 @@ import {
 
 import { cn } from '@job-applicants/ui/utils';
 
-import type { DateFieldDefinition } from '@job-applicants/shared/types/fieldDefinition';
+import type { DateFieldDefinition } from '@job-applicants/shared';
 import type { AnyFieldApi } from '@tanstack/react-form';
 
 import {
     formatDateForInput,
     parseDate
-} from '@job-applicants/shared/date'
+} from '@job-applicants/shared'
 
 type DateFieldOptions = {
     fieldDefinition: DateFieldDefinition;

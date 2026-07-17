@@ -7,7 +7,7 @@
 //     { key: 'dob',                 label: 'Date of Birth',       type: 'daterange',  paramKeys: ['dob_from', 'dob_to'] },
 // ] as const;
 
-import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
+import type { BasicInfo } from '@job-applicants/schemas';
 import type { BasicInfoFieldDefinition } from '../types/fieldDefinition';
 import { today } from '../date';
 
@@ -332,8 +332,7 @@ export function isFilterableField(
     return field.filter !== undefined;
 }
 
-export const filterableBasicInfoFields = basicInfoFields.filter(
-    // (field) => field.filter !== undefined,
+export const filterableBasicInfoFields: FilterableBasicInfoField[] = basicInfoFields.filter(
     isFilterableField,
 );
 
@@ -369,38 +368,21 @@ export const detailBasicInfoFields = basicInfoFields.filter(
     isVisibleIn('detail'),
 );
 
-type FormFieldKey = keyof CreateBasicInfo;
+export type FormBasicInfoField = BasicInfoFieldDefinition;
 
-export type FormBasicInfoField = Extract<BasicInfoField, { key: FormFieldKey }>;
+export function isFormField(field: BasicInfoField): field is FormBasicInfoField {
+    return (field.visibility as readonly Visibility[]).includes('form');
+}
 
-
-// export function isFormField(
-//     field: BasicInfoField,
-// ): field is FormBasicInfoField {
-//     return field.visibility.includes('form');
-// }
-
-// export const formBasicInfoFields = basicInfoFields.filter(isFormField);
 export const formBasicInfoFields = basicInfoFields.filter(
-    isVisibleIn('form'),
+    isFormField,
 );
 
 
 
 //## Filtering
 
-type FilterOptionField = Extract<
-    FilterableBasicInfoField,
-    {
-        filter:
-            | { type: 'distinct' }
-            | { type: 'enum' };
-    }
->;
-
-export type BasicInfoFilterOptions = Partial<
-    Record<FilterOptionField['key'], string[]>
->;
+export type BasicInfoFilterOptions = Partial<Record<string, string[]>>;
 
 export function getFormFieldDefinition(
     key: FormBasicInfoField['key'],
@@ -414,10 +396,9 @@ export function getFormFieldDefinition(
     return field;
 }
 
+export type BasicInfoFilterColumn = typeof filterableBasicInfoFields[number]['key'];
 
-export type BasicInfoFilterColumn = typeof filterableBasicInfoFields [number]['key'];
-
-export type BasicInfoFilterType = typeof filterableBasicInfoFields [number]['type'];
+export type BasicInfoFilterType = FilterConfig['type'];
 
 export type DateRangeValue = { from?: string; to?: string };
 

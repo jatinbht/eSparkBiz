@@ -1,4 +1,4 @@
-import type { BasicInfoFilterColumn, ActiveFilterValue } from '@job-applicants/shared/constants/BasicInfoFields'
+import type { BasicInfoFilterColumn, ActiveFilterValue } from '@job-applicants/shared'
 
 export function valueToParams(column: BasicInfoFilterColumn, value: ActiveFilterValue): [string, string][] {
     if (Array.isArray(value)) {

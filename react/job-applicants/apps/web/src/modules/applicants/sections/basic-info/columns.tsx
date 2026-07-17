@@ -1,7 +1,7 @@
 import type {CellContext, ColumnDef, HeaderContext, RowData,} from '@tanstack/react-table';
 import { ArrowUpDown, ListFilter } from 'lucide-react';
 import { Button } from '@job-applicants/ui/button';
-import {tableBasicInfoFields, type FilterableBasicInfoField, type Formatter, type TableBasicInfoField,} from '@job-applicants/shared/constants/BasicInfoFields';
+import { tableBasicInfoFields, type FilterableBasicInfoField, type Formatter, type TableBasicInfoField } from '@job-applicants/shared';
 import type { BasicInfo } from '@job-applicants/schemas';
 
 declare module '@tanstack/react-table' {

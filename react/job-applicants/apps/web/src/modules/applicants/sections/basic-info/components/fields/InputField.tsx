@@ -1,4 +1,4 @@
-import type { InputFieldDefinition } from '@job-applicants/shared/types/fieldDefinition';
+import type { InputFieldDefinition } from '@job-applicants/shared';
 import type { AnyFieldApi } from '@tanstack/react-form';
 import { Input } from '@job-applicants/ui/input';
 

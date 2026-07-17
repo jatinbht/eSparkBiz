@@ -1,7 +1,7 @@
 import {
     formBasicInfoFields,
     type FormBasicInfoField,
-} from '@job-applicants/shared/constants/BasicInfoFields';
+} from '@job-applicants/shared';
 
 import { FieldGroup } from '@job-applicants/ui/field';
 import type { ApplicantForm } from '../hooks/useBasicInfoForm';

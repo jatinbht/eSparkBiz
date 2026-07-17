@@ -20,7 +20,7 @@
 import type {
     FormBasicInfoField,
     Option,
-} from '@job-applicants/shared/constants/BasicInfoFields';
+} from '@job-applicants/shared';
 import type { AnyFieldApi } from '@tanstack/react-form';
 import { InputField } from './InputField';
 import { SelectField } from './SelectField';

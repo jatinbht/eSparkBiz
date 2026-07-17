@@ -1,5 +1,5 @@
 import { Country, State, City } from "country-state-city";
-import type { Option } from '@job-applicants/shared/constants/BasicInfoFields';
+import type { Option } from '@job-applicants/shared';
 
 // export const countries = Country.getAllCountries();
 

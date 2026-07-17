@@ -3,7 +3,7 @@
 import type { Insertable } from 'kysely';
 import type { DBOverride } from '../../db/db-overrides.js';
 import type { CreateBasicInfo } from '@job-applicants/schemas';
-import { formBasicInfoFields } from '@job-applicants/shared/constants/BasicInfoFields';
+import { formBasicInfoFields } from '@job-applicants/shared';
 
 export function toApplicantInsert(
     body: CreateBasicInfo,

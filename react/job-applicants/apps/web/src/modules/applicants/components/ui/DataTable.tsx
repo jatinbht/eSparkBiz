@@ -24,7 +24,7 @@ import {
 } from '@job-applicants/ui/table';
 
 import * as React from 'react';
-import type { BasicInfoFilterColumn } from '@job-applicants/shared/constants/BasicInfoFields';
+import type { BasicInfoFilterColumn } from '@job-applicants/shared';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];

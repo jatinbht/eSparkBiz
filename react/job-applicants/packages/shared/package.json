@@ -2,16 +2,20 @@
     "name": "@job-applicants/shared",
     "version": "1.0.0",
     "type": "module",
+    "private": true,
+    "main": "./index.ts",
+    "types": "./index.ts",
     "exports": {
+        ".": "./index.ts",
         "./*": "./*.ts",
         "./constants/*": "./constants/*.ts",
         "./types/*": "./types/*.ts"
     },
-    "types": "./dist/index.d.ts",
     "scripts": {
         "typecheck": "tsc --noEmit"
     },
     "files": [
+        "index.ts",
         "constants",
         "types",
         "date.ts",
