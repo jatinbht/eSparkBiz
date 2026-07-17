@@ -1,5 +1,5 @@
 import { useLoaderData, useSearchParams } from 'react-router';
-import PageNavigation from '../../../components/PageNavigator';
+import PageNavigation from '#src/modules/applicants/components/PageNavigator';
 import { columns } from '../columns';
 import { useEffect, useState } from 'react';
 import { getFilterOptions } from '@job-applicants/api-client';
@@ -7,9 +7,9 @@ import type { loadApplicants } from '../loaders';
 import type { SortingState } from '@tanstack/react-table';
 import type { ActiveFilters, ActiveFilterValue, BasicInfoFilterColumn, BasicInfoFilterOptions } from '@job-applicants/shared';
 import { filterableBasicInfoFields } from '@job-applicants/shared';
-import { FilterBar } from '../../../components/FilterBar';
-import { valueToParams } from '../../../lib/filterUtils';
-import { DataTable } from '../../../components/ui/DataTable';
+import { FilterBar } from '#src/modules/applicants/components/FilterBar';
+import { valueToParams } from '#src/modules/applicants/lib/filterUtils';
+import { DataTable } from '#src/modules/applicants/components/ui/DataTable';
 
 const ListViewPage = () => {
     const { applicants, pagination } = useLoaderData() as Awaited<ReturnType<typeof loadApplicants>>;

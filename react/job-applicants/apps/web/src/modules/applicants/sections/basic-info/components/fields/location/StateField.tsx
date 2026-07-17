@@ -1,7 +1,7 @@
 import { getFormFieldDefinition } from '@job-applicants/shared';
-import type { ApplicantForm } from '../../../hooks/useBasicInfoForm';
-import { getStateOptions } from "../../../lib/location";
-import { FormField } from "../FormField";
+import type { ApplicantForm } from '#src/modules/applicants/sections/basic-info/hooks/useBasicInfoForm';
+import { getStateOptions } from '#src/modules/applicants/sections/basic-info/lib/location';
+import { FormField } from '../FormField';
 
 type Props = {
     form: ApplicantForm;

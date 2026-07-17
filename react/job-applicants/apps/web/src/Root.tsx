@@ -1,6 +1,5 @@
-import { Outlet } from "react-router"
-import Header from '../../../packages/ui/src/layout/Header';
-import Footer from '../../../packages/ui/src/layout/Footer';
+import { Outlet } from "react-router";
+import { Header, Footer } from '@job-applicants/ui';
 
 const Root = () => {
     return (
