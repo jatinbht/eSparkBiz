@@ -7,7 +7,7 @@
 //     { key: 'dob',                 label: 'Date of Birth',       type: 'daterange',  paramKeys: ['dob_from', 'dob_to'] },
 // ] as const;
 
-import type { BasicInfo, CreateBasicInfo } from "@job-applicants/schemas/applicant";
+import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
 import type { BasicInfoFieldDefinition } from '../types/fieldDefinition';
 import { today } from '../date';
 

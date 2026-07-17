@@ -6,8 +6,7 @@ import * as controller from './controller.js';
 import { validateRequestExpressValidator, validateRequestZod } from "../../middleware/request-validator.js";
 import idValidator from "../../middleware/id-validator.js";
 import { BasicInfoQuerySchema } from "./schema.js";
-import { IdSchema } from "@job-applicants/schemas/id";
-import { CreateBasicInfoSchema } from "@job-applicants/schemas/applicant";
+import { IdSchema, CreateBasicInfoSchema } from '@job-applicants/schemas';
 
 const router = Router()
 console.debug('router.js executed')

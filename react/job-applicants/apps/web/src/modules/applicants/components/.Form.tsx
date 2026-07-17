@@ -25,7 +25,7 @@ import { Input } from '@job-applicants/ui/input';
 //     InputGroupText,
 //     InputGroupTextarea,
 // } from '@job-applicants/ui/input-group';
-import { BasicInfoSchema } from '@job-applicants/schemas/applicant';
+import { BasicInfoSchema } from '@job-applicants/schemas';
 
 
 export function BasicInfoForm() {

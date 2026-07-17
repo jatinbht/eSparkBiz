@@ -1,5 +1,5 @@
 // import type { BasicInfo } from '@job-applicants/schemas/applicant'
-import { BasicInfoSchema } from '@job-applicants/schemas/applicant';
+import { BasicInfoSchema } from '@job-applicants/schemas';
 import { type LoaderFunctionArgs } from 'react-router';
 import { getApplicants } from '@job-applicants/api-client';
 

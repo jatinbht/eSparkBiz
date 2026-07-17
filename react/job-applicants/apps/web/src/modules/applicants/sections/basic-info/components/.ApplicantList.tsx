@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 import ApplicantItem from './.ApplicantItem';
 import { useLoaderData } from 'react-router';
-import type { BasicInfo } from '@job-applicants/schemas/applicant';
+import type { BasicInfo } from '@job-applicants/schemas';
 
 const ApplicantList = ({applicants}): BasicInfo => {
     // const [applicants, setApplicants] = useState([])

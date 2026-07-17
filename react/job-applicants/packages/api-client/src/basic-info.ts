@@ -1,4 +1,4 @@
-import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas/applicant';
+import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
 import { http } from './http';
 
 export type BasicInfoQueryParams = {

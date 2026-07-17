@@ -2,7 +2,7 @@ import type {CellContext, ColumnDef, HeaderContext, RowData,} from '@tanstack/re
 import { ArrowUpDown, ListFilter } from 'lucide-react';
 import { Button } from '@job-applicants/ui/button';
 import {tableBasicInfoFields, type FilterableBasicInfoField, type Formatter, type TableBasicInfoField,} from '@job-applicants/shared/constants/BasicInfoFields';
-import type { BasicInfo } from '@job-applicants/schemas/applicant';
+import type { BasicInfo } from '@job-applicants/schemas';
 
 declare module '@tanstack/react-table' {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
