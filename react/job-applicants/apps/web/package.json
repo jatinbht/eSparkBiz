@@ -13,6 +13,7 @@
     "dependencies": {
         "@base-ui/react": "^1.5.0",
         "@fontsource-variable/geist": "^5.2.9",
+        "@job-applicants/api-client": "*",
         "@job-applicants/schemas": "*",
         "@job-applicants/shared": "*",
         "@job-applicants/ui": "*",

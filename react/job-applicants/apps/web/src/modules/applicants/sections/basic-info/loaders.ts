@@ -1,7 +1,7 @@
 // import type { BasicInfo } from '@job-applicants/schemas/applicant'
 import { BasicInfoSchema } from '@job-applicants/schemas/applicant';
 import { type LoaderFunctionArgs } from 'react-router';
-import { getApplicants } from '../../../../../../../packages/api-client/basic-info';
+import { getApplicants } from '@job-applicants/api-client';
 
 export const loadApplicants = async ({ request }: LoaderFunctionArgs) => {
     const url = new URL(request.url);

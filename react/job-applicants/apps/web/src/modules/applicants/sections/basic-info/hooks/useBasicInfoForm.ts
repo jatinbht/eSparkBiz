@@ -1,6 +1,6 @@
 import { CreateBasicInfoSchema } from '@job-applicants/schemas/applicant';
 import { useForm } from '@tanstack/react-form'; // or your specific library
-import { createApplicant } from '../../../../../../../../packages/api-client/basic-info';
+import { createApplicant } from '@job-applicants/api-client';
 import { EMPTY_BASIC_INFO } from '../../../../../constants';
 
 export const useApplicantForm = () => {

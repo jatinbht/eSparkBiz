@@ -2,7 +2,7 @@ import { useLoaderData, useSearchParams } from 'react-router';
 import PageNavigation from '../../../components/PageNavigator';
 import { columns } from '../columns';
 import { useEffect, useState } from 'react';
-import { getFilterOptions } from '../../../../../../../../packages/api-client/basic-info';
+import { getFilterOptions } from '@job-applicants/api-client';
 import type { loadApplicants } from '../loaders';
 import type { SortingState } from '@tanstack/react-table';
 import type { ActiveFilters, ActiveFilterValue, BasicInfoFilterColumn, BasicInfoFilterOptions } from "@job-applicants/shared/constants/BasicInfoFields";
