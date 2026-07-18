@@ -1,5 +1,5 @@
-import { db } from '../../db/kysely.connector.js';
-// import { connection } from '../../db/mysql2.connector.js';
+import { db } from '../../../db/kysely.connector.js';
+// import { connection } from '../../../db/mysql2.connector.js';
 import type { ApplicantColumn, FindAllParams, GetCountParams } from './types.js';
 import { toApplicantInsert } from './mapper.js';
 import type { CreateBasicInfo } from '@job-applicants/schemas';

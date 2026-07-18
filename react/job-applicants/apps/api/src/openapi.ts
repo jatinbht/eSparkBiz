@@ -1,5 +1,5 @@
 import { OpenApiGeneratorV3, OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import { basicInfoRegistry } from './modules/basic-info/openapi.js';
+import { basicInfoRegistry } from './modules/applicants/basic-info/openapi.js';
 // import { skillsRegistry } from './modules/skills/openapi.js';
 
 const registry = new OpenAPIRegistry([

@@ -8,9 +8,10 @@
 // import 'dotenv/config';
 import e, { urlencoded } from 'express';
 import {
-    applicantApiRouter,
-    // applicantRouter,
-} from './modules/basic-info/router.js';
+    applicantsRouter,
+} from './modules/applicants/router.js';
+import { authRouter } from './modules/auth/router.js';
+import { usersRouter } from './modules/users/router.js';
 import handleError from './middleware/error-handler.js';
 import { initializeConnection } from './db/mysql2.connector.js';
 
@@ -25,8 +26,9 @@ app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
 
 app.use(e.json()); // for POST
 
-app.use('/api/applicants', applicantApiRouter);
-// app.use('/applicants', applicantRouter);
+app.use('/api/applicants', applicantsRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
 app.use(handleError)
 

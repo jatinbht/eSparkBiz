@@ -1,6 +1,6 @@
 import * as Applicants from './model.js';
 import type { BasicInfoQuery } from './dto.js';
-import { pluckFirstColumn } from '../../utils/shape-shifter.js';
+import { pluckFirstColumn } from '../../../utils/shape-shifter.js';
 import { basicInfoFields, isFilterableField, type BasicInfoFilterOptions } from '@job-applicants/shared';
 
 export async function listPaginatedApplicants( query: BasicInfoQuery /* removed {pageSize, page, sortOn, order} */ ) {

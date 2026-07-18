@@ -1,4 +1,4 @@
-import type { DBOverride } from "../../db/db-overrides.js";
+import type { DBOverride } from "../../../db/db-overrides.js";
 
 export type ApplicantColumn = keyof DBOverride['applicant'];
 

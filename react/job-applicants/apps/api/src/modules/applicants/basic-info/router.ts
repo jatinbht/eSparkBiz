@@ -3,8 +3,8 @@ import { Router } from "express";
 import * as controller from './controller.js';
 
 // import { createBasicInfoValidators } from "./validator.js";
-import { validateRequestExpressValidator, validateRequestZod } from "../../middleware/request-validator.js";
-import idValidator from "../../middleware/id-validator.js";
+import { validateRequestExpressValidator, validateRequestZod } from "../../../middleware/request-validator.js";
+import idValidator from "../../../middleware/id-validator.js";
 import { BasicInfoQuerySchema } from "./schema.js";
 import { IdSchema, CreateBasicInfoSchema } from '@job-applicants/schemas';
 

@@ -1,10 +1,10 @@
-import handleAsync from '../../utils/async-handler.js';
-import AppError from '../../api/errors/AppError.js';
+import handleAsync from '../../../utils/async-handler.js';
+import AppError from '../../../api/errors/AppError.js';
 import * as Applicants from './model.js';
 import type { BasicInfoQuery } from './dto.js';
 import { json, type Request, type Response } from 'express';
 import * as service from './service.js';
-import { ErrorCode } from '../../api/errors/codes.js';
+import { ErrorCode } from '../../../api/errors/codes.js';
 
 export const list = handleAsync(async (req: Request, res: Response) => {
     console.debug('req.query ', req.query);
