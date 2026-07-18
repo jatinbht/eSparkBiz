@@ -9,7 +9,7 @@ import type { ActiveFilters, ActiveFilterValue, BasicInfoFilterColumn, BasicInfo
 import { filterableBasicInfoFields } from '@job-applicants/shared';
 import { FilterBar } from '#src/modules/applicants/components/FilterBar';
 import { valueToParams } from '#src/modules/applicants/lib/filterUtils';
-import { DataTable } from '#src/modules/applicants/components/ui/DataTable';
+import { DataTable } from '#src/modules/applicants/components/DataTable';
 
 const ListViewPage = () => {
     const { applicants, pagination } = useLoaderData() as Awaited<ReturnType<typeof loadApplicants>>;
