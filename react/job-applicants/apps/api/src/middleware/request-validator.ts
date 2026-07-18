@@ -3,7 +3,7 @@ import { type FieldValidationError, validationResult } from "express-validator";
 import type { NextFunction, Request, Response } from "express";
 import { z } from 'zod';
 import { validationErrorsToErrorMap } from "#src/utils/shape-shifter.js";
-import { ErrorCode } from "#src/api/errors/codes.js";
+import { ErrorCode } from '@job-applicants/schemas';
 
 export function validateRequestExpressValidator(req: Request, res: Response, next: NextFunction) {
     const result = validationResult(req).formatWith(

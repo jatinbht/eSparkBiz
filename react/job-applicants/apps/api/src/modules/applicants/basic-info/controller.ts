@@ -4,7 +4,7 @@ import * as Applicants from './model.js';
 import type { BasicInfoQuery } from './dto.js';
 import { json, type Request, type Response } from 'express';
 import * as service from './service.js';
-import { ErrorCode } from '../../../api/errors/codes.js';
+import { ErrorCode } from '@job-applicants/schemas';
 
 export const list = handleAsync(async (req: Request, res: Response) => {
     console.debug('req.query ', req.query);

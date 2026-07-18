@@ -1,4 +1,4 @@
-import { ErrorCode } from './codes.js';
+import { ErrorCode } from '@job-applicants/schemas';
 
 export default class AppError extends Error {
     readonly status: number;
