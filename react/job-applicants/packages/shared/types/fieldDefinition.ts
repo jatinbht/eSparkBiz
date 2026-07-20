@@ -1,4 +1,4 @@
-import type { BasicInfoFieldBaseDefinition, TextFieldOptions, DateFieldOptions, SelectFieldOptions, RadioFieldOptions, TextareaFieldOptions } from "../constants";
+import type { BasicInfoFieldBaseDefinition, TextFieldOptions, DateFieldOptions, SelectFieldOptions, RadioFieldOptions, TextareaFieldOptions } from "../constants/BasicInfoFields";
 
 
 // If you later make basicInfoFields generic enough that each element preserves the relationship

@@ -1,0 +1,23 @@
+import type { InputFieldDefinition } from '@job-applicants/shared';
+import type { AnyFieldApi } from '@tanstack/react-form';
+import { Input } from '@job-applicants/ui/input';
+
+type InputFieldProps = {
+    fieldDefinition: InputFieldDefinition<'text' | 'email' | 'tel'>;
+    field: AnyFieldApi;
+};
+
+export function InputField({ fieldDefinition, field }: InputFieldProps) {
+    return (
+        <Input
+            id={fieldDefinition.key}
+            name={field.name}
+            type={fieldDefinition.fieldType}
+            value={field.state.value ?? ''}
+            onChange={(e) => field.handleChange(e.target.value)}
+            onBlur={field.handleBlur}
+            placeholder={fieldDefinition.fieldProps?.placeholder}
+            disabled={fieldDefinition.fieldProps?.disabled}
+        />
+    );
+}

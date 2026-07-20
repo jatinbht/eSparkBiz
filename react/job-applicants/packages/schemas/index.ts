@@ -1,2 +1,4 @@
-export * from "./applicant.js";
-export * from './id.js'
+export * from './applicant';
+export * from './id';
+export * from './validators/phone';
+export * from './errors';

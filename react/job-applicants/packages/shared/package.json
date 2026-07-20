@@ -1,8 +1,24 @@
 {
     "name": "@job-applicants/shared",
+    "version": "1.0.0",
     "type": "module",
+    "private": true,
+    "main": "./index.ts",
+    "types": "./index.ts",
     "exports": {
-        "./constants": "./constants/index.js",
-        "./types": "./types/types.js" 
-    }
+        ".": "./index.ts",
+        "./*": "./*.ts",
+        "./constants/*": "./constants/*.ts",
+        "./types/*": "./types/*.ts"
+    },
+    "scripts": {
+        "typecheck": "tsc --noEmit"
+    },
+    "files": [
+        "index.ts",
+        "constants",
+        "types",
+        "date.ts",
+        "package.json"
+    ]
 }

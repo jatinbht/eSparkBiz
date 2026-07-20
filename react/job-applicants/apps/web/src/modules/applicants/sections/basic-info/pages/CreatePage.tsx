@@ -1,0 +1,61 @@
+import { BasicInfoForm } from '../components/BasicInfoForm';
+import { Button } from '@job-applicants/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@job-applicants/ui/tabs';
+import { useApplicantForm } from '../hooks/useBasicInfoForm';
+
+export function CreatePage() {
+    const form = useApplicantForm();
+    return (
+        <section className="flex flex-col items-center gap-6 mx-auto max-w-full">
+            {/* <Edit className="self-end" /> */}
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    form.handleSubmit();
+                }}
+            >
+                <Tabs defaultValue="basic-info">
+                    <TabsList>
+                        <TabsTrigger value="basic-info">Basic Info</TabsTrigger>
+
+                        <TabsTrigger value="education">Education</TabsTrigger>
+
+                        <TabsTrigger value="experience">Experience</TabsTrigger>
+
+                        <TabsTrigger value="technologies">
+                            Technologies
+                        </TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="basic-info">
+                        <BasicInfoForm form={form} />
+                    </TabsContent>
+
+                    <TabsContent value="education">Education</TabsContent>
+
+                    <TabsContent value="experience">Experience</TabsContent>
+
+                    <TabsContent value="technologies">Technologies</TabsContent>
+                </Tabs>
+
+                <Button type="submit">Create Applicant</Button>
+                {/* <form.Subscribe
+                    selector={(state) => ({
+                        canSubmit: state.canSubmit,
+                        isSubmitting: state.isSubmitting,
+                    })}
+                >
+                    {({ canSubmit, isSubmitting }) => (
+                        <Button
+                            type="submit"
+                            disabled={!canSubmit || isSubmitting}
+                        >
+                            {isSubmitting ? 'Creating...' : 'Create Applicant'}
+                        </Button>
+                    )}
+                </form.Subscribe> */}
+            </form>
+        </section>
+    );
+}
