@@ -28,9 +28,9 @@ app.use(e.json()); // for POST
 
 import { Routes } from '@job-applicants/api-contract';
 
-app.use('/api' + Routes.applicants.list, applicantsRouter);
-app.use('/api' + Routes.auth.login.replace('/login',''), authRouter); // mount auth router at /api/auth
-app.use('/api' + Routes.users.list, usersRouter);
+app.use('/api' + Routes.applicants.base, applicantsRouter);
+app.use('/api' + Routes.auth.base, authRouter);
+app.use('/api' + Routes.users.base, usersRouter);
 
 app.use(handleError)
 

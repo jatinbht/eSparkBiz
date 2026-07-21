@@ -1,6 +1,6 @@
 import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
 import { http } from './http';
-import { Api } from './endpoints';
+import { Routes, RouteBuilders } from '@job-applicants/api-contract';
 
 export type BasicInfoQueryParams = {
   page?: number;
@@ -30,25 +30,25 @@ export type PaginatedResult<T> = {
 export type BasicInfoFilterOptions = Record<string, string[]>;
 
 export async function getApplicants(params?: BasicInfoQueryParams) {
-  return http.get<PaginatedResult<BasicInfo>>(Api.applicants.list, params);
+  return http.get<PaginatedResult<BasicInfo>>(Routes.applicants.base, params);
 }
 
 export async function getFilterOptions() {
-  return http.get<BasicInfoFilterOptions>(Api.applicants.filterOptions);
+  return http.get<BasicInfoFilterOptions>(Routes.applicants.filterOptions);
 }
 
 export async function getApplicant(id: number) {
-  return http.get<BasicInfo>(Api.applicants.byId(id));
+  return http.get<BasicInfo>(RouteBuilders.applicants.byId(id));
 }
 
 export async function createApplicant(data: CreateBasicInfo) {
-  return http.post<BasicInfo>(Api.applicants.create, data);
+  return http.post<BasicInfo>(Routes.applicants.base, data);
 }
 
 export async function updateApplicant(id: number, data: CreateBasicInfo) {
-  return http.put<BasicInfo>(Api.applicants.update(id), data);
+  return http.put<BasicInfo>(RouteBuilders.applicants.byId(id), data);
 }
 
 export async function deleteApplicant(id: number) {
-  return http.delete<void>(Api.applicants.delete(id));
+  return http.delete<void>(RouteBuilders.applicants.byId(id));
 }
