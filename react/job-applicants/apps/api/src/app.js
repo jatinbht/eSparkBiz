@@ -26,9 +26,11 @@ app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
 
 app.use(e.json()); // for POST
 
-app.use('/api/applicants', applicantsRouter);
-app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
+import { Routes } from '@job-applicants/api-contract';
+
+app.use('/api' + Routes.applicants.list, applicantsRouter);
+app.use('/api' + Routes.auth.login.replace('/login',''), authRouter); // mount auth router at /api/auth
+app.use('/api' + Routes.users.list, usersRouter);
 
 app.use(handleError)
 

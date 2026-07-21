@@ -1,5 +1,6 @@
 import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
 import { http } from './http';
+import { Api } from './endpoints';
 
 export type BasicInfoQueryParams = {
   page?: number;
@@ -29,25 +30,25 @@ export type PaginatedResult<T> = {
 export type BasicInfoFilterOptions = Record<string, string[]>;
 
 export async function getApplicants(params?: BasicInfoQueryParams) {
-  return http.get<PaginatedResult<BasicInfo>>('/applicants', params);
+  return http.get<PaginatedResult<BasicInfo>>(Api.applicants.list, params);
 }
 
 export async function getFilterOptions() {
-  return http.get<BasicInfoFilterOptions>('/applicants/filter-options');
+  return http.get<BasicInfoFilterOptions>(Api.applicants.filterOptions);
 }
 
 export async function getApplicant(id: number) {
-  return http.get<BasicInfo>(`/applicants/${id}`);
+  return http.get<BasicInfo>(Api.applicants.byId(id));
 }
 
 export async function createApplicant(data: CreateBasicInfo) {
-  return http.post<BasicInfo>('/applicants', data);
+  return http.post<BasicInfo>(Api.applicants.create, data);
 }
 
 export async function updateApplicant(id: number, data: CreateBasicInfo) {
-  return http.put<BasicInfo>(`/applicants/${id}`, data);
+  return http.put<BasicInfo>(Api.applicants.update(id), data);
 }
 
 export async function deleteApplicant(id: number) {
-  return http.delete<void>(`/applicants/${id}`);
+  return http.delete<void>(Api.applicants.delete(id));
 }
