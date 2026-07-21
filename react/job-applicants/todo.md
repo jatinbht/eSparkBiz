@@ -1,8 +1,8 @@
 - [x] add 'shadcn' as table/data-grid: to enable sorting, filtering, searching
-- [ ] Shared API Contracts
+- [x] Shared API Contracts
 - [ ] learn about microservices architecture:
 
-- [ ] add authentication (stub but it helps imagine the future direction)
+- [x] add authentication (stub but it helps imagine the future direction)
 
 ```md
 modules/
@@ -137,3 +137,8 @@ apps/web/src/modules/
     auth/
     users/
 ```
+
+
+- [ ] [Implement Tanstack Router and Query](https://chatgpt.com/s/t_6a5f25ef76a48191ab01bf4602ffa561)
+
+- [ ] `zodSmartCoersionPlugin`
