@@ -1,6 +1,6 @@
 import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
 import { http } from './http';
-import { Routes, RouteBuilders } from '@job-applicants/api-contract';
+import { Routes, RouteBuilder } from '@job-applicants/api-contract';
 
 export type BasicInfoQueryParams = {
   page?: number;
@@ -38,7 +38,7 @@ export async function getFilterOptions() {
 }
 
 export async function getApplicant(id: number) {
-  return http.get<BasicInfo>(RouteBuilders.applicants.byId(id));
+  return http.get<BasicInfo>(RouteBuilder.applicants.byId(id));
 }
 
 export async function createApplicant(data: CreateBasicInfo) {
@@ -46,9 +46,9 @@ export async function createApplicant(data: CreateBasicInfo) {
 }
 
 export async function updateApplicant(id: number, data: CreateBasicInfo) {
-  return http.put<BasicInfo>(RouteBuilders.applicants.byId(id), data);
+  return http.put<BasicInfo>(RouteBuilder.applicants.byId(id), data);
 }
 
 export async function deleteApplicant(id: number) {
-  return http.delete<void>(RouteBuilders.applicants.byId(id));
+  return http.delete<void>(RouteBuilder.applicants.byId(id));
 }
