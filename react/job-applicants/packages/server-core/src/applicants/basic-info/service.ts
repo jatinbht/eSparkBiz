@@ -1,7 +1,9 @@
 import * as Applicants from './model.js';
-import type { BasicInfoQuery } from './dto.js';
-import { pluckFirstColumn } from '../../../utils/shape-shifter.js';
+import type { BasicInfoQuery } from '@job-applicants/schemas/dto-basicInfoQuery';
+import { pluckFirstColumn } from '../../utils/shape-shifter.js';
 import { basicInfoFields, isFilterableField, type BasicInfoFilterOptions } from '@job-applicants/shared';
+import { ErrorCode, type CreateBasicInfo } from 'packages/schemas';
+import AppError from '../../errors/AppError.js';
 
 export async function listPaginatedApplicants( query: BasicInfoQuery /* removed {pageSize, page, sortOn, order} */ ) {
     const { page, pageSize, sortOn, order, city, designation, state, gender, relationship_status, dob_from, dob_to } = query;
@@ -28,20 +30,6 @@ export async function listPaginatedApplicants( query: BasicInfoQuery /* removed 
 }
 
 export async function getFilterOptions() {
-    // return {
-    //     // designation: await Applicants.findDistinct('designation'),
-    //     // city: await Applicants.findDistinct('city'),
-    //     // state: await Applicants.findDistinct('state'),
-    //     // NOTE: these can be hardcoded
-    //     // gender: await findDistinct('gender'),
-    //     // relationship_status: await findDistinct('relationship_status'),
-
-    //     // designation: pluckFirstColumn(await Applicants.findDistinct('designation')),
-    //     // city: pluckFirstColumn(await Applicants.findDistinct('city')),
-    //     // state: pluckFirstColumn(await Applicants.findDistinct('state')),
-    //     // gender: pluckFirstColumn(await Applicants.findDistinct('gender')),
-    //     // relationship_status: pluckFirstColumn(await Applicants.findDistinct('relationship_status')),
-    // };
 
     const result: BasicInfoFilterOptions = {};
 
@@ -76,4 +64,25 @@ export async function getFilterOptions() {
     }
 
     return result;
+}
+
+export async function createApplicant(payload: CreateBasicInfo) {
+    const id = await Applicants.insert(payload);
+
+    const applicant = await Applicants.findById(id);
+
+    return applicant;
+}
+
+export async function getApplicant(id: number) {
+    const applicant = await Applicants.findById(id);
+    if (!applicant) {
+        throw new AppError({
+            status: 404,
+            code: ErrorCode.NOT_FOUND,
+            message: "Applicant not found",
+        });
+    }
+
+    return applicant;
 }

@@ -21,6 +21,6 @@
         "src",
         "src/modules/basic-info/.validator.express-validator.js",
         "kysely-codegen.config.js"
-    ],
+, "src/modules/applicants/basic-info/.openapi.ts", "src/modules/applicants/basic-info/.controller.ts", "src/modules/applicants/basic-info/.router.ts", "src/.orpc.ts", "src/modules/applicants/basic-info/.procedure.ts", "../../packages/server-core/src/applicants/basic-info/service.ts", "../../packages/server-core/src/applicants/basic-info/model.ts", "../../packages/server-core/src/applicants/basic-info/mapper.ts", "../../packages/server-core/src/applicants/basic-info/types.ts", "../../packages/server-core/src/db/kysely.connector.ts", "../../packages/server-core/src/db/mysql2.connector.js", "../../packages/server-core/src/db/db-overrides.ts", "../../packages/server-core/src/utils/shape-shifter.ts", "../../packages/server-core/src/db/db-types.ts", "../../packages/server-core/src/errors", "../../packages/schemas/dto-basicInfoQuery.ts"    ],
     "exclude": ["node_modules"]
 }

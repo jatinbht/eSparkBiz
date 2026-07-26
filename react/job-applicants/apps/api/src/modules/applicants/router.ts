@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { applicantApiRouter } from './basic-info/router.js';
+import { applicantApiRouter } from './basic-info/.router.js';
 import { educationRouter } from './education/router.js';
 import { experienceRouter } from './experience/router.js';
 import { technologiesRouter } from './technologies/router.js';

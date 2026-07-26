@@ -1,9 +1,9 @@
 import handleAsync from '../../../utils/async-handler.js';
-import AppError from '../../../api/errors/AppError.js';
-import * as Applicants from './model.js';
-import type { BasicInfoQuery } from './dto.js';
+import AppError from '../../../../../../packages/server-core/src/errors/AppError.js';
+import * as Applicants from '../../../../../../packages/server-core/src/applicants/basic-info/model.js';
+import type { BasicInfoQuery } from '@job-applicants/schemas/dto-basicInfoQuery';
 import { json, type Request, type Response } from 'express';
-import * as service from './service.js';
+import * as service from '../../../../../../packages/server-core/src/applicants/basic-info/service.js';
 import { ErrorCode } from '@job-applicants/schemas';
 
 export const list = handleAsync(async (req: Request, res: Response) => {
@@ -62,25 +62,14 @@ export const show = handleAsync(async (req: Request, res: Response) => {
     // console.log('id', id, typeof id);
 
 
-    const applicant = await Applicants.findById(id);
-    if (!applicant) {
-        // return res.status(404).json({ message: 'Applicant not found' });
-        // throw new Error('Applicant not found');
-        throw new AppError({
-            status: 404,
-            code: ErrorCode.NOT_FOUND,
-            message: "Applicant not found",
-        });
-    }
+    const applicant = service.getApplicant(id)
     res.status(200).json(applicant);
 });
 
 export const create = handleAsync(async (req: Request, res: Response) => {
     const payload = res.locals.body;
     console.log("Validated payload:", res.locals.body);
-    const id = await Applicants.insert(payload);
-    const applicant = await Applicants.findById(id);
-    // console.dir(applicant, { depth: null });
-    // console.log(applicant);
+    const applicant = await service.createApplicant(payload);
+
     res.status(201).json(applicant);
 });

@@ -8,5 +8,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit --ignoreDeprecations 6.0"
   }
 }

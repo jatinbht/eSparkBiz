@@ -1,6 +1,6 @@
 import { Router } from "express";
 // import { addApplicant, getApplicantDetails, listApplicants } from "./controller.js";
-import * as controller from './controller.js';
+import * as controller from './.controller.js';
 
 // import { createBasicInfoValidators } from "./validator.js";
 import { validateRequestExpressValidator, validateRequestZod } from "../../../middleware/request-validator.js";

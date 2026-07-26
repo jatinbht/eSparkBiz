@@ -13,7 +13,8 @@ import {
 import { authRouter } from './modules/auth/router.js';
 import { usersRouter } from './modules/users/router.js';
 import handleError from './middleware/error-handler.js';
-import { initializeConnection } from './db/mysql2.connector.js';
+import { initializeConnection } from '../../../packages/server-core/src/db/mysql2.connector.js';
+import { rpcHandler } from "@job-applicants/api-services";
 
 const app = e();
 
@@ -21,8 +22,22 @@ const app = e();
 app.use(urlencoded({ extended: true }));
 // app.use(e.json()); //React frontend sends JSON request bodies via POST.
 
+
 app.get('/ping', (req, res) => res.send('pong'))
 app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
+
+app.use("/rpc{/*path}", async (req, res, next) => {
+    const { matched } = await rpcHandler.handle(req, res, {
+        prefix: "/rpc",
+        context: {},
+    });
+
+    if (matched) {
+        return;
+    }
+
+    next();
+});
 
 app.use(e.json()); // for POST
 

@@ -1,6 +1,7 @@
 // import { z } from 'zod';
 import * as z from "zod";
 import { PhoneSchema } from "./validators/phone.js";
+import { BasicInfoQuerySchema } from '../../../../apps/api/src/modules/applicants/basic-info/schema.js';
 
 const emptyStringToNull = (value: unknown) =>
     value === '' ? null : value;
@@ -82,3 +83,6 @@ export const CreateBasicInfoSchema = z.object({
 // You never write a separate `type Applicant = { ... }` again.
 export type BasicInfo = z.infer<typeof BasicInfoSchema>;
 export type CreateBasicInfo = z.infer<typeof CreateBasicInfoSchema>;
+
+
+export type BasicInfoQuery = z.infer<typeof BasicInfoQuerySchema>;

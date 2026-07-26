@@ -1,5 +1,5 @@
 import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
-import { http } from './http';
+import { http } from '../http';
 import { Routes, RouteBuilder } from '@job-applicants/api-contract';
 
 export type BasicInfoQueryParams = {

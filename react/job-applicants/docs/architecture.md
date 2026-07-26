@@ -63,3 +63,51 @@ Form value      Calendar value
 ""          ⇄   undefined
 "2024-07-08" ⇄  Date
 ```
+
+## ORPC
+
+- api-contract → @orpc/contract only
+- server-core → @orpc/server
+- web → @orpc/client, @orpc/react
+- apps/api → Express, HTTP server, environment loading, server startup
+
+Replace this flow:
+
+``` md
+React
+    │
+    ▼
+api-client
+    │
+    ▼
+http.post("/applicants")
+    │
+    ▼
+Express REST route
+    │
+    ▼
+service
+```
+
+with
+
+```md
+React
+    │
+    ▼
+oRPC Client
+    │
+    ▼
+RPCHandler
+    │
+    ▼
+appRouter
+    │
+    ▼
+basicInfo.create.handler(...)
+    │
+    ▼
+service
+```
+
+Notice that your service layer should not change. Only the transport changes.

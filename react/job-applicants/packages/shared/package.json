@@ -12,7 +12,7 @@
         "./types/*": "./types/*.ts"
     },
     "scripts": {
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit --ignoreDeprecations 6.0"
     },
     "files": [
         "index.ts",
