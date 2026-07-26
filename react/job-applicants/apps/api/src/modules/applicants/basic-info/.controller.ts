@@ -1,7 +1,7 @@
 import handleAsync from '../../../utils/async-handler.js';
 import AppError from '../../../../../../packages/server-core/src/errors/AppError.js';
 import * as Applicants from '../../../../../../packages/server-core/src/applicants/basic-info/model.js';
-import type { BasicInfoQuery } from '@job-applicants/schemas/dto-basicInfoQuery';
+import type { BasicInfoQuery } from '@job-applicants/schemas';
 import { json, type Request, type Response } from 'express';
 import * as service from '../../../../../../packages/server-core/src/applicants/basic-info/service.js';
 import { ErrorCode } from '@job-applicants/schemas';

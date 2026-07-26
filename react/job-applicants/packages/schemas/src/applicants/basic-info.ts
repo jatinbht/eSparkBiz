@@ -1,6 +1,6 @@
 // import { z } from 'zod';
 import * as z from "zod";
-import { PhoneSchema } from "./validators/phone.js";
+import { PhoneSchema } from "../common/phone.js";
 import { BasicInfoQuerySchema } from '../../../../apps/api/src/modules/applicants/basic-info/schema.js';
 
 const emptyStringToNull = (value: unknown) =>

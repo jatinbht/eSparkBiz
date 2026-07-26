@@ -1,5 +1,5 @@
 import * as Applicants from './model.js';
-import type { BasicInfoQuery } from '@job-applicants/schemas/dto-basicInfoQuery';
+import type { BasicInfoQuery } from '@job-applicants/schemas';
 import { pluckFirstColumn } from '../../utils/shape-shifter.js';
 import { basicInfoFields, isFilterableField, type BasicInfoFilterOptions } from '@job-applicants/shared';
 import { ErrorCode, type CreateBasicInfo } from 'packages/schemas';
