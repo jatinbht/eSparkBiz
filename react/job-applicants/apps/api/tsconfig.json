@@ -19,7 +19,7 @@
     "include": [
         "src",
         "src/modules/basic-info/.validator.express-validator.js",
-        "kysely-codegen.config.js",
+        "kysely-codegen.config.old.js",
         "src/modules/applicants/basic-info/.openapi.ts",
         "src/modules/applicants/basic-info/.controller.ts",
         "src/modules/applicants/basic-info/.router.ts",
@@ -35,7 +35,8 @@
         "../../packages/server-core/src/utils/shape-shifter.ts",
         "../../packages/server-core/src/db/db-types.ts",
         "../../packages/server-core/src/errors",
-        "../../packages/schemas/dto-basicInfoQuery.ts"
+        "../../packages/schemas/dto-basicInfoQuery.ts",
+        "../../packages/schemas/src/applicants/schema.ts"
     ],
     "exclude": ["node_modules"]
 }

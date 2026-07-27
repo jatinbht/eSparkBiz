@@ -1,5 +1,12 @@
-import type { BasicInfoFieldBaseDefinition, TextFieldOptions, DateFieldOptions, SelectFieldOptions, RadioFieldOptions, TextareaFieldOptions } from "../constants/BasicInfoFields";
-
+import type { BasicInfo } from 'packages/schemas/src';
+import type {
+    BasicInfoFieldBaseDefinition,
+    TextFieldOptions,
+    DateFieldOptions,
+    SelectFieldOptions,
+    RadioFieldOptions,
+    TextareaFieldOptions,
+} from '../constants/BasicInfoFields';
 
 // If you later make basicInfoFields generic enough that each element preserves the relationship
 
@@ -20,36 +27,35 @@ import type { BasicInfoFieldBaseDefinition, TextFieldOptions, DateFieldOptions, 
 //     dbColumn: TDbKey;
 // };
 
+// export type InputFieldDefinition<T extends 'text' | 'email' | 'tel'> =
+//     BasicInfoFieldBaseDefinition & {
+//         fieldType: T;
+//         fieldProps?: TextFieldOptions;
+//     };
 
-export type InputFieldDefinition<T extends 'text' | 'email' | 'tel'> =
-    BasicInfoFieldBaseDefinition & {
-        fieldType: T;
-        fieldProps?: TextFieldOptions;
-    };
+// export type TextFieldDefinition = InputFieldDefinition<'text'>;
+// export type EmailFieldDefinition = InputFieldDefinition<'email'>;
+// export type TelFieldDefinition = InputFieldDefinition<'tel'>;
 
-export type TextFieldDefinition = InputFieldDefinition<'text'>;
-export type EmailFieldDefinition = InputFieldDefinition<'email'>;
-export type TelFieldDefinition = InputFieldDefinition<'tel'>;
+// export type DateFieldDefinition = BasicInfoFieldBaseDefinition & {
+//     fieldType: 'date';
+//     fieldProps?: DateFieldOptions;
+// };
 
-export type DateFieldDefinition = BasicInfoFieldBaseDefinition & {
-    fieldType: 'date';
-    fieldProps?: DateFieldOptions;
-};
+// export type SelectFieldDefinition = BasicInfoFieldBaseDefinition & {
+//     fieldType: 'select';
+//     fieldProps?: SelectFieldOptions;
+// };
 
-export type SelectFieldDefinition = BasicInfoFieldBaseDefinition & {
-    fieldType: 'select';
-    fieldProps?: SelectFieldOptions;
-};
+// export type RadioFieldDefinition = BasicInfoFieldBaseDefinition & {
+//     fieldType: 'radio';
+//     fieldProps: RadioFieldOptions;
+// };
 
-export type RadioFieldDefinition = BasicInfoFieldBaseDefinition & {
-    fieldType: 'radio';
-    fieldProps: RadioFieldOptions;
-};
-
-export type TextareaFieldDefinition = BasicInfoFieldBaseDefinition & {
-    fieldType: 'textarea';
-    fieldProps?: TextareaFieldOptions;
-};
+// export type TextareaFieldDefinition = BasicInfoFieldBaseDefinition & {
+//     fieldType: 'textarea';
+//     fieldProps?: TextareaFieldOptions;
+// };
 
 export type BasicInfoFieldDefinition =
     | TextFieldDefinition
@@ -59,4 +65,50 @@ export type BasicInfoFieldDefinition =
     | TextareaFieldDefinition
     | SelectFieldDefinition
     | RadioFieldDefinition;
-    
+
+export type InputFieldDefinition<
+    T extends 'text' | 'email' | 'tel',
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = BasicInfoFieldBaseDefinition<TKey> & {
+    fieldType: T;
+    fieldProps?: TextFieldOptions;
+};
+
+export type TextFieldDefinition<
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = InputFieldDefinition<'text', TKey>;
+
+export type EmailFieldDefinition<
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = InputFieldDefinition<'email', TKey>;
+
+export type TelFieldDefinition<TKey extends keyof BasicInfo = keyof BasicInfo> =
+    InputFieldDefinition<'tel', TKey>;
+
+export type DateFieldDefinition<
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = BasicInfoFieldBaseDefinition<TKey> & {
+    fieldType: 'date';
+    fieldProps?: DateFieldOptions;
+};
+
+export type SelectFieldDefinition<
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = BasicInfoFieldBaseDefinition<TKey> & {
+    fieldType: 'select';
+    fieldProps?: SelectFieldOptions;
+};
+
+export type RadioFieldDefinition<
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = BasicInfoFieldBaseDefinition<TKey> & {
+    fieldType: 'radio';
+    fieldProps: RadioFieldOptions;
+};
+
+export type TextareaFieldDefinition<
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = BasicInfoFieldBaseDefinition<TKey> & {
+    fieldType: 'textarea';
+    fieldProps?: TextareaFieldOptions;
+};

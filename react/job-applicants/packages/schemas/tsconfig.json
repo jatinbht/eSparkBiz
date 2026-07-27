@@ -10,5 +10,5 @@
     "noEmit": true,
     "skipLibCheck": true
   },
-  "include": ["."]
+  "include": [".", "../../apps/api/src/modules/applicants/basic-info/schema.ts"]
 }

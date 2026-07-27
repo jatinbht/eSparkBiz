@@ -6,10 +6,11 @@
 //     { key: 'relationship_status', label: 'Relationship Status', type: 'enum',       paramKeys: ['relationship_status'],     options: ['single', 'committed'] },
 //     { key: 'dob',                 label: 'Date of Birth',       type: 'daterange',  paramKeys: ['dob_from', 'dob_to'] },
 // ] as const;
-
-import type { BasicInfo } from '@job-applicants/schemas';
+import { z } from "zod";
+import type { BasicInfo, BasicInfoFilterOptionsSchema, CreateBasicInfo } from '@job-applicants/schemas';
 import type { BasicInfoFieldDefinition } from '../types/fieldDefinition';
 import { today } from '../date';
+import type { ApplicantColumn } from '@job-applicants/server-core';
 
 type Visibility = 'table' | 'form' | 'detail';
 
@@ -39,36 +40,54 @@ type CommonFieldOptions = {
 };
 
 
-export type BasicInfoFieldBaseDefinition = {
-    key: keyof BasicInfo;
+// export type BasicInfoFieldBaseDefinition = {
+//     key: keyof BasicInfo;
 
-    dbColumn: string;
+//     dbColumn: ApplicantColumn;
+
+//     label: string;
+
+//     // fieldType:
+//     //     | 'text'
+//     //     | 'textarea'
+//     //     | 'email'
+//     //     | 'tel'
+//     //     | 'date'
+//     //     | 'select'
+//     //     | 'radio';
+
+//     formatter?: Formatter;
+
+//     sortable?: boolean;
+
+//     // isVisibleIn: {
+//     //     table?: boolean;
+//     //     form?: boolean;
+//     //     detail?: boolean;
+//     // };
+//     visibility: readonly Visibility[];
+
+//     filter?: FilterConfig;
+
+//     // fieldProps?: fieldProps;
+// };
+
+export type BasicInfoFieldBaseDefinition<
+    TKey extends keyof BasicInfo = keyof BasicInfo,
+> = {
+    key: TKey;
+
+    dbColumn: ApplicantColumn;
 
     label: string;
-
-    // fieldType:
-    //     | 'text'
-    //     | 'textarea'
-    //     | 'email'
-    //     | 'tel'
-    //     | 'date'
-    //     | 'select'
-    //     | 'radio';
 
     formatter?: Formatter;
 
     sortable?: boolean;
 
-    // isVisibleIn: {
-    //     table?: boolean;
-    //     form?: boolean;
-    //     detail?: boolean;
-    // };
     visibility: readonly Visibility[];
 
     filter?: FilterConfig;
-
-    // fieldProps?: fieldProps;
 };
 
 export type TextFieldOptions = CommonFieldOptions;
@@ -114,7 +133,7 @@ export type Formatter = 'date' | 'email' | 'phone';
 export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
     {
         key: 'firstName',
-        dbColumn: 'first_name',
+        dbColumn: 'firstName',
         label: 'First Name',
         fieldType: 'text',
         sortable: true,
@@ -128,7 +147,7 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
 
     {
         key: 'lastName',
-        dbColumn: 'last_name',
+        dbColumn: 'lastName',
         label: 'Last Name',
         fieldType: 'text',
         sortable: true,
@@ -246,7 +265,7 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
 
     {
         key: 'zipCode',
-        dbColumn: 'zip_code',
+        dbColumn: 'zipCode',
         label: 'Zip Code',
         fieldType: 'text',
         sortable: false,
@@ -256,7 +275,7 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
 
     {
         key: 'relationshipStatus',
-        dbColumn: 'relationship_status',
+        dbColumn: 'relationshipStatus',
         label: 'Relationship Status',
         fieldType: 'select',
         sortable: false,
@@ -300,7 +319,7 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
 
     {
         key: 'createdAt',
-        dbColumn: 'created_at',
+        dbColumn: 'createdAt',
         label: 'Created At',
         fieldType: 'date',
         formatter: 'date',
@@ -322,9 +341,14 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
 
 export type BasicInfoField = BasicInfoFieldDefinition;
 
-export type FilterableBasicInfoField = BasicInfoField & {
-    filter: NonNullable<BasicInfoField['filter']>;
-};
+// export type FilterableBasicInfoField = BasicInfoField & {
+//     filter: NonNullable<BasicInfoField['filter']>;
+// };
+export type FilterableBasicInfoField =
+    BasicInfoField & {
+        key: FilterKey;
+        filter: NonNullable<BasicInfoField["filter"]>;
+    };
 
 export function isFilterableField(
     field: BasicInfoField,
@@ -332,9 +356,13 @@ export function isFilterableField(
     return field.filter !== undefined;
 }
 
-export const filterableBasicInfoFields: FilterableBasicInfoField[] = basicInfoFields.filter(
-    isFilterableField,
-);
+// export const filterableBasicInfoFields: FilterableBasicInfoField[] = basicInfoFields.filter(
+//     isFilterableField,
+// );
+export const filterableBasicInfoFields =
+    basicInfoFields.filter(
+        isFilterableField,
+    ) as FilterableBasicInfoField[];
 
 function isVisibleIn(section: Visibility) {
     return (field: BasicInfoField) =>
@@ -364,25 +392,35 @@ export type TableBasicInfoField = (typeof tableBasicInfoFields)[number];
 //     > => field.filter !== undefined,
 // );
 
+
 export const detailBasicInfoFields = basicInfoFields.filter(
     isVisibleIn('detail'),
 );
 
-export type FormBasicInfoField = BasicInfoFieldDefinition;
+// export type FormBasicInfoField = BasicInfoFieldDefinition;
+export type FormBasicInfoField =
+    BasicInfoFieldDefinition & {
+        key: FormKey;
+    };
 
 export function isFormField(field: BasicInfoField): field is FormBasicInfoField {
     return (field.visibility as readonly Visibility[]).includes('form');
 }
 
-export const formBasicInfoFields = basicInfoFields.filter(
-    isFormField,
-);
+// export const formBasicInfoFields = basicInfoFields.filter(
+//     isFormField,
+// );
+export const formBasicInfoFields =
+    basicInfoFields.filter(
+        isFormField,
+    ) as FormBasicInfoField[];
 
 
 
 //## Filtering
 
-export type BasicInfoFilterOptions = Partial<Record<string, string[]>>;
+// export type BasicInfoFilterOptions = Partial<Record<string, string[]>>;
+export type BasicInfoFilterOptions = z.infer<typeof BasicInfoFilterOptionsSchema>;
 
 export function getFormFieldDefinition(
     key: FormBasicInfoField['key'],
@@ -405,3 +443,15 @@ export type DateRangeValue = { from?: string; to?: string };
 export type ActiveFilterValue = string[] | DateRangeValue;
 
 export type ActiveFilters = Partial<Record<BasicInfoFilterColumn, ActiveFilterValue>>;
+
+
+type FormKey = keyof CreateBasicInfo;
+
+type FilterKey =
+    | "designation"
+    | "country"
+    | "state"
+    | "city"
+    | "gender"
+    | "relationshipStatus"
+    | "dob";

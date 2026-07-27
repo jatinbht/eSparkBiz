@@ -11,9 +11,10 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 
 export interface Applicant {
   city: string | null;
+  country: string | null;
   createdAt: Generated<Date>;
   designation: Generated<string>;
-  dob: Date;
+  dob: string;
   email: string | null;
   firstName: string;
   fullAddress: string | null;
@@ -23,7 +24,7 @@ export interface Applicant {
   lastName: string;
   phone: string;
   relationshipStatus: "committed" | "single" | null;
-  state: Generated<string | null>;
+  state: string | null;
   zipCode: string | null;
 }
 

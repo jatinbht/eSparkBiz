@@ -1,7 +1,6 @@
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
-import { BasicInfoQuerySchema } from './schema.js';
 import { z } from 'zod';
-import { IdSchema } from '@job-applicants/schemas';
+import { BasicInfoQuerySchema, IdSchema } from '@job-applicants/schemas';
 
 export const basicInfoRegistry = new OpenAPIRegistry();
 

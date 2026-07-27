@@ -1,6 +1,6 @@
 // db.ts
 import { CamelCasePlugin, Kysely, MysqlDialect } from 'kysely';
-import { createPool } from 'mysql2';
+import { createPool } from 'mysql2/promise';
 import type { DBOverride } from './db-overrides.js';
 
 export const db = new Kysely<DBOverride>({

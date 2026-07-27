@@ -1,8 +1,16 @@
 import { db } from '../../db/kysely.connector.js';
 // import { connection } from '../../../db/mysql2.connector.js';
-import type { ApplicantColumn, FindAllParams, GetCountParams } from './types.js';
+import type {
+    ApplicantColumn,
+    FindAllParams,
+    GetCountParams,
+} from './types.js';
 import { toApplicantInsert } from './mapper.js';
 import type { CreateBasicInfo } from '@job-applicants/schemas';
+// import AppError from '../../errors/AppError.js';
+import AppError from '@job-applicants/server-core/errors/AppError'; // adjust path
+import { ErrorCode } from '@job-applicants/schemas';
+
 
 db.selectFrom('applicant')
     .selectAll()
@@ -147,16 +155,20 @@ export async function findById(id: number) {
 //     return result;
 // }
 // type Dob = CreateBasicInfo['dob'];
+
 export async function insert(body: CreateBasicInfo) {
-    // const row = toApplicantInsert(body);
-
-    // const s: string = body.dob; // should compile
-
-    // const d: Date = row.dob; // currently compiles according to your hover
     const result = await db
         .insertInto('applicant')
         .values(toApplicantInsert(body))
         .executeTakeFirst();
 
-    return result.insertId;
+    if (result.insertId === undefined) {
+        throw new AppError({
+            status: 500,
+            code: ErrorCode.INTERNAL_SERVER_ERROR,
+            message: 'Insert failed: no insertId returned.',
+        });
+    }
+
+    return Number(result.insertId);
 }

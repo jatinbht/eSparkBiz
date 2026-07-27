@@ -12,7 +12,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch --env-file=.env src/app.js",
-    "db:codegen": "dotenv -e .env -- kysely-codegen --config-file kysely-codegen.config.js",
+    "db:codegen": "dotenv -e .env -- kysely-codegen --dialect mysql --camel-case --out-file ../../packages/server-core/src/db/db-types.ts --type-mapping \"{\\\"date\\\":\\\"string\\\"}\"",
     "db:codegen:watch": "nodemon --watch src --ext sql,ts --exec \"npm run db:codegen\"",
     "typecheck": "tsc --noEmit --ignoreDeprecations 6.0"
   },

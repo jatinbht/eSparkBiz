@@ -1,7 +1,7 @@
 import * as Applicants from './model.js';
 import type { BasicInfoQuery } from '@job-applicants/schemas';
 import { pluckFirstColumn } from '../../utils/shape-shifter.js';
-import { basicInfoFields, isFilterableField, type BasicInfoFilterOptions } from '@job-applicants/shared';
+import { basicInfoFields, filterableBasicInfoFields, isFilterableField, type BasicInfoFilterOptions } from '@job-applicants/shared';
 import { ErrorCode, type CreateBasicInfo } from 'packages/schemas';
 import AppError from '../../errors/AppError.js';
 
@@ -31,7 +31,15 @@ export async function listPaginatedApplicants( query: BasicInfoQuery /* removed 
 
 export async function getFilterOptions() {
 
-    const result: BasicInfoFilterOptions = {};
+    // const result: BasicInfoFilterOptions = {};   
+    const result: BasicInfoFilterOptions = {
+        designation: [],
+        country: [],
+        state: [],
+        city: [],
+        gender: [],
+        relationshipStatus: [],
+    };
 
     // for (const column of basicInfoFilterableColumns) {
     //     if (column.type === 'distinct') {
@@ -45,7 +53,7 @@ export async function getFilterOptions() {
     //     }
     // }
 
-    const filterableFields = basicInfoFields.filter(isFilterableField);
+    const filterableFields = filterableBasicInfoFields.filter(isFilterableField);
 
     for (const field of filterableFields) {
         // if (!field.filter) continue; // no longer needs, because the type guard already guarantees it.
