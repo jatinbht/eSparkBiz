@@ -17,7 +17,7 @@
 // });
 
 import * as service from "./service";
-import { os } from "../../orpc";
+import { os } from "../../orpc.builder";
 
 // const os = implement(appContract);
 

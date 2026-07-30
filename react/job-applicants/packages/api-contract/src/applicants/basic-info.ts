@@ -1,4 +1,5 @@
 import { oc } from "@orpc/contract";
+import * as z from 'zod';
 
 import {
   IdSchema,
@@ -18,13 +19,18 @@ export const basicInfoContract = oc.router({
     .input(CreateBasicInfoSchema)
     .output(BasicInfoSchema),
 
-  show: oc
-    .route({
-      method: "GET",
-      path: "/applicants/:id",
-    })
-    .input(IdSchema)
-    .output(BasicInfoSchema),
+  // show: oc
+  //   .route({
+  //     method: "GET",
+  //     path: "/applicants/:id",
+  //   })
+    show: oc
+      .route({
+        method: "POST",
+        path: "/applicants/show",
+      })
+      .input(IdSchema)
+      .output(BasicInfoSchema),
 
   list: oc
     .route({

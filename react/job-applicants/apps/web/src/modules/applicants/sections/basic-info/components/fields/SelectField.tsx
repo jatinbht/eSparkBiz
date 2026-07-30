@@ -1,4 +1,3 @@
-console.log('NEW SELECT FIELD');
 import {
     Select,
     SelectContent,

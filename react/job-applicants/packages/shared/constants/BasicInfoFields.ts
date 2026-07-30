@@ -10,7 +10,6 @@ import { z } from "zod";
 import type { BasicInfo, BasicInfoFilterOptionsSchema, CreateBasicInfo } from '@job-applicants/schemas';
 import type { BasicInfoFieldDefinition } from '../types/fieldDefinition';
 import { today } from '../date';
-import type { ApplicantColumn } from '@job-applicants/server-core';
 
 type Visibility = 'table' | 'form' | 'detail';
 
@@ -72,12 +71,13 @@ type CommonFieldOptions = {
 //     // fieldProps?: fieldProps;
 // };
 
+export type ApplicantColumn = typeof basicInfoFields[number]["key"];
+
 export type BasicInfoFieldBaseDefinition<
     TKey extends keyof BasicInfo = keyof BasicInfo,
 > = {
     key: TKey;
-
-    dbColumn: ApplicantColumn;
+    dbColumn: TKey;
 
     label: string;
 
@@ -130,7 +130,7 @@ type FilterConfig =
 // used in basicInfoFields
 export type Formatter = 'date' | 'email' | 'phone';
 
-export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
+export const basicInfoFields = [
     {
         key: 'firstName',
         dbColumn: 'firstName',
@@ -337,18 +337,34 @@ export const basicInfoFields: readonly BasicInfoFieldDefinition[] = [
         visibility: ['detail'],
         filter: undefined,
     },
-]
+] as const satisfies readonly BasicInfoFieldDefinition[];
 
-export type BasicInfoField = BasicInfoFieldDefinition;
+// export type BasicInfoField = BasicInfoFieldDefinition;
+export type BasicInfoField = (typeof basicInfoFields)[number];
 
 // export type FilterableBasicInfoField = BasicInfoField & {
 //     filter: NonNullable<BasicInfoField['filter']>;
 // };
-export type FilterableBasicInfoField =
-    BasicInfoField & {
-        key: FilterKey;
-        filter: NonNullable<BasicInfoField["filter"]>;
-    };
+// export type FilterableBasicInfoField =
+//     BasicInfoField & {
+//         key: FilterKey;
+//         filter: NonNullable<BasicInfoField["filter"]>;
+//     };
+// export type FilterableBasicInfoField = Extract<
+//     BasicInfoField,
+//     {
+//         filter: NonNullable<BasicInfoField["filter"]>;
+//     }
+// >;
+// type FilterableBasicInfoField = Extract<
+//     BasicInfoField,
+//     {
+//         key: FilterKey;
+//         filter: FilterConfig;
+//     }
+// >;
+
+
 
 export function isFilterableField(
     field: BasicInfoField,
@@ -356,24 +372,41 @@ export function isFilterableField(
     return field.filter !== undefined;
 }
 
-// export const filterableBasicInfoFields: FilterableBasicInfoField[] = basicInfoFields.filter(
-//     isFilterableField,
-// );
-export const filterableBasicInfoFields =
-    basicInfoFields.filter(
-        isFilterableField,
-    ) as FilterableBasicInfoField[];
+export const filterableBasicInfoFields: FilterableBasicInfoField[] = basicInfoFields.filter(
+    isFilterableField,
+);
+// export const filterableBasicInfoFields =
+//     basicInfoFields.filter(
+//         isFilterableField,
+//     ) as FilterableBasicInfoField[];
 
 function isVisibleIn(section: Visibility) {
     return (field: BasicInfoField) =>
         (field.visibility as readonly Visibility[]).includes(section);
 }
+export function isTableField(
+    field: BasicInfoField,
+): field is Extract<
+    BasicInfoField,
+    { visibility: readonly ["table", ...Visibility[]] }
+> {
+    const visibility = field.visibility as readonly Visibility[];
 
-export const tableBasicInfoFields = basicInfoFields.filter(
-    isVisibleIn('table'),
-);
+    return visibility.includes("table");
+}
 
-export type TableBasicInfoField = (typeof tableBasicInfoFields)[number];
+// export const tableBasicInfoFields = basicInfoFields.filter(
+//     isVisibleIn('table'),
+// );
+export const tableBasicInfoFields = basicInfoFields.filter(isTableField);
+
+// export type TableBasicInfoField = (typeof tableBasicInfoFields)[number];
+// type TableBasicInfoField = Extract<
+//     BasicInfoField,
+//     {
+//         key: TableKey;
+//     }
+// >;
 
 // const filterableBasicInfoFields = basicInfoFields.filter(
 //     (
@@ -398,22 +431,39 @@ export const detailBasicInfoFields = basicInfoFields.filter(
 );
 
 // export type FormBasicInfoField = BasicInfoFieldDefinition;
-export type FormBasicInfoField =
-    BasicInfoFieldDefinition & {
-        key: FormKey;
-    };
+// export type FormBasicInfoField =
+//     BasicInfoFieldDefinition & {
+//         key: FormKey;
+//     };
+// export type FormBasicInfoField = Extract<
+//     BasicInfoField,
+//     {
+//         visibility: readonly ("table" | "form" | "detail")[];
+//     }
+// >;
+// type FormBasicInfoField = Extract<
+//     BasicInfoField,
+//     {
+//         key: Exclude<keyof BasicInfo, "id" | "createdAt" | "isDeleted">;
+//     }
+// >;
+// type FormBasicInfoField = Extract<
+//     BasicInfoField,
+//     { key: FormKey }
+// >;
+
 
 export function isFormField(field: BasicInfoField): field is FormBasicInfoField {
     return (field.visibility as readonly Visibility[]).includes('form');
 }
 
-// export const formBasicInfoFields = basicInfoFields.filter(
-//     isFormField,
-// );
-export const formBasicInfoFields =
-    basicInfoFields.filter(
-        isFormField,
-    ) as FormBasicInfoField[];
+export const formBasicInfoFields = basicInfoFields.filter(
+    isFormField,
+);
+// export const formBasicInfoFields =
+//     basicInfoFields.filter(
+//         isFormField,
+//     ) as FormBasicInfoField[];
 
 
 
@@ -445,13 +495,61 @@ export type ActiveFilterValue = string[] | DateRangeValue;
 export type ActiveFilters = Partial<Record<BasicInfoFilterColumn, ActiveFilterValue>>;
 
 
-type FormKey = keyof CreateBasicInfo;
+const x = formBasicInfoFields;
+type X = typeof formBasicInfoFields[number];
 
+
+// type FormKey = keyof CreateBasicInfo;
+// type FormBasicInfoField = typeof formBasicInfoFields[number];
+// type FormKey = FormBasicInfoField["key"];
+type FormKey =
+    Exclude<keyof BasicInfo, "id" | "createdAt" | "isDeleted">;
+type FormBasicInfoField = Extract<
+    BasicInfoField,
+    { key: FormKey }
+>;
+
+// type FilterableBasicInfoField = typeof filterableBasicInfoFields[number];
+// type FilterKey = FilterableBasicInfoField["key"];
 type FilterKey =
-    | "designation"
-    | "country"
-    | "state"
-    | "city"
-    | "gender"
-    | "relationshipStatus"
-    | "dob";
+    Extract<
+        BasicInfoField,
+        { filter: FilterConfig }
+    >["key"];
+type FilterableBasicInfoField =
+    Extract<
+        BasicInfoField,
+        { filter: FilterConfig }
+    >;
+
+// type TableBasicInfoField = typeof tableBasicInfoFields[number];
+// type TableKey = TableBasicInfoField["key"];
+
+export function isDistinctFilter(
+    field: FilterableBasicInfoField,
+): field is Extract<
+    FilterableBasicInfoField,
+    {
+        filter: {
+            type: "distinct";
+        };
+    }
+> {
+    return field.filter.type === "distinct";
+}
+
+export function hasRemoteOptions(
+    field: FilterableBasicInfoField,
+): field is Extract<
+    FilterableBasicInfoField,
+    {
+        filter:
+            | { type: "distinct" }
+            | { type: "enum" };
+    }
+> {
+    return (
+        field.filter.type === "distinct" ||
+        field.filter.type === "enum"
+    );
+}

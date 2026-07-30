@@ -21,7 +21,7 @@ export const BasicInfoSchema = z.object({
     firstName: z.string(),
     lastName: z.string(),
     designation: z.string().nullable(),
-    email: z.string(),
+    email: z.string().nullable(),
     phone: z.string(),
     country: z.string().nullable(),
     state: z.string().nullable(),
@@ -147,7 +147,8 @@ export const BasicInfoFilterOptionsSchema = z.object({
     relationshipStatus: z.array(
         z.enum(["single", "committed"])
     ),
+    // dob: z.null(),
+    // dob: z.object({}),
 });
 
-export type BasicInfoFilterOptions =
-    z.infer<typeof BasicInfoFilterOptionsSchema>;
+export type BasicInfoFilterOptions = z.infer<typeof BasicInfoFilterOptionsSchema>;

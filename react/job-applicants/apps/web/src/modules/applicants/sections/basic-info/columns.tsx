@@ -1,4 +1,3 @@
-console.log("columns.tsx loaded");
 import type {CellContext, ColumnDef, HeaderContext, RowData,} from '@tanstack/react-table';
 import { ArrowUpDown, ListFilter } from 'lucide-react';
 import { Button } from '@job-applicants/ui/button';

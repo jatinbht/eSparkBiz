@@ -1,24 +1,62 @@
-// server/src/modules/basic-info/mapper.ts
+// As your project grows, mapper.ts will likely also contain:
 
-import type { Insertable } from 'kysely';
+// toApplicantInsert()
+// toApplicantUpdate()
+// toBasicInfoDto()
+// toApplicantSummaryDto()
+
+// which keeps all Applicant-specific transformations together.
+
+
+// NOTE: 
+// | Purpose                   | Kysely type             |
+// | ------------------------- | ----------------------- |
+// | Database table definition | `Applicant`             |
+// | `INSERT` payload          | `Insertable<Applicant>` |
+// | `UPDATE` payload          | `Updateable<Applicant>` |
+// | `SELECT` result           | `Selectable<Applicant>` |
+
+
 import type { DBOverride } from '../../db/db-overrides.js';
-import type { CreateBasicInfo } from '@job-applicants/schemas';
+import type { BasicInfo, CreateBasicInfo } from '@job-applicants/schemas';
 import { formBasicInfoFields } from '@job-applicants/shared';
+import type { Insertable, Selectable } from "kysely";
+import type { Applicant } from "../../db/db-types";
+
+// console.log(
+//     formBasicInfoFields.map(f => ({
+//         key: f.key,
+//         visibility: f.visibility,
+//     })),
+// );
+
+type ApplicantInsert = Insertable<Applicant>;
+type ApplicantRow = Selectable<Applicant>;
 
 export function toApplicantInsert(
     body: CreateBasicInfo,
-): Insertable<DBOverride['applicant']> {
-    // type BodyDob = typeof body.dob;
-    const row: Partial<Insertable<DBOverride['applicant']>> = {};
+): ApplicantInsert {
+    const row = {} as ApplicantInsert;
 
     for (const field of formBasicInfoFields) {
-        (row as any)[field.dbColumn] = body[field.key];
+        (row as Record<string, unknown>)[field.dbColumn] =
+            body[field.key];
     }
 
-    return row as Insertable<DBOverride['applicant']>;
+    return row;
 }
 
-// type Insert = Insertable<DB['applicant']>;
-// type InsertDob = Insert['dob'];
+export function toBasicInfoDto(
+    applicant: ApplicantRow,
+): BasicInfo {
+    // console.log(
+    //     applicant.createdAt,
+    //     typeof applicant.createdAt,
+    //     applicant.createdAt instanceof Date,
+    // );
 
-// type InsertDob = Insertable<DBOverride['applicant']>['dob'];
+    return {
+        ...applicant,
+        createdAt: new Date(applicant.createdAt).toISOString(),
+    };
+}

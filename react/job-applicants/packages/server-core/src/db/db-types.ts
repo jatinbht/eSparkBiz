@@ -20,7 +20,7 @@ export interface Applicant {
   fullAddress: string | null;
   gender: "female" | "male" | "other";
   id: Generated<number>;
-  isDeleted: Generated<number | null>;
+  isDeleted: Generated<number>;
   lastName: string;
   phone: string;
   relationshipStatus: "committed" | "single" | null;

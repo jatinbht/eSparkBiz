@@ -1,23 +1,22 @@
 import { db } from '../../db/kysely.connector.js';
 // import { connection } from '../../../db/mysql2.connector.js';
 import type {
-    ApplicantColumn,
     FindAllParams,
     GetCountParams,
 } from './types.js';
 import { toApplicantInsert } from './mapper.js';
-import type { CreateBasicInfo } from '@job-applicants/schemas';
 // import AppError from '../../errors/AppError.js';
 import AppError from '@job-applicants/server-core/errors/AppError'; // adjust path
-import { ErrorCode } from '@job-applicants/schemas';
+import { ErrorCode, type CreateBasicInfo } from '@job-applicants/schemas';
+import type { ApplicantColumn } from "@job-applicants/shared";
 
 
-db.selectFrom('applicant')
-    .selectAll()
-    .limit(1)
-    .execute()
-    .then(() => console.debug('DB connection OK'))
-    .catch((err) => console.error('DB connection FAILED', err));
+// db.selectFrom('applicant')
+//     .selectAll()
+//     .limit(1)
+//     .execute()
+//     .then(() => console.debug('DB connection OK'))
+//     .catch((err) => console.error('DB connection FAILED', err));
 
 //NOTE: MYSQL2 VERSION
 // const allowedSortColumns = [
@@ -61,11 +60,38 @@ export async function findAll({
         if (dob_to) query = query.where('dob', '<=', dob_to);
     }
 
-    return query
+    // console.log("before execute");
+    const result = await query
         .orderBy(sortOn, order)
         .limit(pageSize)
         .offset(offset)
         .execute();
+    // console.log("after execute", result);
+
+    return result;
+
+    // const query = db
+    // .selectFrom("applicant")
+    // .selectAll()
+    // .orderBy(sortOn, order)
+    // .limit(pageSize)
+    // .offset(offset);
+
+
+    // console.log("before execute");
+
+    // const promise = query.execute();
+    
+    // console.log("execute returned", promise);
+    
+    // const result = await promise;
+    
+    // console.log("after execute");
+
+    // console.log(result);
+
+
+    // return result;
 }
 
 export async function findDistinct<K extends ApplicantColumn>(column: K) {
@@ -172,3 +198,44 @@ export async function insert(body: CreateBasicInfo) {
 
     return Number(result.insertId);
 }
+
+// import { createPool } from "mysql2/promise";
+
+// const pool = createPool({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_NAME,
+//     port: Number(process.env.DB_PORT),
+// });
+// console.log(pool);
+// console.log("before");
+
+// const conn = await pool.getConnection();
+
+// console.log("after");
+
+// conn.release();
+// console.log(pool.Promise === Promise);
+// console.log(pool.Promise);
+// console.log(globalThis.Promise);
+
+
+
+// console.log(import.meta.url);
+// console.log(createPool.toString());
+
+// import { createRequire } from "module";
+
+// const require = createRequire(import.meta.url);
+
+// console.log(require.resolve("mysql2/promise"));
+// console.log(require.resolve("mysql2"));
+
+
+
+// const [rows] = await pool.query(
+//     "SELECT * FROM applicant LIMIT 1"
+// );
+
+// console.log(rows);

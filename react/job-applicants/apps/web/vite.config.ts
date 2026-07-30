@@ -13,6 +13,11 @@ export default defineConfig({
       "/api": {
         target: "http://localhost:3000",
         // changeOrigin: true
+      },
+      "/rpc": {
+        target: "http://localhost:3000",
+        // proxy RPC calls to the API server
+        // changeOrigin: true
       }
     }
   },

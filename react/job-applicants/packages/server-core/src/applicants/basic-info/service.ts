@@ -1,9 +1,11 @@
 import * as Applicants from './model.js';
 import type { BasicInfoQuery } from '@job-applicants/schemas';
-import { pluckFirstColumn } from '../../utils/shape-shifter.js';
-import { basicInfoFields, filterableBasicInfoFields, isFilterableField, type BasicInfoFilterOptions } from '@job-applicants/shared';
-import { ErrorCode, type CreateBasicInfo } from 'packages/schemas';
+import { filterableBasicInfoFields, type BasicInfoFilterOptions } from '@job-applicants/shared';
+import { ErrorCode, type CreateBasicInfo } from '@job-applicants/schemas';
 import AppError from '../../errors/AppError.js';
+import { toBasicInfoDto } from './mapper.js';
+import { pluckFirstColumn } from '../../utils/shape-shifter.js';
+import { City, Country, State } from 'country-state-city';
 
 export async function listPaginatedApplicants( query: BasicInfoQuery /* removed {pageSize, page, sortOn, order} */ ) {
     const { page, pageSize, sortOn, order, city, designation, state, gender, relationship_status, dob_from, dob_to } = query;
@@ -18,7 +20,7 @@ export async function listPaginatedApplicants( query: BasicInfoQuery /* removed 
     const totalCount = Number(total.count);
 
     return {
-        data: rows,
+        data: rows.map(toBasicInfoDto),
         pagination: {
             page,
             offset,
@@ -41,32 +43,30 @@ export async function getFilterOptions() {
         relationshipStatus: [],
     };
 
-    // for (const column of basicInfoFilterableColumns) {
-    //     if (column.type === 'distinct') {
-    //         result[column.key] = pluckFirstColumn(
-    //             await Applicants.findDistinct(column.key),
-    //         );
-    //     }
+    result.country = Country.getAllCountries().map(c => c.name);
 
-    //     if (column.type === 'enum') {
-    //         result[column.key] = column.options;
-    //     }
-    // }
+    result.state = pluckFirstColumn(
+        await Applicants.findDistinct("state")
+    );
+    
+    result.city = pluckFirstColumn(
+        await Applicants.findDistinct("city")
+    );
 
-    const filterableFields = filterableBasicInfoFields.filter(isFilterableField);
+    result.designation = pluckFirstColumn(
+        await Applicants.findDistinct("designation")
+    );
 
-    for (const field of filterableFields) {
-        // if (!field.filter) continue; // no longer needs, because the type guard already guarantees it.
-
-        switch (field.filter.type) {
-            case 'distinct':
-                result[field.key] = pluckFirstColumn(
-                    await Applicants.findDistinct(field.dbColumn),
-                );
+    for (const field of filterableBasicInfoFields) {
+        if (field.filter.type !== "enum") continue;
+    
+        switch (field.key) {
+            case "gender":
+                result.gender = [...field.filter.options];
                 break;
-
-            case 'enum':
-                result[field.key] = [...field.filter.options];
+    
+            case "relationshipStatus":
+                result.relationshipStatus = [...field.filter.options];
                 break;
         }
     }
@@ -79,7 +79,15 @@ export async function createApplicant(payload: CreateBasicInfo) {
 
     const applicant = await Applicants.findById(id);
 
-    return applicant;
+    if (!applicant) {
+        throw new AppError({
+            status: 500,
+            code: 'INTERNAL_SERVER_ERROR',
+            message: `Applicant ${id} not found immediately after insert.`,
+        });
+    }
+
+    return toBasicInfoDto(applicant);
 }
 
 export async function getApplicant(id: number) {
@@ -92,5 +100,5 @@ export async function getApplicant(id: number) {
         });
     }
 
-    return applicant;
+    return toBasicInfoDto(applicant);
 }

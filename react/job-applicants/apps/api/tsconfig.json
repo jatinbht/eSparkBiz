@@ -37,6 +37,6 @@
         "../../packages/server-core/src/errors",
         "../../packages/schemas/dto-basicInfoQuery.ts",
         "../../packages/schemas/src/applicants/schema.ts"
-    ],
+, "src/modules/applicants/.router.ts"    ],
     "exclude": ["node_modules"]
 }
