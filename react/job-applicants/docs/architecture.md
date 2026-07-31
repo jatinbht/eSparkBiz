@@ -111,3 +111,39 @@ service
 ```
 
 Notice that your service layer should not change. Only the transport changes.
+
+---
+
+# Package Ownership & Dependency Boundaries
+
+```text
+                 shared
+                    ▲
+                    │
+                 schemas
+                    ▲
+                    │
+             api-contract
+              ▲         ▲
+              │         │
+         api-client  server-core
+              ▲         ▲
+              │         │
+          apps/web   apps/api
+```
+
+| Package        | Owns                                       | Must not know about        |
+| -------------- | ------------------------------------------ | -------------------------- |
+| `shared`       | utilities, constants                       | everyone                   |
+| `schemas`      | data models & validation                   | HTTP, Express, React, oRPC |
+| `api-contract` | routes, methods, request/response bindings | Express implementation     |
+| `api-client`   | network implementation                     | server internals           |
+| `server-core`  | business logic                             | React, browser             |
+| `apps/api`     | Express adapters                           | UI                         |
+| `apps/web`     | React UI                                   | database                   |
+
+### Core Architectural Rules:
+1. **Dependencies flow one way**: Lower layers never depend on higher layers.
+2. **`schemas` owns domain models**: Domain schemas (`BasicInfoSchema`, `CreateBasicInfoSchema`, `BasicInfoListQuerySchema`) stay transport-agnostic.
+3. **`api-contract` owns HTTP endpoints**: Defines oRPC/HTTP routes and selectively re-exports only the request/response schemas tied to those endpoints.
+4. **React Forms consume `schemas`**: UI components import validation schemas from `@job-applicants/schemas` directly, without coupling UI validation to HTTP contract routes.

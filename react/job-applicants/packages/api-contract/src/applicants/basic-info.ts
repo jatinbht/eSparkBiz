@@ -1,14 +1,23 @@
 import { oc } from "@orpc/contract";
-import * as z from 'zod';
 
 import {
   IdSchema,
   BasicInfoSchema,
   CreateBasicInfoSchema,
-  BasicInfoQuerySchema,
-  createPaginatedResultSchema,
+  BasicInfoListQuerySchema,
+  BasicInfoListResponseSchema,
   BasicInfoFilterOptionsSchema,
 } from "@job-applicants/schemas";
+
+// Selective re-exports of schemas specifically involved in HTTP API contracts
+export {
+  IdSchema,
+  BasicInfoSchema,
+  CreateBasicInfoSchema,
+  BasicInfoListQuerySchema,
+  BasicInfoListResponseSchema,
+  BasicInfoFilterOptionsSchema,
+};
 
 export const basicInfoContract = oc.router({
   create: oc
@@ -19,26 +28,21 @@ export const basicInfoContract = oc.router({
     .input(CreateBasicInfoSchema)
     .output(BasicInfoSchema),
 
-  // show: oc
-  //   .route({
-  //     method: "GET",
-  //     path: "/applicants/:id",
-  //   })
-    show: oc
-      .route({
-        method: "POST",
-        path: "/applicants/show",
-      })
-      .input(IdSchema)
-      .output(BasicInfoSchema),
+  show: oc
+    .route({
+      method: "POST",
+      path: "/applicants/show",
+    })
+    .input(IdSchema)
+    .output(BasicInfoSchema),
 
   list: oc
     .route({
       method: "GET",
       path: "/applicants",
     })
-    .input(BasicInfoQuerySchema)
-    .output(createPaginatedResultSchema(BasicInfoSchema)),
+    .input(BasicInfoListQuerySchema)
+    .output(BasicInfoListResponseSchema),
 
   filterOptions: oc
     .route({

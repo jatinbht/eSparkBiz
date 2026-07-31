@@ -1,36 +1,9 @@
-import type { CreateBasicInfo, BasicInfoQuery } from '@job-applicants/schemas';
+import type { CreateBasicInfo, BasicInfoListQuery } from '@job-applicants/schemas';
 import { orpc } from '../orpc';
-// import { http } from '../http';
-// import { Routes, RouteBuilder } from '@job-applicants/api-contract';
-
-// export type BasicInfoQueryParams = {
-//   page?: number;
-//   pageSize?: number;
-//   sortOn?: string;
-//   order?: 'asc' | 'desc';
-//   city?: string;
-//   designation?: string;
-//   state?: string;
-//   gender?: string;
-//   relationship_status?: string;
-//   dob_from?: string;
-//   dob_to?: string;
-// };
-
-// export type PaginatedResult<T> = {
-//   data: T[];
-//   pagination: {
-//     page: number;
-//     offset: number;
-//     pageSize: number;
-//     total: number;
-//     pageCount: number;
-//   };
-// };
 
 export type BasicInfoFilterOptions = Record<string, string[]>;
 
-export async function getApplicants(params?: BasicInfoQuery) {
+export async function getApplicants(params?: BasicInfoListQuery) {
   // return http.get<PaginatedResult<BasicInfo>>(Routes.applicants.base, params);
   return orpc.applicants.basicInfo.list(params ?? {});
 }

@@ -1,5 +1,5 @@
 import * as Applicants from './model.js';
-import type { BasicInfoQuery } from '@job-applicants/schemas';
+import type { BasicInfoListQuery } from '@job-applicants/schemas';
 import { filterableBasicInfoFields, type BasicInfoFilterOptions } from '@job-applicants/shared';
 import { ErrorCode, type CreateBasicInfo } from '@job-applicants/schemas';
 import AppError from '../../errors/AppError.js';
@@ -7,7 +7,7 @@ import { toBasicInfoDto } from './mapper.js';
 import { pluckFirstColumn } from '../../utils/shape-shifter.js';
 import { City, Country, State } from 'country-state-city';
 
-export async function listPaginatedApplicants( query: BasicInfoQuery /* removed {pageSize, page, sortOn, order} */ ) {
+export async function listPaginatedApplicants( query: BasicInfoListQuery /* removed {pageSize, page, sortOn, order} */ ) {
     const { page, pageSize, sortOn, order, city, designation, state, gender, relationship_status, dob_from, dob_to } = query;
     
     const filters = { city, designation, state, gender, relationship_status };

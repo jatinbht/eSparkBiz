@@ -95,7 +95,7 @@ extendZodWithOpenApi(z);
 const emptyToDefault = <T>(defaultValue: T) => (value: unknown): unknown =>
         value === '' || value === undefined ? defaultValue : value;
 
-export const BasicInfoQuerySchema = z.object({
+export const BasicInfoListQuerySchema = z.object({
     pageSize: z
         .preprocess(emptyToDefault(10), z.coerce.number().min(1).max(100))
         .default(10)
@@ -123,7 +123,7 @@ export const BasicInfoQuerySchema = z.object({
 });
 
 
-export type BasicInfoQuery = z.infer<typeof BasicInfoQuerySchema>;
+export type BasicInfoListQuery = z.infer<typeof BasicInfoListQuerySchema>;
 
 //-------------------------
 
