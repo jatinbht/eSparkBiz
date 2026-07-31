@@ -12,6 +12,8 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://localhost:3000",
+        // strip the /api prefix before forwarding so backend routes like /applicants match
+        rewrite: (path) => path.replace(/^\/api/, ''),
         // changeOrigin: true
       },
       "/rpc": {

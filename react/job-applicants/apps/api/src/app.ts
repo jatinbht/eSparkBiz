@@ -27,18 +27,18 @@ app.get('/ping', (req, res) => res.send('pong'))
 app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
 
 
-app.use("/rpc", (req, res, next) => {
-    console.log(req.method);
-    console.log(req.url);
-    console.log(req.body);
-    next();
-});
+// app.use("/rpc", (req, res, next) => {
+//     // console.log(req.method);
+//     // console.log(req.url);
+//     // console.log(req.body);
+//     next();
+// });
 
-app.use((req, _, next) => {
-    console.log("content-type:", req.headers["content-type"]);
-    console.log("body:", req.body);
-    next();
-});
+// app.use((req, _, next) => {
+//     console.log("content-type:", req.headers["content-type"]);
+//     console.log("body:", req.body);
+//     next();
+// });
 
 app.use("/rpc{/*path}", async (req, res, next) => {
     const { matched } = await rpcHandler.handle(req, res, {

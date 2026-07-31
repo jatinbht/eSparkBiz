@@ -9,5 +9,3 @@ export const appRouter = {
 
     users: {},
 };
-
-console.dir(appRouter, { depth: 5 });

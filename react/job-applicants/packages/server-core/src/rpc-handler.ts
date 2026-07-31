@@ -10,10 +10,10 @@ export const rpcHandler = new RPCHandler(appRouter, {
     onError((error) => {
       console.error(error);
     
-      if (error.cause instanceof ValidationError) {
-        console.dir(error.cause.issues, { depth: null });
-      }
-      console.dir(error.data, { depth: null });
+      // if (error.cause instanceof ValidationError) {
+      //   console.dir(error.cause.issues, { depth: null });
+      // }
+      // console.dir(error.data, { depth: null });
     })
   ],
 });

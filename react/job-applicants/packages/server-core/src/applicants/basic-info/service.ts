@@ -9,6 +9,7 @@ import { City, Country, State } from 'country-state-city';
 
 export async function listPaginatedApplicants( query: BasicInfoQuery /* removed {pageSize, page, sortOn, order} */ ) {
     const { page, pageSize, sortOn, order, city, designation, state, gender, relationship_status, dob_from, dob_to } = query;
+    
     const filters = { city, designation, state, gender, relationship_status };
 
     const offset = (page - 1) * pageSize;
