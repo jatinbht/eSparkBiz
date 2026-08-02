@@ -39,6 +39,8 @@ export const basicInfoContract = oc.router({
     .route({
       method: "POST",
       path: "/applicants",
+      description: "...",
+      tags: ["Applicants"],
     })
     .errors({
       CONFLICT: contractErrors.CONFLICT,

@@ -23,8 +23,7 @@
     "@orpc/openapi-client": "^1.14.8",
     "@orpc/server": "^1.14.8",
     "@orpc/tanstack-query": "^1.14.8",
-    "@orpc/zod": "^1.14.8",
-    "swagger-ui-express": "^5.0.1"
+    "@orpc/zod": "^1.14.8"
   },
   "allowScripts": {
     "@scarf/scarf@1.4.0": true,
