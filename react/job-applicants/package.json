@@ -25,5 +25,9 @@
     "@orpc/tanstack-query": "^1.14.8",
     "@orpc/zod": "^1.14.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "allowScripts": {
+    "@scarf/scarf@1.4.0": true,
+    "esbuild@0.28.1": true
   }
 }
