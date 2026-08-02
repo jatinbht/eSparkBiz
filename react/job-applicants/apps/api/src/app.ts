@@ -14,7 +14,7 @@ import e, { urlencoded } from 'express';
 // import { usersRouter } from './modules/users/router.js';
 import handleError from './middleware/error-handler.js';
 // import { initializeConnection } from '../../../packages/server-core/src/db/mysql2.connector.js';
-import { rpcHandler } from "@job-applicants/server-core";
+import { openApiHandler, rpcHandler } from "@job-applicants/server-core";
 
 const app = e();
 
@@ -24,7 +24,7 @@ app.use(e.json()); // React frontend sends JSON request bodies via POST. For oRP
 
 
 app.get('/ping', (req, res) => res.send('pong'))
-app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
+// app.get('/api-docs.json', (req, res) => res.json(generateOpenApiDocument()));
 
 
 // app.use("/rpc", (req, res, next) => {
@@ -53,6 +53,19 @@ app.use("/rpc{/*path}", async (req, res, next) => {
     next();
 });
 
+app.use("/api{/*path}", async (req, res, next) => {
+    const { matched } = await openApiHandler.handle(req, res, {
+      prefix: "/api",
+      context: {},
+    });
+  
+    if (matched) {
+      return;
+    }
+  
+    next();
+});
+
 // import { Routes } from '@job-applicants/api-contract';
 
 // app.use('/api' + Routes.applicants.base, applicantsRouter);
@@ -75,8 +88,10 @@ catch (error) {
 
 
 
-import { generateOpenApiDocument } from './openapi.js';
-import swaggerUi from 'swagger-ui-express';
+// import { generateOpenApiDocument } from './.openapi.js';
+// import swaggerUi from 'swagger-ui-express';
 
-const spec = generateOpenApiDocument();
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
+// const spec = generateOpenApiDocument();
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spec));
+
+

@@ -9,6 +9,16 @@ export const ErrorCode = {
     INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
 } as const;
 
+export const ErrorStatus = {
+    VALIDATION_ERROR: 400,
+    NOT_FOUND: 404,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    CONFLICT: 409,
+    INTERNAL_SERVER_ERROR: 500,
+} as const;
+
+
 export const ErrorCodeSchema = z.enum(ErrorCode);
 
 export const ErrorResponseSchema = z.object({

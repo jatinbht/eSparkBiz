@@ -32,15 +32,13 @@
 
 // For a project your size, Option A is perfectly reasonable.
 
-import { ErrorCode } from '@job-applicants/schemas';
+import { ErrorCode } from "@job-applicants/schemas";
 
 export default class AppError extends Error {
-    readonly status: number;
-    readonly code: keyof typeof ErrorCode;
+    readonly code: (typeof ErrorCode)[keyof typeof ErrorCode];
 
     constructor(options: {
-        status: number;
-        code: keyof typeof ErrorCode;
+        code: (typeof ErrorCode)[keyof typeof ErrorCode];
         message: string;
         cause?: unknown;
     }) {
@@ -49,8 +47,6 @@ export default class AppError extends Error {
         });
 
         this.name = "AppError";
-
-        this.status = options.status;
         this.code = options.code;
     }
 }

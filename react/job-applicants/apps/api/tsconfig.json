@@ -26,7 +26,7 @@
         "src/.orpc.ts",
         "src/modules/applicants/basic-info/.procedure.ts",
         "../../packages/server-core/src/applicants/basic-info/service.ts",
-        "../../packages/server-core/src/applicants/basic-info/model.ts",
+        "../../packages/server-core/src/applicants/basic-info/repository.ts",
         "../../packages/server-core/src/applicants/basic-info/mapper.ts",
         "../../packages/server-core/src/applicants/basic-info/types.ts",
         "../../packages/server-core/src/db/kysely.connector.ts",
@@ -37,6 +37,6 @@
         "../../packages/server-core/src/errors",
         "../../packages/schemas/dto-basicInfoQuery.ts",
         "../../packages/schemas/src/applicants/schema.ts"
-    ],
+, "src/.openapi.ts"    ],
     "exclude": ["node_modules"]
 }

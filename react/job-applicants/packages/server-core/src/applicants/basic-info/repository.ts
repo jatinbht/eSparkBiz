@@ -1,3 +1,13 @@
+// Typical methods include:
+// findById()
+// findByIdOrThrow()
+// findAll()
+// insert()
+// update()
+// delete()
+// exists()
+// count()
+
 import { db } from '../../db/kysely.connector.js';
 // import { connection } from '../../../db/mysql2.connector.js';
 import type {
@@ -161,6 +171,19 @@ export async function findById(id: number) {
         .executeTakeFirst();
 }
 
+export async function findByIdOrThrow(id: number) {
+    const applicant = await findById(id);
+
+    if (!applicant) {
+        throw new AppError({
+            code: ErrorCode.NOT_FOUND,
+            message: `Applicant ${id} not found.`,
+        });
+    }
+
+    return applicant;
+}
+
 // export async function insert(body) {
 //     const statement = `insert into applicants.applicant (first_name, last_name, designation, full_address, email, phone, city, gender, zip_code, relationship_status, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 //     const values = [
@@ -190,7 +213,6 @@ export async function insert(body: CreateBasicInfo) {
 
     if (result.insertId === undefined) {
         throw new AppError({
-            status: 500,
             code: ErrorCode.INTERNAL_SERVER_ERROR,
             message: 'Insert failed: no insertId returned.',
         });

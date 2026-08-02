@@ -6,3 +6,5 @@ export * from "./db/kysely.connector.ts";
 export { os } from "./orpc.builder";
 export { appRouter } from "./routes";
 export { rpcHandler } from "./rpc-handler";
+
+export * from "./openapi-handler";

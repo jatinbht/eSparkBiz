@@ -141,4 +141,5 @@ apps/web/src/modules/
 
 - [ ] [Implement Tanstack Router and Query](https://chatgpt.com/s/t_6a5f25ef76a48191ab01bf4602ffa561)
 
-- [ ] `zodSmartCoersionPlugin`
+- [x] `zodSmartCoersionPlugin`
+this has been CANCELLED due to oRPC lock-in.

@@ -19,7 +19,7 @@
   "dependencies": {
     "@job-applicants/schemas": "*",
     "@job-applicants/shared": "*",
-    "@orpc/openapi": "^1.14.8",
+    "@orpc/openapi": "^1.14.10",
     "@orpc/server": "^1.14.8",
     "@orpc/zod": "^1.14.8",
     "express": "^5.2.1",

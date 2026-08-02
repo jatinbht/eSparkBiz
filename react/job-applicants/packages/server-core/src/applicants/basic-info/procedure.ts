@@ -6,7 +6,6 @@
 
 // import * as service from "./service";
 
-
 // const os = implement(basicInfoContract);
 // const os = implement(appContract); //implemented in apps/api/src/orpc.ts
 
@@ -16,23 +15,29 @@
 //   }),
 // });
 
-import * as service from "./service";
-import { os } from "../../orpc.builder";
+import * as service from './service';
+import { os } from '../../orpc.builder'; //replaced with `rpc`
+import { withAppErrors } from '../../errors/with-app-errors.ts';
 
 // const os = implement(appContract);
 
-
 export const basicInfoRouter = os.applicants.basicInfo.router({
-  create: os.applicants.basicInfo.create.handler(({ input }) => {
-    return service.createApplicant(input);
-  }),
-  show: os.applicants.basicInfo.show.handler(({ input }) => {
-    return service.getApplicant(input.id)
-  }),
-  filterOptions: os.applicants.basicInfo.filterOptions.handler(() => {
-    return service.getFilterOptions();
-  }),
-  list: os.applicants.basicInfo.list.handler(({ input }) => {
-    return service.listPaginatedApplicants(input);
-  }),
+    create: os.applicants.basicInfo.create.handler(
+        withAppErrors(async ({ input }) => {
+            return service.createApplicant(input);
+        }),
+    ),
+    show: os.applicants.basicInfo.show.handler(
+        withAppErrors(async ({ input }) => {
+            return service.getApplicant(input.id);
+        }),
+    ),
+    filterOptions: os.applicants.basicInfo.filterOptions.handler(
+        withAppErrors(() => {
+            return service.getFilterOptions();
+        }),
+    ),
+    list: os.applicants.basicInfo.list.handler(({ input }) => {
+        return service.listPaginatedApplicants(input);
+    }),
 });
