@@ -77,8 +77,9 @@ app.use(handleError)
 try {
     // await initializeConnection();
 
-    app.listen(3000, () => {
-        console.log('Server running');
+    const port = Number(process.env.PORT) || 3000;
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
     });
 }
 catch (error) {
