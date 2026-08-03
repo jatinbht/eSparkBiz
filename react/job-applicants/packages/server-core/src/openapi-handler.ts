@@ -35,7 +35,7 @@ export const openApiHandler = new OpenAPIHandler(appRouter, {
         new ZodToJsonSchemaConverter(),
       ],
 
-      docsProvider: "swagger",
+      docsProvider: "scalar",
 
       docsPath: "/docs",
 
